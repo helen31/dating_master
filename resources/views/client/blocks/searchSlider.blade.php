@@ -65,7 +65,7 @@
                             </div>
                             <div class="col-md-3 form-group">
                                 {!! Form::label('coutry', trans('profile.country')) !!}
-                                <select name="county" class="form-control">
+                                <select name="country" class="form-control">
                                     <option value="false" selected>---</option>
                                     @foreach($countries as $country)
                                         <option value="{{ $country->id }}"> {{ $country->name }}</option>

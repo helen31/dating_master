@@ -46,19 +46,7 @@
                 <div class="alert alert-danger">
                     <ul>
                         @foreach ($errors->all() as $error)
-                            @if (stristr($error,"passno"))
-                                <li>The passport number field is required.</li>
-                            @elseif(stristr($error,"pass_photo"))
-                                <li>The passport photo field is required.</li>
-                            @elseif(stristr($error,"b_year_pasp"))
-                                <li>The passport year field is required.</li>
-                            @elseif(stristr($error,"b_month_pasp"))
-                                <li>The passport month field is required.</li>
-                            @elseif(stristr($error,"b_day_pasp"))
-                                <li>The passport day field is required.</li>
-                            @else
-                                <li>{{ $error }}</li>
-                            @endif
+                            <li>{{ $error }}</li>
                         @endforeach
                     </ul>
                 </div>
@@ -93,65 +81,38 @@
                                         {!! Form::label('hot', 'Hot Block') !!}
                                         <input type="checkbox" name="hot">
                                     </div>
-                                    <div class="form-group  col-md-6">
+                                    <div class="form-group  col-md-4">
                                         <label for="first_name">Имя<span class="red">*</span></label>
-                                        {!! Form::text('first_name', '', ['class'=>'form-control', 'placeholder' => 'Name', 'required'=>'required']) !!}
+                                        {!! Form::text('first_name', '', ['class'=>'form-control', 'placeholder' => 'Name']) !!}
                                     </div>
 
-                                    <div class="form-group col-md-6">
+                                    <div class="form-group col-md-4">
                                         <label for="second_name">Фамилия<span class="red">*</span></label>
-                                        {!! Form::text('second_name', '', ['class'=>'form-control', 'placeholder' => 'Surname', 'required'=>'required']) !!}
+                                        {!! Form::text('second_name', '', ['class'=>'form-control', 'placeholder' => 'Surname']) !!}
                                     </div>
 
-                                    <div class="form-group col-md-12">
-                                        <title>Дата рождения</title>
-                                    <!--{!! Form::label('birthday', 'Дата рождения') !!}
-                                    {!! Form::text('birthday', '', ['class' => 'form-control default-date-picker'/*, 'disabled' => 'disabled'*/]) !!}-->
-                                        <div class="col-md-4" style="padding-left: 0;">
-                                            <label for="b_year">Год рождения<span class="red">*</span></label>
-                                            <select class="form-control" name="b_year" required="required" style="    padding: 0;" >
-                                                <option>---</option>
-                                                @for($i=date("Y")-100; $i<date("Y"); $i++)
-                                                        <option>{!! $i !!}</option>
-                                                @endfor
-                                            </select>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label for="b_month" >Месяц<span class="red">*</span></label>
-                                            <select class="form-control" name="b_month" required="required" style="    padding: 0;">
-                                                @for($i=1; $i<13; $i++)
-                                                        <option>{!! $i !!}</option>
-                                                @endfor
-                                            </select>
-                                        </div>
-                                        <div class="col-md-4" style="padding-right: 0;">
-                                            <label for="b_day">День<span class="red">*</span></label>
-                                            <select class="form-control" style="    padding: 0;" required="required" name="b_day">
-                                                @for($i=1; $i<32; $i++)
-                                                        <option>{!! $i !!}</option>
-                                                @endfor
-                                            </select>
-                                        </div>
-
+                                    <div class="form-group col-md-4">
+                                        <label for="birthday">Дата рождения<span class="red">*</span></label>
+                                        {!! Form::date('birthday', '', ['class'=>'form-control']) !!}
                                     </div>
 
                                     <div class="info col-md-4">
                                         <div class="form-group">
                                             <label for="email">Email<span class="red">*</span></label>
-                                            {!! Form::email('email', '', ['class' => 'form-control', 'required'=>'required', 'placeholder' => 'email@email.com', 'required' => 'required']) !!}
+                                            {!! Form::email('email', '', ['class' => 'form-control', 'placeholder' => 'email@email.com']) !!}
                                         </div>
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label for="phone">Phone<span class="red">*</span></label>
-                                        {!! Form::text('phone', '', ['class' => 'form-control', 'required'=>'required' ]) !!}
+                                        {!! Form::text('phone', '', ['class' => 'form-control' ]) !!}
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label for="password">Password<span class="red">*</span></label>
-                                        {!! Form::password('password', ['class' => 'form-control', 'required'=>'required']) !!}
+                                        {!! Form::password('password', ['class' => 'form-control']) !!}
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label for="coutry">Cтрана<span class="red">*</span></label>
-                                        <select name="county" class="form-control" required="required">
+                                        <select name="country" class="form-control">
                                             @foreach($countries as $country)
                                                 <option value="{{ $country->id }}"> {{ $country->name }}</option>
                                             @endforeach
@@ -161,13 +122,13 @@
                                     <div class="form-group col-md-4">
                                         <label for="state">Штат<span class="red">*</span></label>
                                         {!! Form::hidden('user_state_id', '' ) !!}
-                                        <select name="state" class="form-control" required="required"></select>
+                                        <select name="state" class="form-control"></select>
                                     </div>
 
                                     <div class="form-group col-md-4">
                                         <label for="city">Город<span class="red">*</span></label>
                                         {!! Form::hidden('user_city_id', '' ) !!}
-                                        <select name="city" class="form-control" required="required"></select>
+                                        <select name="city" class="form-control"></select>
                                     </div>
                                 </div>
                                 <div class="form-group text-center col-md-12">
@@ -178,7 +139,7 @@
                     </div>
                     <div role="tabpanel" class="tab-pane" id="profile_foto">
                         <div class="col-md-12">
-                            <h3 class="text-center"> Фтографии профиля (макс. 10) </h3>
+                            <h3 class="text-center"> Фотографии профиля (макс. 10) </h3>
                             <div class="form-group col-md-12">
                                 <div class="form-group">
                                     {!! Form::label(trans('profile_photo')) !!}
@@ -203,46 +164,81 @@
                                 {!! Form::label('occupation', 'Род деятельности') !!}
                                 {!! Form::text('occupation', '', ['class' => 'form-control']) !!}
                             </div>
-                        <!--div class="form-group col-md-4">
-                                {!! Form::label('gender', 'Пол') !!}
-                        {!! Form::select('gender', $selects['gender'], '' ,  ['class' => 'form-control']) !!}
-                                </div-->
-                            <input type="hidden" name="gender" value="female">
                             <div class="form-group col-md-4">
                                 {!! Form::label('eyes', 'Цвет глаз') !!}
-                                {!! Form::select('eyes', $selects['eyes'] , '',  ['class' => 'form-control']) !!}
+                                <select name="eyes" class="form-control">
+                                    @foreach($selects['eyes'] as $eyes)
+                                        <option value="{{ $eyes }}" >{{ trans('profile.'.$eyes) }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="form-group col-md-4">
                                 {!! Form::label('hair', 'Цвет волос') !!}
-                                {!! Form::select('hair', $selects['hair'], '',  ['class' => 'form-control']) !!}
+                                <select name="hair" class="form-control">
+                                    @foreach($selects['hair'] as $hair)
+                                        <option value="{{ $hair }}" >{{ trans('profile.'.$hair) }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="form-group col-md-4">
                                 {!! Form::label('education', 'Образование') !!}
-                                {!! Form::select('education', $selects['education'],'',  ['class' => 'form-control']) !!}
+                                <select name="education" class="form-control">
+                                    @foreach($selects['education'] as $education)
+                                        <option value="{{ $education }}" >{{ trans('profile.'.$education) }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="form-group col-md-4">
                                 {!! Form::label('kids', 'Дети') !!}
-                                {!! Form::select('kids', $selects['kids'],'',  ['class' => 'form-control']) !!}
+                                <select name="kids" class="form-control">
+                                    @foreach($selects['kids'] as $kids)
+                                        <option value="{{ $kids }}" >{{ trans('profile.'.$kids) }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="form-group col-md-4">
                                 {!! Form::label('kids_live', 'Проживание детей')!!}
-                                {!! Form::select('kids_live', $selects['kids_live'],'',  ['class' => 'form-control']) !!}
+                                <select name="kids_live" class="form-control">
+                                    @foreach($selects['kids_live'] as $kids_live)
+                                        <option value="{{ $kids_live }}" >{{ trans('profile.'.$kids_live) }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="form-group col-md-4">
                                 {!! Form::label('want_kids', 'Желание завести детей') !!}
-                                {!! Form::select('want_kids', $selects['want_kids'],'',  ['class' => 'form-control']) !!}
+                                <select name="want_kids" class="form-control">
+                                    @foreach($selects['want_kids'] as $want_kids)
+                                        <option value="{{ $want_kids }}" >{{ trans('profile.'.$want_kids) }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="form-group col-md-4">
                                 {!! Form::label('family', 'Семейное положение') !!}
-                                {!! Form::select('family', $selects['family'], '',  ['class' => 'form-control']) !!}
+                                <select name="family" class="form-control">
+                                    @foreach($selects['family'] as $family)
+                                        @if($family == '---')
+                                            <option value="---">---</option>
+                                        @else
+                                            <option value="{{ $family }}">{{ trans('profile.'.$family.'_female') }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="form-group col-md-4">
                                 {!! Form::label('religion', 'Вероисповедание') !!}
-                                {!! Form::select('religion', $selects['religion'], '',  ['class' => 'form-control']) !!}
+                                <select name="religion" class="form-control">
+                                    @foreach($selects['religion'] as $religion)
+                                        <option value="{{ $religion }}" >{{ trans('profile.'.$religion) }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="form-group col-md-4">
                                 {!! Form::label('finance_income', 'Доход') !!}
-                                {!! Form::select('finance_income', $selects['finance_income'], '',  ['class' => 'form-control']) !!}
+                                <select name="finance_income" class="form-control">
+                                    @foreach($selects['finance_income'] as $finance_income)
+                                        <option value="{{ $finance_income }}" >{{ trans('profile.'.$finance_income) }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="form-group col-md-4">
                                 {!! Form::label('know_lang', 'Знание языков') !!}
@@ -250,15 +246,27 @@
                             </div>
                             <div class="form-group col-md-4">
                                 {!! Form::label('english_level', 'Знание Английского') !!}
-                                {!! Form::select('english_level', $selects['english_level'], '',  ['class' => 'form-control']) !!}
+                                <select name="english_level" class="form-control">
+                                    @foreach($selects['english_level'] as $english_level)
+                                        <option value="{{ $english_level }}" >{{ trans('profile.'.$english_level) }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="form-group col-md-4">
                                 {!! Form::label('smoke', 'Отношение к курению') !!}
-                                {!! Form::select('smoke', $selects['smoke'], '',  ['class' => 'form-control']) !!}
+                                <select name="smoke" class="form-control">
+                                    @foreach($selects['smoke'] as $smoke)
+                                        <option value="{{ $smoke }}" >{{ trans('profile.'.$smoke) }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="form-group col-md-4">
-                                {!! Form::label('drink', 'Отношение к алкоголюы') !!}
-                                {!! Form::select('drink', $selects['drink'], '',  ['class' => 'form-control']) !!}
+                                {!! Form::label('drink', 'Отношение к алкоголю') !!}
+                                <select name="drink" class="form-control">
+                                    @foreach($selects['drink'] as $drink)
+                                        <option value="{{ $drink }}" >{{ trans('profile.'.$drink) }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="form-group col-md-12">
                                 {!! Form::label('about', 'О девушке ') !!}
@@ -306,7 +314,7 @@
                                     <select name="l_horoscope_id" id="l_horoscope_id" class="form-control">
                                         <option value="---">---</option>
                                         @foreach($zodiac_list as $key=>$zodiac)
-                                                <option value="{!! $key !!}">{!! $zodiac !!}</option>
+                                                <option value="{!! $key !!}">{{ trans('horoscope.'.$zodiac) }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -322,13 +330,13 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="passno">№ паспорта<span class="red">*</span></label>
-                                    {!! Form::text('passno', '', ['class' => 'form-control','required' => 'required']) !!}
+                                    {!! Form::text('passno', '', ['class' => 'form-control']) !!}
                                 </div>
 
                                 <div class="form-group">
                                     <div class="col-md-4" style="padding-left: 0;">
                                         <label for="b_year">Год выдачи паспорта<span class="red">*</span></label>
-                                        <select class="form-control" name="b_year_pasp" required="required" style="    padding: 0;" >
+                                        <select class="form-control" name="b_year_pasp" style="    padding: 0;" >
                                             <option>---</option>
                                             @for($i=date("Y")-100; $i<date("Y"); $i++)
                                                 <option>{!! $i !!}</option>
@@ -337,7 +345,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <label for="b_month" >Месяц<span class="red">*</span></label>
-                                        <select class="form-control" name="b_month_pasp" required="required" style="    padding: 0;">
+                                        <select class="form-control" name="b_month_pasp" style="    padding: 0;">
                                             @for($i=1; $i<13; $i++)
                                                 <option>{!! $i !!}</option>
                                             @endfor
@@ -345,7 +353,7 @@
                                     </div>
                                     <div class="col-md-4" style="padding-right: 0;">
                                         <label for="b_day">День<span class="red">*</span></label>
-                                        <select class="form-control" style="    padding: 0;" required="required" name="b_day_pasp">
+                                        <select class="form-control" style="    padding: 0;" name="b_day_pasp">
                                             @for($i=1; $i<32; $i++)
                                                 <option>{!! $i !!}</option>
                                             @endfor
@@ -355,7 +363,7 @@
                                 </br>
                                 <div class="form-group">
                                     <label for="pass_photo">Фото/Скан паспорта<span class="red">*</span></label>
-                                    <input type="file" class="form-control file" name="pass_photo" value="" required="required"  accept="image/*"><!--disabled="disabled"-->
+                                    <input type="file" class="form-control file" name="pass_photo" value=""  accept="image/*"><!--disabled="disabled"-->
                                 </div>
 
                                 <div class="form-group col-md-12 text-center">
@@ -416,7 +424,7 @@
             $.ajax({
                 type: 'POST',
                 url: '{{ url('/get/states/')  }}',
-                data: {id: $('select[name="county"]').val(), _token: $('input[name="_token"]').val()  },
+                data: {id: $('select[name="country"]').val(), _token: $('input[name="_token"]').val()  },
                 success: function( response ){
                     $('select[name="state"]').empty();
                     for( var i = 0; i < response.length; i++ )
@@ -434,7 +442,7 @@
             refreshRegions();
         });
         $(function() {
-            $('select[name="county"]').on('change', function(){
+            $('select[name="country"]').on('change', function(){
                 $('select[name="state"]').empty();
                 $('select[name="city"]').empty();
                 refreshRegions();

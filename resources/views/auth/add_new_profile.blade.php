@@ -59,7 +59,7 @@
                             <div class="form-group">
                                 {!! Form::label('country', trans('common.country')) !!}
 
-                                <select name="county" class="form-control">
+                                <select name="country" class="form-control">
                                         <option value="0"> {{trans('register.select-country')}} </option>
                                     @foreach($countries as $country)
                                         <option value="{{ $country->id }}"> {{ $country->name }}</option>
@@ -112,7 +112,7 @@
             $('.date-picker').datepicker();
 
 
-            $('select[name="county"]').on('change', function(){
+            $('select[name="country"]').on('change', function(){
 
                 $('select[name="city"]').empty();
 

@@ -96,8 +96,6 @@ class UsersController extends Controller
                 'english_level'     => $this->profile->getEnum('english_level'),
             ];
 
-
-
             return view('client.profile.edit')->with([
                 'user'      => $this->user->find($id),
                 'selects'   => $selects,
@@ -106,6 +104,7 @@ class UsersController extends Controller
             ]);
         } else
             return redirect('/'.\App::getLocale().'/profile/show/'.$id);
+
     }
 
     public function online()
@@ -238,35 +237,21 @@ class UsersController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            //'avatar' => 'required',
             'first_name' => 'required',
             'second_name'  => 'required',
             'email'      => 'required',
         ]);
 
-     //   dump($request->input());
-
         $user = User::find($id);
 
-        if ( $request->file('avatar') ) {
-            if ($request->file('avatar')) {
-                $file = $request->file('avatar');
-                $user_avatar = time().'-'.$file->getClientOriginalName();
-                $destination = public_path().'/uploads';
-                $file->move($destination, $user_avatar);
-            }
+        if ($request->file('avatar')) {
+            $file = $request->file('avatar');
+            $user_avatar = time() . '-' . $file->getClientOriginalName();
+            $destination = public_path() . '/uploads';
+            $file->move($destination, $user_avatar);
             $user->avatar = $user_avatar;
         }
-/*
- *
-           if ($request->file('avatar')) {
-                $file = $request->file('avatar');
-                $user_avatar = time().'-'.$file->getClientOriginalName();
-                $destination = public_path().'/uploads/girls/avatars';
-                $file->move($destination, $user_avatar);
-            }
- *
- */
+
         $user->first_name = $request->input('first_name');
         $user->last_name  = $request->input('second_name');
         $user->email      = $request->input('email');
@@ -280,8 +265,18 @@ class UsersController extends Controller
         $user->city_id    = $request->input('city');
 
         $user->save();
+
         if( empty((Profile::where('user_id', '=', $id)->first())) ){
+
             $profile = new Profile();
+
+            if($user->role_id == 5){
+                $profile->gender   = "female";
+            }elseif($user->role_id == 4){
+                $profile->gender   = "male";
+            }else{
+                $profile->gender   = "---";
+            }
             $profile->user_id   = $id;
             $profile->birthday   = new \DateTime($request->input('birthday'));  //check age new \DateTime($request->input('birthday'));
             $profile->height    = $request->input('height');

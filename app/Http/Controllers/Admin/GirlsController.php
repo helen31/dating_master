@@ -75,7 +75,7 @@ class GirlsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create() /* Проверил */
     {
         $selects = [
             'gender'    => $this->profile->getEnum('gender'),
@@ -93,7 +93,6 @@ class GirlsController extends Controller
             'english_level' => $this->profile->getEnum('english_level'),
         ];
         $countries = Country::orderBy('name')->get();
-        //$countries = Country::all();
 
         return view('admin.profile.girls.create')->with([
             'heading'   => 'Добавить девушку',
@@ -112,6 +111,8 @@ class GirlsController extends Controller
      */
     public function store(Request $request)
     {
+        /* Валидация */
+        /*
         $this->validate($request, [
             'first_name'    => 'required|max:255',
             'second_name'   => 'required|max:255',
@@ -132,145 +133,128 @@ class GirlsController extends Controller
             'height'        => 'numeric',
             'weight'        => 'numeric',
         ]);
+        */
+        /* Создание нового пользователя (девушки) */
+
+        $user_avatar = 'empty_girl.png';
+        if ($request->file('avatar')) {
+            $user_avatar = $this->upload($request->file('avatar'));
+        }
+        $this->user->avatar = $user_avatar;
+
+        $this->user->webcam = $request->input('webcam') ? 1 : 0;
+        $this->user->hot = $request->input('hot') ? 1 : 0;
+        $this->user->first_name = $request->input('first_name');
+        $this->user->last_name = $request->input('second_name');
+        $this->user->email = $request->input('email');
+        $this->user->phone = $request->input('phone');
+        $this->user->password = bcrypt($request->input('password'));
+
+        $this->user->country_id = $request->input('country');
+        $this->user->state_id = $request->input('state');
+        $this->user->city_id = $request->input('city');
+
+        $this->user->partner_id = Auth::user()->id; // Партнером является текуший партнер, если это админ, то админ
+        $this->user->role_id = 5; // Роль - женщина
+        $this->user->status_id = 5; // Статус - на модерации
+
+        $this->user->save();
+
+        /* Создание профиля девушки */
+
+        $this->profile->gender    = 'female';
+        $this->profile->user_id = $this->user->id;
+        $this->profile->birthday = $request->input('birthday');
+        $this->profile->height    = $request->input('height');
+        $this->profile->weight    = $request->input('weight');
+        $this->profile->eyes       = $request->input('eyes');
+        $this->profile->hair      = $request->input('hair');
+        $this->profile->education = $request->input('education');
+        $this->profile->kids      = $request->input('kids');
+        $this->profile->kids_live = $request->input('kids_live');
+        $this->profile->want_kids = $request->input('want_kids');
+        $this->profile->family    = $request->input('family');
+        $this->profile->religion  = $request->input('religion');
+        $this->profile->smoke     = $request->input('smoke');
+        $this->profile->drink     = $request->input('drink');
+        $this->profile->occupation = $request->input('occupation');
+        $this->profile->finance_income = $request->input('finance_income');
+        $this->profile->about     = $request->input('about');
+        $this->profile->know_lang = $request->input('know_lang');
+        $this->profile->english_level  = $request->input('english_level');
+        $this->profile->looking = $request->input('looking');
+        $this->profile->l_age_start = $request->input('l_age_start');
+        $this->profile->l_age_stop = $request->input('l_age_stop');
+        $this->profile->l_height_start = $request->input('l_height_start');
+        $this->profile->l_height_stop = $request->input('l_height_stop');
+        $this->profile->l_weight_start = $request->input('l_weight_start');
+        $this->profile->l_weight_stop = $request->input('l_weight_stop');
+        $this->profile->l_horoscope_id = $request->input('l_horoscope_id');
+
+        dump($this->profile);
+        //$this->profile->save();
 
 
-        $check = $this->passport->where('passno', 'like', str_replace(' ', '', $request->input('passno')))->first();
+  /*
+            $user_passport = $this->upload($request->file('pass_photo'));
 
-        if (!$check) {
-            if ($this->age(date('d/m/Y',strtotime($request->input('b_day').'-'.$request->input('b_month').'-'.$request->input('b_year')))) < 18) {
-                \Session::flash('flash_error', 'Девушка младше 18');
-                return redirect(\App::getLocale().'/admin/girl/new');
-            }
-
-            $user_avatar = 'empty_girl.png';
-
-            if ($request->file('avatar')) {
-                $user_avatar = $this->upload($request->file('avatar'));
-            }
-            $user_passoprt = $this->upload($request->file('pass_photo'));
-            /*
-             * Create user with role female/male
-             *
-             */
-
-            $this->user->avatar = $user_avatar;
-            $this->user->webcam = $request->input('webcam') ? 1 : 0;
-            $this->user->hot = $request->input('hot') ? 1 : 0;
-            $this->user->first_name = $request->input('first_name');
-            $this->user->last_name = $request->input('second_name');
-            $this->user->email = $request->input('email');
-            $this->user->phone = $request->input('phone');
-            $this->user->password = bcrypt($request->input('password'));
-
-            $this->user->country_id = $request->input('country');
-            $this->user->state_id = $request->input('state');
-            $this->user->city_id = $request->input('city');
-
-            $this->user->partner_id = Auth::user()->id;
-
-            $gender = $request->input('gender');
-
-            /* Проверка пола учасника */
-            if ($gender == 'female') {
-                $this->user->role_id = 5;
-                $this->user->status_id = 5;
-            } else {
-                $this->user->role_id = 4;
-                $this->user->status_id = 1;
-            }
-
-            $this->user->save();
+/*
 
             /*
              *  Add girl passport
              */
 
-            $this->passport->user_id = $this->user->id;
-            $this->passport->cover=$user_passoprt;
+ /*           $this->passport->user_id = $this->user->id;
+            $this->passport->cover=$user_passport;
             $this->passport->date = str_replace(' ', '', date('Y-m-d',strtotime($request->input('b_day_pasp').'-'.$request->input('b_month_pasp').'-'.$request->input('b_year_pasp'))));
             $this->passport->passno = str_replace(' ', '', $request->input('passno'));
-            $this->passport->save();
+            //$this->passport->save();
 
             /*
              * Create girl profile
              */
-            if($request->file("profile_photo")!==null){
+ /*
+            if($request->file("profile_photo")!=null){
                 foreach ($request->file("profile_photo") as $p_image){
                     $profile_image = new profileImages();
-                    $profile_image->url=$this->upload(($p_image));
-                    $profile_image->user_id=$this->user->id;
-                    $profile_image->save();
+                    $profile_image->url = $this->upload($p_image);
+                    $profile_image->user_id = $this->user->id;
+                    //$profile_image->save();
                 }
             }
 
             /*
             * Create girl profile
             */
-            $this->profile->user_id = $this->user->id;
-            $this->profile->birthday = date('Y-m-d',strtotime($request->input('b_day').'-'.$request->input('b_month').'-'.$request->input('b_year')));
-            $this->profile->gender    = $request->input('gender');
-            $this->profile->height    = $request->input('height');
-            $this->profile->weight    = $request->input('weight');
-            $this->profile->eyes       = $request->input('eyes');
-            $this->profile->hair      = $request->input('hair');
-            $this->profile->education = $request->input('education');
-            $this->profile->kids      = $request->input('kids');
-            $this->profile->want_kids = $request->input('want_kids');
-            $this->profile->family    = $request->input('family');
-            $this->profile->religion  = $request->input('religion');
-            $this->profile->smoke     = $request->input('smoke');
-            $this->profile->drink     = $request->input('drink');
-            $this->profile->occupation= $request->input('occupation');
-            $this->profile->kids_live = $request->input('kids_live');
-            $this->profile->finance_income =$request->input('finance_income');
-            $this->profile->about = $request->input('about');
-            $this->profile->know_lang=$request->input('know_lang');
-            $this->profile->english_level=$request->input('english_level');
-            $this->profile->looking = $request->input('looking');
-            $this->profile->l_age_start=$request->input('l_age_start');
-            $this->profile->l_age_stop=$request->input('l_age_stop');
-            $this->profile->l_height_start=$request->input('l_height_start');
-            $this->profile->l_height_stop=$request->input('l_height_stop');
-            $this->profile->l_weight_start=$request->input('l_weight_start');
-            $this->profile->l_weight_stop=$request->input('l_weight_stop');
-            $this->profile->l_horoscope_id=$request->input('l_horoscope_id');
 
-            $this->profile->save();
+   /*
 
             /* Passport multi add photos */
-            if($this->passport_photos){
+  /*          if($this->passport_photos){
                 foreach ($this->passport_photos as $p) {
                     $media = new ProfileMedia();
                     $media->media_key = 'passport';
                     $media->media_value = $p;
-                    $this->profile->media()->save($media);
+                    //$this->profile->media()->save($media);
                 }
             }
 
             //@todo Загрузка 5 фотографий вкладка.
         }
-
+*/
         \Session::flash('flash_success', 'Девушка успешно добавлена');
 
-        return redirect('/admin/girls');
+        //return redirect()->back();
+
+
     }
+
     public function changePartner(Request $request){
         $request->input('girl_id');
         $user = User::find($request->input('girl_id'));
         $user->partner_id=$request->input('partner_list');
         $user->save();
         return redirect()->back();
-    }
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        return view('admin.profile.girls.girl');
     }
 
     /**
@@ -392,7 +376,7 @@ class GirlsController extends Controller
         $profile->birthday = date('Y-m-d',strtotime($request->input('b_day').'-'.$request->input('b_month').'-'.$request->input('b_year')));
         $user->save();
         /* profile DATA */
-        //dd($request->file("profile_photo"));
+
         if($request->file("profile_photo")[0]!=null){
             foreach ($request->file("profile_photo") as $p_image){
                 $profile_image = new profileImages();

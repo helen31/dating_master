@@ -122,10 +122,10 @@
 
     jQuery(window).on('load', function(){
 
-        get_states( $('select[name="county"]').val() );
+        get_states( $('select[name="country"]').val() );
 
     });
-    $('select[name="county"]').on('change', function(){
+    $('select[name="country"]').on('change', function(){
 
         $('select[name="city"]').empty();
 

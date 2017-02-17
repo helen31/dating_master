@@ -28,6 +28,8 @@ final class ZodiacSignService
         51  => 'Pisces',
         20  => 'Aquarius',
         0   => 'Capricorn',
+
+
     ];
 
 

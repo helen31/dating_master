@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Social;
 use App\Models\User;
+use App\Models\Profile;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
+use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use Validator;
 
@@ -68,6 +70,8 @@ class AuthController extends Controller
 
     /**
      * Create a new user instance after a valid registration.
+     * Создает нового пользователя после успешной регистрации (в таблице users)
+     * Создает профиль пользователя (в таблице profiles) и инициализирует его начальными данными
      *
      * @param array $data
      *
@@ -75,7 +79,7 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = new User([
             'first_name' => $data['first_name'],
             'last_name'  => $data['last_name'],
             'email'      => $data['email'],
@@ -83,6 +87,25 @@ class AuthController extends Controller
             'role_id'    => $data['gender'],
             'partner_id' => 1,
         ]);
+        $user->save();
+
+        $profile = new Profile();
+
+        $profile->user_id = $user->id;
+        if($user->role_id == 4){
+            $profile->gender = 'male';
+        }elseif($user->role_id == 5){
+            $profile->gender = 'female';
+        }else{
+            $profile->gender = '---';
+        }
+        $profile->birthday = '1900-01-01';
+        $profile->l_age_start = 18;
+        $profile->l_age_stop = 65;
+
+        $profile->save();
+
+        return $user;
     }
 
     /** @todo Sender  */
@@ -175,6 +198,22 @@ class AuthController extends Controller
             $social = new Social();
             $social->provider = $provider;
             $social->social_id = $user->getId();
+
+            $profile = new Profile();
+            $profile->user_id = $usr->id;
+            if($usr->role_id == 4){
+                $profile->gender = 'male';
+            }elseif($usr->role_id == 5){
+                $profile->gender = 'female';
+            }else{
+                $profile->gender = '---';
+            }
+            $profile->birthday = '1900-01-01';
+            $profile->l_age_start = 18;
+            $profile->l_age_stop = 65;
+
+            $profile->save();
+
 
             $usr->social()->save($social);
 

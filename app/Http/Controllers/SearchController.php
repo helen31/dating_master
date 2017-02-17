@@ -83,8 +83,8 @@ class SearchController extends Controller
 
 
             ->where(function ($query) use ($profile_attrs){
-                if (isset($profile_attrs['county']) && $profile_attrs['county']!='false'){
-                    $query->where('country_id', '=', $profile_attrs['county']);
+                if (isset($profile_attrs['country']) && $profile_attrs['country']!='false'){
+                    $query->where('country_id', '=', $profile_attrs['country']);
                 }
             })
             ->where(function ($query) use ($profile_attrs){

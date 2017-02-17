@@ -106,8 +106,7 @@
                     <div class="row info">
                         <div class="col-md-6"><strong>{{ trans('profile.want_kids') }}:</strong> {{ trans('profile.'.$u->want_kids) }}</div>
                         <div class="col-md-6"><strong>{{ trans('profile.family') }}:</strong>
-                            {{ trans('profile.'.($u->gender == 'male' || $u->gender == 'female') ?
-                             trans('profile.'.$u->family.'_'.$u->gender) : $u->family) }}</div>
+                            {{ ($u->family != '---') ? trans('profile.'.$u->family.'_'.$u->gender) : '---' }}</div>
                     </div>
                     <div class="row info">
                         <div class="col-md-6"><strong>{{ trans('profile.smoke') }}:</strong> {{ trans('profile.'.$u->smoke) }}</div>

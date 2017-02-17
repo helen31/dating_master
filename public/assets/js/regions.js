@@ -48,6 +48,6 @@ function get_states( $id )
 
 $(window).on('load', function(){
 
-    get_states( $('select[name="county"]').val() );
+    get_states( $('select[name="country"]').val() );
 
 });

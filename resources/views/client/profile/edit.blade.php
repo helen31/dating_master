@@ -116,7 +116,7 @@
                                 {!! Form::label('eyes', trans('profile.eyes') ) !!}
                                 <select name="eyes" class="form-control">
                                     @foreach($selects['eyes'] as $eyes)
-                                        <option value="{{ $eyes }}" {{ ($eyes == $user->profile->eyes)?'selected':'' }}>{{ trans('profile.'.$eyes) }}</option>
+                                        <option value="{{ $eyes }}" {{ (!empty($user->profile->eyes) && $eyes == $user->profile->eyes)?'selected':'' }}>{{ trans('profile.'.$eyes) }}</option>
                                     @endforeach
                                 </select>
 			                </div>
@@ -124,7 +124,7 @@
                                 {!! Form::label('hair', trans('profile.hair') ) !!}
                                 <select name="hair" class="form-control">
                                     @foreach($selects['hair'] as $hair)
-                                        <option value="{{ $hair }}" {{ ($hair == $user->profile->hair)?'selected':'' }}>{{ trans('profile.'.$hair) }}</option>
+                                        <option value="{{ $hair }}" {{ (!empty($user->profile->hair) && $hair == $user->profile->hair)?'selected':'' }}>{{ trans('profile.'.$hair) }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -132,7 +132,7 @@
                                 {!! Form::label('education', trans('profile.education') ) !!}
                                 <select name="education" class="form-control">
                                     @foreach($selects['education'] as $education)
-                                        <option value="{{ $education }}" {{ ($education == $user->profile->education)?'selected':'' }}>{{ trans('profile.'.$education) }}</option>
+                                        <option value="{{ $education }}" {{ (!empty($user->profile->education) && $education == $user->profile->education)?'selected':'' }}>{{ trans('profile.'.$education) }}</option>
                                     @endforeach
                                 </select>
 			                </div>
@@ -144,7 +144,7 @@
                                 {!! Form::label('finance_income', trans('profile.finance_income') ) !!}
                                 <select name="finance_income" class="form-control">
                                     @foreach($selects['finance_income'] as $finance_income)
-                                        <option value="{{ $finance_income }}" {{ ($finance_income == $user->profile->finance_income)?'selected':'' }}>{{ trans('profile.'.$finance_income) }}</option>
+                                        <option value="{{ $finance_income }}" {{ (!empty($user->profile->finance_income) && $finance_income == $user->profile->finance_income)?'selected':'' }}>{{ trans('profile.'.$finance_income) }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -154,10 +154,10 @@
                                 <select name="family" class="form-control">
                                     @foreach($selects['family'] as $family)
                                         @if($family == '---')
-                                            <option value="{{ $family }}" {{ ($family == $user->profile->family)?'selected':'' }}>{{ trans('profile.'.$family) }}</option>
+                                            <option value="{{ $family }}" {{ (!empty($user->profile->family) && $family == $user->profile->family)?'selected':'' }}>{{ trans('profile.'.$family) }}</option>
                                         @else
-                                            <option value="{{ $family }}" {{ ($family == $user->profile->family)?'selected':'' }}>
-                                            {{ ($user->profile->gender == 'male' || $user->profile->gender == 'female') ? trans('profile.'.$family.'_'.$user->profile->gender) : $family }}</option>
+                                            <option value="{{ $family }}" {{ (!empty($user->profile->family) && $family == $user->profile->family)?'selected':'' }}>
+                                            {{ (!empty($user->profile->gender) && ($user->profile->gender == 'male' || $user->profile->gender == 'female')) ? trans('profile.'.$family.'_'.$user->profile->gender) : $family }}</option>
                                         @endif
                                     @endforeach
                                 </select>
@@ -166,7 +166,7 @@
                                 {!! Form::label('kids', trans('profile.kids') ) !!}
                                 <select name="kids" class="form-control">
                                     @foreach($selects['kids'] as $kids)
-                                        <option value="{{ $kids }}" {{ ($kids == $user->profile->kids)?'selected':'' }}>{{ trans('profile.'.$kids) }}</option>
+                                        <option value="{{ $kids }}" {{ (!empty($user->profile->kids) && $kids == $user->profile->kids)?'selected':'' }}>{{ trans('profile.'.$kids) }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -174,7 +174,7 @@
                                 {!! Form::label('kids_live', trans('profile.kids_live') ) !!}
                                 <select name="kids_live" class="form-control">
                                     @foreach($selects['kids_live'] as $kids_live)
-                                        <option value="{{ $kids_live }}" {{ ($kids_live == $user->profile->kids_live)?'selected':'' }}>{{ trans('profile.'.$kids_live) }}</option>
+                                        <option value="{{ $kids_live }}" {{ (!empty($user->profile->kids_live) && $kids_live == $user->profile->kids_live)?'selected':'' }}>{{ trans('profile.'.$kids_live) }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -182,7 +182,7 @@
                                 {!! Form::label('want_kids', trans('profile.want_kids') ) !!}
                                 <select name="want_kids" class="form-control">
                                     @foreach($selects['want_kids'] as $want_kids)
-                                        <option value="{{ $want_kids }}" {{ ($want_kids == $user->profile->want_kids)?'selected':'' }}>{{ trans('profile.'.$want_kids) }}</option>
+                                        <option value="{{ $want_kids }}" {{ (!empty($user->profile->want_kids) && $want_kids == $user->profile->want_kids)?'selected':'' }}>{{ trans('profile.'.$want_kids) }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -191,7 +191,7 @@
                                 {!! Form::label('english_level', trans('profile.english_level') ) !!}
                                 <select name="english_level" class="form-control">
                                     @foreach($selects['english_level'] as $english_level)
-                                        <option value="{{ $english_level }}" {{ ($english_level == $user->profile->english_level)?'selected':'' }}>{{ trans('profile.'.$english_level) }}</option>
+                                        <option value="{{ $english_level }}" {{ (!empty($user->profile->english_level) && $english_level == $user->profile->english_level)?'selected':'' }}>{{ trans('profile.'.$english_level) }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -203,7 +203,7 @@
                                 {!! Form::label('religion', trans('profile.religion') ) !!}
                                 <select name="religion" class="form-control">
                                     @foreach($selects['religion'] as $religion)
-                                        <option value="{{ $religion }}" {{ ($religion == $user->profile->religion)?'selected':'' }}>{{ trans('profile.'.$religion) }}</option>
+                                        <option value="{{ $religion }}" {{ (!empty($user->profile->religion) && $religion == $user->profile->religion)?'selected':'' }}>{{ trans('profile.'.$religion) }}</option>
                                     @endforeach
                                 </select>
 			                </div>
@@ -211,7 +211,7 @@
                                 {!! Form::label('smoke', trans('profile.smoke') ) !!}
                                 <select name="smoke" class="form-control">
                                     @foreach($selects['smoke'] as $smoke)
-                                        <option value="{{ $smoke }}" {{ ($smoke == $user->profile->smoke)?'selected':'' }}>{{ trans('profile.'.$smoke) }}</option>
+                                        <option value="{{ $smoke }}" {{ (!empty($user->profile->smoke) && $smoke == $user->profile->smoke)?'selected':'' }}>{{ trans('profile.'.$smoke) }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -219,7 +219,7 @@
                                 {!! Form::label('drink', trans('profile.drink') ) !!}
                                 <select name="drink" class="form-control">
                                     @foreach($selects['drink'] as $drink)
-                                        <option value="{{ $drink }}" {{ ($drink == $user->profile->drink)?'selected':'' }}>{{ trans('profile.'.$drink) }}</option>
+                                        <option value="{{ $drink }}" {{ (!empty($user->profile->drink) && $drink == $user->profile->drink)?'selected':'' }}>{{ trans('profile.'.$drink) }}</option>
                                     @endforeach
                                 </select>
                             </div>
