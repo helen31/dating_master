@@ -20,6 +20,10 @@ return [
     'gender'                => 'Gender',
     'password'              => 'Password',
     'password_confirmation' => 'Confirm password',
+    'passport_data'         => 'Passport data',
+    'passno'                => 'Passport Number',
+    'pass_photo'            => 'Passport Photo',
+    'pass_date'             => 'Date of issue',
 
     /* -- Other Profile Labels -- */
 
@@ -83,6 +87,7 @@ return [
     'company'   => 'Company',
     'info'  => 'Info',
     'contacts'  => 'Contacts',
+    'required_fields' => 'Required fields',
 
     /* -- Smiles -- */
 

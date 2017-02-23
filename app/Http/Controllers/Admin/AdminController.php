@@ -25,46 +25,89 @@ class AdminController extends Controller
         return view('admin.auth.login');
     }
 
-    public function dashboard()
-    {//@todo refactor this shit
+    public function dashboard() /* Готово */
+    {
+
         $heading = 'Управление';
-        $girls = User::where('role_id', '=', '5')->get();
 
-        $active = User::where('role_id', '=', '5')
-                      ->where('status_id', '=', 1)
-                      ->get();
-        $deactive = User::where('role_id', '=', '5')
-                        ->where('status_id', '=', 2)
-                        ->get();
+        if(Auth::user()->hasRole('Owner') || Auth::user()->hasRole('Moder')) {
+            $girls = User::where('role_id', '=', '5')->get();
 
-        $dismiss = User::where('role_id', '=', '5')
-                        ->where('status_id', '=', 3)
-                        ->get();
+            $active = User::where('role_id', '=', '5')
+                ->where('status_id', '=', 1)
+                ->get();
+            $deactive = User::where('role_id', '=', '5')
+                ->where('status_id', '=', 2)
+                ->get();
 
-        $deleted = User::where('role_id', '=', '5')
-                    ->where('status_id', '=', 4)
-                    ->get();
+            $dismiss = User::where('role_id', '=', '5')
+                ->where('status_id', '=', 3)
+                ->get();
 
-        $moder = User::where('role_id', '=', '5')
-                        ->where('status_id', '=', 5)
-                        ->get();
+            $deleted = User::where('role_id', '=', '5')
+                ->where('status_id', '=', 4)
+                ->get();
 
-        $partner = User::where('role_id', '=', '3')->get();
-        $moderator = User::where('role_id', '=', '2')->get();
-        $man = User::where('role_id', '=', '4')->get();
+            $moderation = User::where('role_id', '=', '5')
+                ->where('status_id', '=', 5)
+                ->get();
 
-        return view('admin.dashboard')->with([
-            'heading'       => $heading,
-            'girls'         => $girls,
-            'active'        => $active,
-            'deactive'      => $deactive,
-            'dismiss'       => $dismiss,
-            'deleted'       => $deleted,
-            'moderation'    => $moder,
-            'partner'       => $partner,
-            'moderator'     => $moderator,
-            'man'           => $man,
-        ]);
+            $partner = User::where('role_id', '=', '3')->get();
+            $moderator = User::where('role_id', '=', '2')->get();
+            $man = User::where('role_id', '=', '4')->get();
+
+            return view('admin.dashboard')->with([
+                'heading' => $heading,
+                'girls' => $girls,
+                'active' => $active,
+                'deactive' => $deactive,
+                'dismiss' => $dismiss,
+                'deleted' => $deleted,
+                'moderation' => $moderation,
+                'partner' => $partner,
+                'moderator' => $moderator,
+                'man' => $man,
+            ]);
+        }
+        if(Auth::user()->hasRole('Partner')){
+            $girls = User::where('role_id', '=', '5')
+                ->where('partner_id', '=', Auth::user()->id)
+                ->get();
+
+            $active = User::where('role_id', '=', '5')
+                ->where('partner_id', '=', Auth::user()->id)
+                ->where('status_id', '=', 1)
+                ->get();
+            $deactive = User::where('role_id', '=', '5')
+                ->where('partner_id', '=', Auth::user()->id)
+                ->where('status_id', '=', 2)
+                ->get();
+
+            $dismiss = User::where('role_id', '=', '5')
+                ->where('partner_id', '=', Auth::user()->id)
+                ->where('status_id', '=', 3)
+                ->get();
+
+            $deleted = User::where('role_id', '=', '5')
+                ->where('partner_id', '=', Auth::user()->id)
+                ->where('status_id', '=', 4)
+                ->get();
+
+            $moderation = User::where('role_id', '=', '5')
+                ->where('partner_id', '=', Auth::user()->id)
+                ->where('status_id', '=', 5)
+                ->get();
+
+            return view('admin.dashboard')->with([
+                'heading' => $heading,
+                'girls' => $girls,
+                'active' => $active,
+                'deactive' => $deactive,
+                'dismiss' => $dismiss,
+                'deleted' => $deleted,
+                'moderation' => $moderation,
+            ]);
+        }
     }
 
     public function all_users()

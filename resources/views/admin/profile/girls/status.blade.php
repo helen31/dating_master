@@ -48,14 +48,19 @@
                         </td>
                         <td> {{ $girl->last_login }} </td>
                         <td>
-                            <a class="btn btn-success btn-xs"><i class="fa fa-check"></i></a>
-                            <a href="{{ url('admin/girl/edit/'.$girl->id) }}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
-                            <a class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
+                            @if($girl->status->id == 4)<!-- Если анкета удалена, отображается только кнопка "Восстановить" -->
+                                <a href="{{ url('/admin/girl/restore/'.$girl->id) }}" class="btn btn-danger btn-xs"><i class="fa fa-chevron-circle-up"></i>  Восстановить</a>
+                            @else <!-- Если анкета не удалена - следующий набор кнопок -->
+                                <a href="{{ url('/profile/show/'. $girl->id ) }}" class="btn btn-success btn-xs"><i class="fa fa-check"></i></a>
+                                <a href="{{ url('/admin/girl/edit/'.$girl->id) }}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
+                                <a href="{{ url('/admin/girl/drop/'.$girl->id) }}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i></a>
+                            @endif
                         </td>
                     </tr>
                 @endforeach
                 </tbody>
             </table>
+            {!! $girls->render() !!}
         </div>
     </section>
 @stop

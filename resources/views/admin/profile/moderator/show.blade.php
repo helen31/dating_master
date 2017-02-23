@@ -11,23 +11,27 @@
         </header>
         <div class="panel-body">
             <div class="col-md-6">
-                <img src="{{ url( '/uploads/admins/'. $user->avatar ) }}">
+                <img class="img-responsive" src="{{ url( '/uploads/admins/'. $user->avatar ) }}">
             </div>
             <div class="col-md-6">
                 <div class="row">
-                    Имя / фамилия: <b>{{ $user->first_name }} {{ $user->last_name }}</b>
+                    <b>Имя / фамилия:</b> {{ $user->first_name }} {{ $user->last_name }}
                 </div>
 
                 <div class="row">
-                    Адрес:  <b>{{ $user->address }}</b>
+                    <b>Телефон:</b>  {{ $user->phone }}
                 </div>
 
                 <div class="row">
-                    Контакты:  <b>{{ $user->contacts }}</b>
+                    <b>Адрес:</b>  {{ $user->address }}
                 </div>
 
                 <div class="row">
-                    Информация:  <b>{{ $user->info }}</b>
+                    <b>Контакты:</b>  {{ $user->contacts }}
+                </div>
+
+                <div class="row">
+                    <b>Информация:</b>  {{ $user->info }}
                 </div>
             </div>
         </div>

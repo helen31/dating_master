@@ -5,7 +5,7 @@ return[
 	'finance'		=> 'Финансы',
 	'statistics'	=> 'Статистика',
 	'profiles'		=> 'Профили',
-	'partners'		=> 'Патнеры',
+	'partners'		=> 'Партнеры',
 	'allPartners'	=> 'Все партнеры',
 	'addPartner'	=> 'Добавить партнера',
 	'partnersStatistics'	=> 'Статистика по партнерам',

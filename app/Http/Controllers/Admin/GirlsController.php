@@ -11,7 +11,6 @@ use App\Models\ProfileMedia;
 use App\Models\State;
 use App\Models\Status;
 use App\Models\User;
-use App\Models\Why;
 use App\Models\profileImages;
 
 use App\Models\Album;
@@ -20,10 +19,10 @@ use App\Models\Images;
 use App\Services\ZodiacSignService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
-
-//@todo refactor this shit
-//@todo check email before add
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Session;
 
 class GirlsController extends Controller
 {
@@ -55,19 +54,26 @@ class GirlsController extends Controller
     {
         if (Auth::user()->hasRole('Owner') || Auth::user()->hasRole('Moder')) {
             $partners = User::where('role_id', '=', '3')->get();
-            $girls = User::where('role_id', '=', '5')->get();
-        } elseif (Auth::user()->hasRole('Partner')) {
+            $girls = User::where('role_id', '=', '5')->paginate(15);
+
+            return view('admin.profile.girls.index')->with([
+                'heading' => 'Все девушки',
+                'girls'   => $girls,
+                'partners'=> $partners,
+            ]);
+        }elseif (Auth::user()->hasRole('Partner')) {
 
             $girls = User::where('role_id', '=', '5')
                                 ->where('partner_id', '=', Auth::user()->id)
-                                ->get();
-        }
+                                ->paginate(15);
 
-        return view('admin.profile.girls.index')->with([
-            'heading' => 'Все девушки',
-            'girls'   => $girls,
-            'partners'=> $partners,
-        ]);
+            return view('admin.profile.girls.index')->with([
+                'heading' => 'Все девушки',
+                'girls'   => $girls
+            ]);
+        }else{
+            abort(404);
+        }
     }
 
     /**
@@ -75,7 +81,7 @@ class GirlsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() /* Проверил */
+    public function create()
     {
         $selects = [
             'gender'    => $this->profile->getEnum('gender'),
@@ -109,35 +115,53 @@ class GirlsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        /* Валидация */
-        /*
+    public function store(Request $request){
+
+        /* Стандартная валидация полей */
+
         $this->validate($request, [
             'first_name'    => 'required|max:255',
             'second_name'   => 'required|max:255',
-            'b_year'        => 'required',
-            'b_month'       => 'required',
-            'b_day'         => 'required',
-            'email'         => 'required|max:128',
-            'phone'         => 'required|max:20',
+            'birthday'      => 'required',
+            'email'         => 'required|max:128|unique:users',
+            'phone'         => 'required|max:30',
             'password'      => 'required',
-            'country'        => 'required',
+            'country'       => 'required',
             'state'         => 'required',
             'city'          => 'required',
             'passno'        => 'required',
+            'pass_date'     => 'required',
             'pass_photo'    => 'required',
-            'b_year_pasp'        => 'required',
-            'b_month_pasp'       => 'required',
-            'b_day_pasp'         => 'required',
             'height'        => 'numeric',
             'weight'        => 'numeric',
+            'l_age_start'   => 'numeric',
+            'l_age_stop'    => 'numeric',
+            'l_height_start' => 'numeric',
+            'l_height_stop'  => 'numeric',
+            'l_weight_start' => 'numeric',
+            'l_weight_stop'  => 'numeric',
         ]);
-        */
-        /* Создание нового пользователя (девушки) */
+
+        /* Проверка возраста девушки - больше 18 лет */
+
+        if($this->age($request->input('birthday')) < 18 ){
+            \Session::flash('flash_error', 'Девушка моложе 18 лет');
+            return redirect()->back();
+        };
+
+        /* Проверка количества фото профиля - не больше 10 штук */
+
+        if($request->hasFile("profile_photo")){
+            if(count($request->file("profile_photo")) > 10){
+                \Session::flash('flash_error', 'Количество загруженных фото должно быть не больше 10');
+                return redirect()->back();
+            }
+        }
+
+        /* Создание нового пользователя (девушки) - таблица users */
 
         $user_avatar = 'empty_girl.png';
-        if ($request->file('avatar')) {
+        if ($request->hasFile('avatar')) {
             $user_avatar = $this->upload($request->file('avatar'));
         }
         $this->user->avatar = $user_avatar;
@@ -160,10 +184,11 @@ class GirlsController extends Controller
 
         $this->user->save();
 
-        /* Создание профиля девушки */
+        /* Создание профиля девушки  - таблица profile */
 
-        $this->profile->gender    = 'female';
+
         $this->profile->user_id = $this->user->id;
+        $this->profile->gender    = 'female';
         $this->profile->birthday = $request->input('birthday');
         $this->profile->height    = $request->input('height');
         $this->profile->weight    = $request->input('weight');
@@ -191,61 +216,35 @@ class GirlsController extends Controller
         $this->profile->l_weight_stop = $request->input('l_weight_stop');
         $this->profile->l_horoscope_id = $request->input('l_horoscope_id');
 
-        dump($this->profile);
-        //$this->profile->save();
+        $this->profile->save();
 
+        /* Сохранение паспортных данных девушки - таблица passport */
 
-  /*
+        $this->passport->user_id = $this->user->id;
+        $this->passport->passno = str_replace(' ', '', $request->input('passno'));
+        $this->passport->date = $request->input('pass_date');
+
+        if($request->hasFile('pass_photo')){
             $user_passport = $this->upload($request->file('pass_photo'));
-
-/*
-
-            /*
-             *  Add girl passport
-             */
-
- /*           $this->passport->user_id = $this->user->id;
             $this->passport->cover=$user_passport;
-            $this->passport->date = str_replace(' ', '', date('Y-m-d',strtotime($request->input('b_day_pasp').'-'.$request->input('b_month_pasp').'-'.$request->input('b_year_pasp'))));
-            $this->passport->passno = str_replace(' ', '', $request->input('passno'));
-            //$this->passport->save();
-
-            /*
-             * Create girl profile
-             */
- /*
-            if($request->file("profile_photo")!=null){
-                foreach ($request->file("profile_photo") as $p_image){
-                    $profile_image = new profileImages();
-                    $profile_image->url = $this->upload($p_image);
-                    $profile_image->user_id = $this->user->id;
-                    //$profile_image->save();
-                }
-            }
-
-            /*
-            * Create girl profile
-            */
-
-   /*
-
-            /* Passport multi add photos */
-  /*          if($this->passport_photos){
-                foreach ($this->passport_photos as $p) {
-                    $media = new ProfileMedia();
-                    $media->media_key = 'passport';
-                    $media->media_value = $p;
-                    //$this->profile->media()->save($media);
-                }
-            }
-
-            //@todo Загрузка 5 фотографий вкладка.
         }
-*/
-        \Session::flash('flash_success', 'Девушка успешно добавлена');
+        $this->passport->save();
 
-        //return redirect()->back();
+        /* Сохранение фотографий профиля девушки - максимум 10 - таблица profile_images */
 
+        if($request->hasFile('profile_photo')){
+            $profile_photos = $request->file('profile_photo');
+            foreach($profile_photos as $photo){
+                $profile_image = new profileImages();
+                $profile_image->url = $this->upload($photo);
+                $profile_image->user_id = $this->user->id;
+                $profile_image->save();
+            }
+        }
+
+        \Session::flash('flash_success', trans('flash.profile_add_success'));
+
+        return redirect('admin/girls/');
 
     }
 
@@ -285,12 +284,9 @@ class GirlsController extends Controller
             'english_level' => $this->profile->getEnum('english_level'),
         ];
         $countries = Country::orderBy('name')->get();
-
         $states = State::all();
-
+        $passport = Passport::where('user_id', '=', $id)->first();
         $statuses = Status::all();
-
-        $why = Why::where('uid', '=', $id)->select(['meta_key', 'meta_value'])->get();
 
         return view('admin.profile.girls.edit')->with([
             'heading'   => 'Редактировать профиль',
@@ -298,8 +294,8 @@ class GirlsController extends Controller
             'selects'   => $selects,
             'countries' => $countries,
             'states'    => $states,
+            'passport'  => $passport,
             'statuses'  => $statuses,
-            'why'       => $why,
             'albums'    => (new Album)->getAlbums($id),
             'zodiac_list'=>ZodiacSignService::getAll(),
             'profile_images' => $profile_images,
@@ -307,85 +303,77 @@ class GirlsController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Обновление профиля девушки
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int                      $id
-     *
-     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //@todo Refactor this shit (Single responsibility) lol
+
+        /* Стандартная валидация полей */
+
+        $this->validate($request, [
+            'first_name'    => 'required|max:255',
+            'second_name'   => 'required|max:255',
+            'birthday'      => 'required',
+            'country'       => 'required',
+            'state'         => 'required',
+            'city'          => 'required',
+            'height'        => 'numeric',
+            'weight'        => 'numeric',
+            'l_age_start'   => 'numeric',
+            'l_age_stop'    => 'numeric',
+            'l_height_start' => 'numeric',
+            'l_height_stop'  => 'numeric',
+            'l_weight_start' => 'numeric',
+            'l_weight_stop'  => 'numeric',
+        ]);
+
+        /* Создание необходимых для работы объектов */
 
         $user = User::find($id);
         $profile = Profile::where('user_id', '=', $id)->first();
 
+        /* Проверка возраста девушки - больше 18 лет */
+
+        if($this->age($request->input('birthday')) < 18 ){
+            \Session::flash('flash_error', 'Девушка моложе 18 лет');
+            return redirect()->back();
+        };
+
+        /* Обновление данных пользователя (девушки) - таблица users */
+
         $user->webcam = $request->input('webcam') ? 1 : 0;
         $user->hot = $request->input('hot') ? 1 : 0;
-
-        if ( $request->file('avatar')!=null ) {
-            $file = $request->file('avatar');
-            $user_avatar = time().'-'.$file->getClientOriginalName();
-            $destination = public_path().'/uploads';
-            $file->move($destination, $user_avatar);
-            $user->avatar = $user_avatar;
-        }
-/*
-        if ($request->file('avatar')) {
-            $file = $request->file('avatar');
-            $user_avatar = time().'-'.$file->getClientOriginalName();
-            $destination = public_path().'/uploads/girls/avatars';
-            $file->move($destination, $user_avatar);
-            $user->avatar = $user_avatar;
-        }
-
-        if(!$request->allFiles()['pass_photo']){
-            foreach ($request->allFiles()['pass_photo'] as $file) {
-                $pass = time().'-'.$file->getClientOriginalName();
-                $destination = public_path().'/uploads/girls/passports';
-                $file->move($destination, $pass);
-                array_push($this->passport_photos, $pass);
-            }
-        }
-*//*
-        if ($request->file('avatar')) {
-            $user->avatar =  $this->upload($request->file('avatar'));
-        }*/
-        //var_dump($request->allFiles()['pass_photo']);
-/*
-        if(!$request->allFiles()['pass_photo']){
-            foreach ($request->allFiles()['pass_photo'] as $file) {
-                $pass = $this->upload($file);
-                array_push($this->passport_photos, $pass);
-            }
-        }
-*/
-        //$this->user->avatar = $user_avatar; eye
-
         $user->first_name = $request->input('first_name');
         $user->last_name  = $request->input('second_name');
+
+        if ($request->hasFile('avatar')) {
+            $user_avatar = $this->upload($request->file('avatar'));
+            $user->avatar = $user_avatar;
+        }
 
         if($request->input('password') !=null){
             $user->password   = bcrypt($request->input('password'));
         }
+
         $user->country_id = $request->input('country');
         $user->state_id   = $request->input('state');
         $user->city_id    = $request->input('city');
 
-        $profile->birthday = date('Y-m-d',strtotime($request->input('b_day').'-'.$request->input('b_month').'-'.$request->input('b_year')));
-        $user->save();
-        /* profile DATA */
-
-        if($request->file("profile_photo")[0]!=null){
-            foreach ($request->file("profile_photo") as $p_image){
-                $profile_image = new profileImages();
-                $profile_image->url=$this->upload(($p_image));
-                $profile_image->user_id=$id;
-                $profile_image->save();
+        //Статус анкеты и сообщение модератора для приостановленных и отклоненных анкет
+        $user->status_id = $request->input('status');
+        $user->status_message = NULL;
+        if($user->status_id == 2 || $user->status_id == 3){
+            if($request->input('status_message')){
+                $user->status_message = $request->input('status_message');
             }
         }
-        $profile->gender    = $request->input('gender');
+
+        $user->save();
+
+        /* Обновляем данные профиля девушки - таблица profiles */
+
+        $profile->birthday = $request->input('birthday');
         $profile->height    = $request->input('height');
         $profile->weight    = $request->input('weight');
         $profile->eyes       = $request->input('eyes');
@@ -411,74 +399,92 @@ class GirlsController extends Controller
         $profile->l_weight_start=$request->input('l_weight_start');
         $profile->l_weight_stop=$request->input('l_weight_stop');
         $profile->l_horoscope_id=$request->input('l_horoscope_id');
-        /* profile DATA */
+
         $profile->save();
 
+        /* Обновляем фото профиля девушки */
 
-        \Session::flash('flash_success', trans('flash.success_girl_update'));
+        if($request->hasFile('profile_photo')){
+            $profile_photos = $request->file('profile_photo');
+            foreach($profile_photos as $photo){
+                $profile_image = new profileImages();
+                $profile_image->url = $this->upload($photo);
+                $profile_image->user_id = $id;
+                $profile_image->save();
+            }
+        }
+
+        \Session::flash('flash_success', trans('flash.profile_update_success'));
         return redirect()->back();
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Удаление профиля девушки
      *
-     * @param int $id
+     * Так как в модели Users используется SoftDeletes, то запись не удаляется из базы,
+     * а к ней добавляется дата удаления deleted_at
+     * получить такую запись можно только с помощью метода withTrashed()
      *
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $this->user->find($id)->delete();
+        $user = User::withTrashed()->find($id);
+        $user->status_id = 4; //Статус профиля - удален
+        $user->save();
+        $user->delete();
+
+        return redirect('/admin/girls');
+    }
+    /**
+     * Восстановление удаленного профиля девушки
+     *
+     * Так как в модели Users используется SoftDeletes, то запись не удаляется из базы,
+     * а к ней добавляется дата удаления deleted_at
+     * получить такую запись можно только с помощью метода withTrashed()
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function restore($id)
+    {
+        $user = User::withTrashed()->find($id);
+        $user->status_id = 1; //Статус профиля - активный
+        $user->deleted_at = NULL; //Снимаем дату удаления, иначе невозможно будет получить данные профиля
+        $user->save();
 
         return redirect('/admin/girls');
     }
 
+    /**
+     * Получение списка девушек по статусу анкет
+     *
+     * Так как в модели Users используется SoftDeletes, то запись не удаляется из базы,
+     * а к ней добавляется дата удаления deleted_at
+     * получить такую запись можно только с помощью метода withTrashed()
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function getByStatus($status)
     {
         $s = Status::where('name', 'like', '%'.$status.'%')->first();
 
         $girls = []; //without -> role moder -> error -> undefined variable girls on line 335
 
-        if (Auth::user()->hasRole('Owner') || Auth::user()->hasRole('Moder')) {
-            $girls = User::where('role_id', '=', '5')
-                            ->where('status_id', '=', $s->id)
-                            ->get();
-        } elseif (Auth::user()->hasRole('Partner')) {
-            $girls = User::where('role_id', '=', '5')
+            if (Auth::user()->hasRole('Owner') || Auth::user()->hasRole('Moder')) {
+                $girls = User::withTrashed()->where('role_id', '=', '5')
+                    ->where('status_id', '=', $s->id)
+                    ->paginate(15);
+            } elseif (Auth::user()->hasRole('Partner')) {
+                $girls = User::withTrashed()->where('role_id', '=', '5')
                     ->where('partner_id', '=', Auth::user()->id)
                     ->where('status_id', '=', $s->id)
-                    ->get();
-        }
+                    ->paginate(15);
+            }
 
         return view('admin.profile.girls.status')->with([
             'heading' => 'Девушки по статусу анкеты '.$status,
             'girls'   => $girls,
         ]);
-    }
-
-    public function changeStatus(Request $request)
-    {
-        $girl = User::find($request->input('user_id'));
-        $girl->status_id = $request->input('id');
-
-        if (!empty($request->input('why'))) {
-            $why = Why::where('uid', '=', $request->input('user_id'))->
-                        where('meta_key', 'like', '%status_comment%')->get();
-
-            if (empty($why[0])) {
-                $why = new Why();
-                $why->uid = $request->input('user_id');
-                $why->meta_key = 'status_comment';
-                $why->meta_value = $request->input('why');
-                $why->save();
-            } else {
-                Why::where('uid', '=', $request->input('user_id'))
-                     ->where('meta_key', 'like', '%status_comment%')
-                     ->update(['meta_value' => $request->input('why')]);
-            }
-        }
-
-        $girl->save();
     }
 
     /**
@@ -501,10 +507,13 @@ class GirlsController extends Controller
         }
     }
 
-    private function age($bithday)
+    /* Определение возраста девушки
+        Принимает: дату рождения в формате 'Y-m-d'
+        Возвращает: возраст (int)
+     */
+    private function age($birthday)
     {
-        $age = Carbon::now()->diffInYears(Carbon::createFromFormat('d/m/Y', $bithday));
-
+        $age = Carbon::now()->diffInYears(Carbon::createFromFormat('Y-m-d', $birthday));
         return $age;
     }
 

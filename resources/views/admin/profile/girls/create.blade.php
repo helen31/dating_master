@@ -42,6 +42,7 @@
             Добавить новую анкету
         </header>
         <div class="panel-body">
+
             @if (count($errors) > 0)
                 <div class="alert alert-danger">
                     <ul>
@@ -51,6 +52,7 @@
                     </ul>
                 </div>
             @endif
+
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#osn" aria-controls="osn" role="tab" data-toggle="tab" id="open_main">Основная информация профиля</a></li>
@@ -58,7 +60,7 @@
                 <li role="presentation"><a href="#profile_foto" aria-controls="profile_fot" role="tab" data-toggle="tab" id="profile_fo">Фото профиля</a></li>
                 <li role="presentation"><a href="#status" aria-controls="status" role="tab" data-toggle="tab" id="open_partner">Партнерская информация</a></li>
             </ul>
-                {!! Form::open(['url' => 'admin/girl/store', 'class' => 'form', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                {!! Form::open(['url' => 'admin/girl/store', 'class' => 'form', 'method' => 'POST', 'files' => true]) !!}
             <!-- Tab panes -->
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="osn">
@@ -139,12 +141,10 @@
                     </div>
                     <div role="tabpanel" class="tab-pane" id="profile_foto">
                         <div class="col-md-12">
-                            <h3 class="text-center"> Фотографии профиля (макс. 10) </h3>
+                            <h3 class="text-center"> Фотографии профиля (максимально 10 фото) </h3>
                             <div class="form-group col-md-12">
                                 <div class="form-group">
-                                    {!! Form::label(trans('profile_photo')) !!}
-
-                                    <input id="profile_photo" type="file" name="profile_photo[]" multiple="multiple" class="file" accept="image/*">
+                                    <input type="file" name="profile_photo[]" class="file" accept="image/*" multiple>
                                 </div>
                             </div>
                         </div>
@@ -281,32 +281,32 @@
                                 <div class="form-group col-md-4">
                                     <div class="col-md-6">
                                         {!! Form::label('l_age_start', 'Возраст от:') !!}
-                                        {!! Form::number('l_age_start','', ['class' => 'form-control']) !!}
+                                        {!! Form::number('l_age_start', 18, ['class' => 'form-control']) !!}
                                     </div>
 
                                     <div class="col-md-6">
                                         {!! Form::label('l_age_stop', 'До:') !!}
-                                        {!! Form::number('l_age_stop','', ['class' => 'form-control']) !!}
+                                        {!! Form::number('l_age_stop', 99, ['class' => 'form-control']) !!}
                                     </div>
 
                                     <div class="col-md-6">
                                         {!! Form::label('l_height_start', 'Рост (см) от:') !!}
-                                        {!! Form::number('l_height_start','', ['class' => 'form-control']) !!}
+                                        {!! Form::number('l_height_start', 0, ['class' => 'form-control']) !!}
                                     </div>
 
                                     <div class="col-md-6">
                                         {!! Form::label('l_height_stop', 'До:') !!}
-                                        {!! Form::number('l_height_stop','', ['class' => 'form-control']) !!}
+                                        {!! Form::number('l_height_stop', 250, ['class' => 'form-control']) !!}
                                     </div>
 
                                     <div class="col-md-6">
                                         {!! Form::label('l_weight_start', 'Вес (кг) от:') !!}
-                                        {!! Form::number('l_weight_start','', ['class' => 'form-control']) !!}
+                                        {!! Form::number('l_weight_start', 0, ['class' => 'form-control']) !!}
                                     </div>
 
                                     <div class="col-md-6">
                                         {!! Form::label('l_weight_stop', 'До:') !!}
-                                        {!! Form::number('l_weight_stop','', ['class' => 'form-control']) !!}
+                                        {!! Form::number('l_weight_stop', 500, ['class' => 'form-control']) !!}
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -332,42 +332,17 @@
                                     <label for="passno">№ паспорта<span class="red">*</span></label>
                                     {!! Form::text('passno', '', ['class' => 'form-control']) !!}
                                 </div>
-
                                 <div class="form-group">
-                                    <div class="col-md-4" style="padding-left: 0;">
-                                        <label for="b_year">Год выдачи паспорта<span class="red">*</span></label>
-                                        <select class="form-control" name="b_year_pasp" style="    padding: 0;" >
-                                            <option>---</option>
-                                            @for($i=date("Y")-100; $i<date("Y"); $i++)
-                                                <option>{!! $i !!}</option>
-                                            @endfor
-                                        </select>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="b_month" >Месяц<span class="red">*</span></label>
-                                        <select class="form-control" name="b_month_pasp" style="    padding: 0;">
-                                            @for($i=1; $i<13; $i++)
-                                                <option>{!! $i !!}</option>
-                                            @endfor
-                                        </select>
-                                    </div>
-                                    <div class="col-md-4" style="padding-right: 0;">
-                                        <label for="b_day">День<span class="red">*</span></label>
-                                        <select class="form-control" style="    padding: 0;" name="b_day_pasp">
-                                            @for($i=1; $i<32; $i++)
-                                                <option>{!! $i !!}</option>
-                                            @endfor
-                                        </select>
-                                    </div>
+                                    <label for="pass_date">Дата выдачи паспорта<span class="red">*</span></label>
+                                    {!! Form::date('pass_date', '', ['class'=>'form-control']) !!}
                                 </div>
-                                </br>
                                 <div class="form-group">
                                     <label for="pass_photo">Фото/Скан паспорта<span class="red">*</span></label>
                                     <input type="file" class="form-control file" name="pass_photo" value=""  accept="image/*"><!--disabled="disabled"-->
                                 </div>
 
                                 <div class="form-group col-md-12 text-center">
-                                    {!! Form::submit('Submit', ['class' => 'btn btn-success']) !!}
+                                    {!! Form::submit(trans('buttons.save'), ['class' => 'btn btn-success']) !!}
                                 </div>
                             </div>
                         </div>
@@ -450,18 +425,6 @@
             $('select[name="state"]').on('change', function(){
                 refreshCities();
             });
-        });
-    </script>
-    <script>
-        $("#profile_photo").fileinput({
-            uploadUrl: "/file-upload-batch/1",
-
-            uploadAsync: false,
-            minFileCount: 0,
-            maxFileCount: 10,
-            overwriteInitial: false,
-            allowedFileExtensions: ["jpg", "png", "gif", "jpeg"],
-            showUpload: false,
         });
     </script>
 @stop

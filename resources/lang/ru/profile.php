@@ -20,6 +20,10 @@ return [
     'gender'                => 'Пол',
     'password'              => 'Пароль',
     'password_confirmation' => 'Подтвердите пароль',
+    'passport_data'         => 'Паспортные данные',
+    'passno'                => '№ паспорта',
+    'pass_photo'            => 'Фото паспорта',
+    'pass_date'             => 'Дата выдачи',
 
     /* -- Other Profile Labels -- */
 
@@ -83,6 +87,7 @@ return [
     'company'   => 'Компания',
     'info'  => 'Информация',
     'contacts'  => 'Контакты',
+    'required_fields' => 'Обязательные поля',
 
     /* -- Smiles -- */
 

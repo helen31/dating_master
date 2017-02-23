@@ -58,6 +58,9 @@
     <section class="panel">
         <header class="panel-heading">
             Редактировать анкету
+            <a href="{{ url(App::getLocale().'/admin/girl/drop/'.$user->id) }}" class="btn btn-danger btn-xs" >
+                <i class="fa fa-trash-o"></i>  Удалить анкету
+            </a>
         </header>
         <div class="panel-body">
             @if (count($errors) > 0)
@@ -70,25 +73,28 @@
                 </div>
             @endif
 
-            @if( !empty($why) && ( $user->status_id == 2 || $user->status_id == 3 || $user->status_id == 4 )   )
+            <!-- Сообщение в админке, если профильт деактивирован или отклонен -->
+
+            @if(($user->status_id == 2 || $user->status_id == 3) && $user->status_message != NULL )
                 <div class="alert alert-info">
-                    @foreach($why as $w)
-                        @if($w->meta_key == "status_comment")
-                            <b><i>Причина:</i></b> {{ $w->meta_value }} <br/>
-                        @endif
-                    @endforeach
+                    <p>Анкета приостановлена или отклонена модератором</p>
+                    <p><b><i>Причина:</i></b> {{ $user->status_message }}</p>
                 </div>
             @endif
+
             <!-- Nav tabs -->
+
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#osn" aria-controls="osn" role="tab" data-toggle="tab">Основная информация профиля</a></li>
-                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Данные профиля</a></li>
+                <li role="presentation" class="active"><a href="#osn" aria-controls="osn" role="tab" data-toggle="tab" id="open-main">Основная информация профиля</a></li>
+                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab" id="open-additional">Данные профиля</a></li>
                 <li role="presentation"><a href="#profile_foto" aria-controls="profile_fot" role="tab" data-toggle="tab" id="profile_fo">Фото профиля</a></li>
+                <li role="presentation"><a href="#status" aria-controls="status" role="tab" data-toggle="tab" id="open_partner">Партнерская информация</a></li>
                 <li role="presentation"><a href="#photoalbums" aria-controls="photoalbums" role="tab" data-toggle="tab">Фотоальбомы</a></li>
-                <li role="presentation"><a href="#status" aria-controls="status" role="tab" data-toggle="tab">Партнерская информация</a></li>
             </ul>
             {!! Form::open(['url' => '#', 'class' => 'form', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
-                <!-- Tab panes -->
+
+                <!-- Основная информация профиля -->
+
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="osn">
                         <div class="col-md-12 text-center">
@@ -114,55 +120,19 @@
                                         {!! Form::label('hot', 'Hot Block') !!}
                                         <input type="checkbox" name="hot" {{ ($user->hot == 0) ?: 'checked' }}>
                                     </div>
-                                    <div class="form-group  col-md-6">
+                                    <div class="form-group  col-md-4">
                                         {!! Form::label('first_name', 'Имя') !!}
                                         {!! Form::text('first_name', $user->first_name, ['class'=>'form-control', 'placeholder' => 'Name']) !!}
                                     </div>
 
-                                    <div class="form-group col-md-6">
+                                    <div class="form-group col-md-4">
                                         {!! Form::label('second_name', 'Фамилия') !!}
                                         {!! Form::text('second_name', $user->last_name, ['class'=>'form-control', 'placeholder' => 'Surname']) !!}
                                     </div>
 
-                                    <div class="form-group col-md-12">
-                                        <title>Дата рождения</title>
-                                        <div class="col-md-4" style="padding-left: 0;">
-                                            <label for="b_year">Год рождения</label>
-                                            <select class="form-control" name="b_year" style="    padding: 0;">
-                                                @for($i=date("Y")-100; $i<date("Y"); $i++)
-                                                    @if($i==date('Y',strtotime($user->profile->birthday)))
-                                                        <option selected="selected">{!! $i !!}</option>
-                                                    @else
-                                                        <option>{!! $i !!}</option>
-                                                    @endif
-                                                @endfor
-                                            </select>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label for="b_month" >Месяц</label>
-                                            <select class="form-control" name="b_month" style="    padding: 0;">
-                                                @for($i=1; $i<13; $i++)
-                                                    @if($i==date('m',strtotime($user->profile->birthday)))
-                                                        <option selected="selected">{!! $i !!}</option>
-                                                    @else
-                                                        <option>{!! $i !!}</option>
-                                                    @endif
-                                                @endfor
-                                            </select>
-                                        </div>
-                                        <div class="col-md-4" style="padding-right: 0;">
-                                            <label for="b_day">День</label>
-                                            <select class="form-control" style="    padding: 0;" name="b_day">
-                                                @for($i=1; $i<32; $i++)
-                                                    @if($i==date('d',strtotime($user->profile->birthday)))
-                                                        <option selected="selected">{!! $i !!}</option>
-                                                    @else
-                                                        <option>{!! $i !!}</option>
-                                                    @endif
-                                                @endfor
-                                            </select>
-                                        </div>
-
+                                    <div class="form-group col-md-4">
+                                        <label for="birthday">Дата рождения<span class="red">*</span></label>
+                                        {!! Form::date('birthday', $user->profile->birthday, ['class'=>'form-control']) !!}
                                     </div>
 
                             <div class="info col-md-4">
@@ -203,10 +173,16 @@
                                 {!! Form::hidden('user_city_id', $user->city_id ) !!}
                                 <select name="city" class="form-control"></select>
                             </div>
-                                </div>
+                            <div class="form-group text-center col-md-12">
+                                <a style="color: white;background-color: gray;" class="btn btn-next next" onClick="next_click('#open-additional');">Далее</a>
+                            </div>
+                            </div>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Фото профиля -->
+
                     <div role="tabpanel" class="tab-pane" id="profile_foto">
                         <div class="col-md-12">
                             <h3 class="text-center"> Фотографии профиля (макс. 10) </h3>
@@ -225,7 +201,13 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group text-center col-md-12">
+                            <a style="color: white;background-color: gray;" class="btn btn-next next" onClick="next_click('#open_partner');">Далее</a>
+                        </div>
                     </div>
+
+                    <!-- Дополнительная информация профиля -->
+
                     <div role="tabpanel" class="tab-pane" id="profile">
                         <div class="col-md-12">
                             <h3 class="text-center"> Дополнительная информация профиля </h3>
@@ -241,10 +223,6 @@
                                 {!! Form::label('occupation', 'Род деятельности') !!}
                                 {!! Form::text('occupation', $user->profile->occupation, ['class' => 'form-control']) !!}
                             </div>
-
-                            <!-- Временное присвоение женского пола -->
-                            <input type="hidden" name="gender" value="female">
-                            <!-- Конец присвоения -->
 
                             <div class="form-group col-md-4">
                                 {!! Form::label('eyes', 'Цвет глаз') !!}
@@ -406,13 +384,14 @@
                                     </select>
                                 </div>
                             </div>
-
-                            <div class="form-group col-md-12 text-center">
-                                {!! Form::submit('Submit', ['class' => 'btn btn-success']) !!}
+                            <div class="form-group text-center col-md-12">
+                                <a style="color: white;background-color: gray;" class="btn btn-next next" onClick="next_click('#profile_fo');">Далее</a>
                             </div>
                         </div>
                     </div>
-                    <!-- Photoalbums -->
+
+                    <!-- Фотоальбомы -->
+
                     <div role="tabpanel" class="tab-pane" id="photoalbums">
                         <div class="row">
                             <div class="col-md-12">
@@ -441,35 +420,33 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Партнерская информация -->
+
                     <div role="tabpanel" class="tab-pane" id="status">
                         <div class="row">
                             <div class="col-md-12">
-                                @if( Auth::user()->hasRole('Owner') || Auth::user()->hasRole('Moder') )
+                                @if( Auth::user()->hasRole('Owner') || Auth::user()->hasRole('Moder'))
                                 <div class="form-group" style="margin-top: 20px">
                                     <select name="status" class="form-control">
                                         @foreach($statuses as $status)
-                                            <option value="{{ $status->id }}" {{ $status->id == $user->status_id ? "selected" : ''}}>{{ trans('status.'.$status->name) }}</option>
+                                            @if($status->id == 4)<!-- Статус удаленный не выводим, так как профили удаляются через SoftDelete -->
+                                            @else
+                                                <option value="{{ $status->id }}" {{ $status->id == $user->status_id ? "selected" : ''}}>{{ trans('status.'.$status->name) }}</option>
+                                            @endif
                                         @endforeach
                                     </select>
                                     <input type="hidden" name="user_id" value="{{ $user->id }}">
                                 </div>
                                 <div class="form-group">
-                                    <label for="why">Причина отказа (если есть):</label>
-                                    <textarea name="why" class="form-control">
-                                        @if( !empty($why) && ( $user->status_id == 2 || $user->status_id == 3 || $user->status_id == 4 )   )
-                                            @foreach($why as $w)
-                                                @if($w->meta_key == "status_comment")
-                                                     {{ $w->meta_value }}
-                                                @endif
-                                            @endforeach
-                                        @endif
-                                    </textarea>
+                                    <label for="status_message">Причина отказа (если есть):</label>
+                                    <textarea name="status_message" class="form-control"></textarea>
                                 </div>
                                 @else
                                     <title>Статус анкеты:
                                         @foreach($statuses as $status)
                                             @if($status->id == $user->status_id)
-                                                {{trans('status.'.$status->name)}}
+                                                {{ trans('status.'.$status->name) }}
                                             @endif
                                         @endforeach
                                     </title>
@@ -477,23 +454,22 @@
 
                                 <div class="form-group">
                                     {!! Form::label('passno','№ паспорта') !!}
-                                    {!! Form::text('passno', ((isset($user->passport))?$user->passport->passno:""), ['class' => 'form-control', 'disabled' => 'disabled']) !!}
+                                    {!! Form::text('passno', ((isset($passport->passno))?$passport->passno:""), ['class' => 'form-control', 'disabled' => 'disabled']) !!}
                                 </div>
 
                                 <div class="form-group">
                                 {!! Form::label('pass_date', 'Дата выдачи паспорта') !!}
-                                {!! Form::text('pass_date', ((isset($user->passport))?$user->passport->date:"") , ['class' => 'form-control default-date-picker', 'id' => 'datepicker', 'disabled' => 'disabled']) !!}
+                                {!! Form::text('pass_date', ((isset($passport->date))?$passport->date:"") , ['class' => 'form-control default-date-picker', 'id' => 'datepicker', 'disabled' => 'disabled']) !!}
                                 </div>
 
                                 <div class="form-group">
                                     {!! Form::label('avatar', 'Фото/Скан паспорта') !!}
                                     <br/>
-                                    <img width="373rem" src="{{ url('/uploads/'.  ((isset($user->passport))?$user->passport->cover:"")) }}">
-                                    <input type="file" class="form-control file" name="pass_photo" value="{{ ((isset($user->passport))?$user->passport->cover:"") }}"  disabled="disabled" accept="image/*"><!--disabled="disabled"-->
+                                    <img class="img-responsive" src="{{ url('/uploads/'.  ((isset($passport->cover))?$passport->cover:"")) }}">
+                                    <input type="file" class="form-control file" name="pass_photo" value="{{ ((isset($passport->cover))?$passport->cover:"") }}" accept="image/*" disabled="disabled"><!--disabled="disabled"-->
                                 </div>
-
-                                <div class="form-group text-center">
-                                    <button class="btn btn-success status">Сохранить</button>
+                                <div class="form-group col-md-12 text-center">
+                                    {!! Form::submit(trans('buttons.save'), ['class' => 'btn btn-success']) !!}
                                 </div>
                             </div>
                         </div>
@@ -513,6 +489,11 @@
 
 
     <script>
+        function next_click(id) {
+
+            $(id).trigger('click');
+            return false;
+        }
 
         function get_cities( $id )
         {

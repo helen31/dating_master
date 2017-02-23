@@ -82,11 +82,16 @@
             </div>
         </div>
 
-
         <!-- Header -->
         <header class="row header-bg">
             @include('client.blocks.header')
         </header><!-- .header -->
+
+        <!-- Сообщение зарегистрированному пользователю, если его анкета отклонена, приостановлена
+        или удалена -->
+        @if(Auth::user())
+            @include('client.blocks.user-warning')
+        @endif
 
         <!-- Content -->
         <section class="row">

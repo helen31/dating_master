@@ -30,32 +30,33 @@
                                 <img class="img-responsive" src="{{ url('/uploads/'. $user->avatar) }}" id="preview-avatar">
                                 <input type="file" class="form-control file" name="avatar" accept="image/*" value="{{ $user->avatar }}">
                             </div>
+                            <p class="text-danger">* {{ trans('profile.required_fields') }}</p>
                             <div class="form-group">
-                                {!! Form::label('first_name', trans('profile.first_name')) !!}
-                                {!! Form::text('first_name', !empty($user->first_name) ? $user->first_name : '', ['class'=>'form-control', 'placeholder' => trans('profile.placeholder_name')]) !!}
+                                {!! Form::label('first_name', trans('profile.first_name')) !!}<span class="text-danger">*</span>
+                                {!! Form::text('first_name', !empty($user->first_name) ? $user->first_name : '', ['class'=>'form-control', 'required'=>'required', 'placeholder' => trans('profile.placeholder_name')]) !!}
                             </div>
                             <div class="form-group">
-                                {!! Form::label('second_name', trans('profile.last_name')) !!}
-                                {!! Form::text('second_name', !empty($user->last_name) ? $user->last_name : '', ['class'=>'form-control', 'placeholder' => trans("profile.placeholder_surname")]) !!}
+                                {!! Form::label('second_name', trans('profile.last_name')) !!}<span class="text-danger">*</span>
+                                {!! Form::text('second_name', !empty($user->last_name) ? $user->last_name : '', ['class'=>'form-control', 'required'=>'required', 'placeholder' => trans("profile.placeholder_surname")]) !!}
                             </div>
                             <div class="form-group">
-                                {!! Form::label('birthday', trans('profile.birthday')) !!}
-                                {!! Form::text('birthday', !empty($user->profile->birthday) ? $user->profile->birthday : '', ['class' => 'form-control default-date-picker']) !!}
+                                {!! Form::label('birthday', trans('profile.birthday')) !!}<span class="text-danger">*</span>
+                                {!! Form::date('birthday', $user->profile->birthday, ['class'=>'form-control', 'required'=>'required']) !!}
                             </div>
                             <div class="form-group">
-                                {!! Form::label('email',trans('profile.email')) !!}
-                                {!! Form::email('email', !empty($user->email) ? $user->email : '', ['class' => 'form-control', 'placeholder' => 'email@email.com', 'required' => 'required']) !!}
+                                {!! Form::label('email',trans('profile.email')) !!}<span class="text-danger">*</span>
+                                {!! Form::email('email', !empty($user->email) ? $user->email : '', ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'email@email.com']) !!}
                             </div>
                             <div class="form-group">
-                                {!! Form::label('phone', trans('profile.phone')) !!}
-                                {!! Form::text('phone', !empty($user->phone) ? $user->phone : '', ['class' => 'form-control']) !!}
+                                {!! Form::label('phone', trans('profile.phone')) !!}<span class="text-danger">*</span>
+                                {!! Form::text('phone', !empty($user->phone) ? $user->phone : '', ['class' => 'form-control', 'required' => 'required']) !!}
                             </div>
                             <div class="form-group">
                                 {!! Form::label('password', trans('profile.password')) !!}
                                 {!! Form::password('password', ['class' => 'form-control', ]) !!}
                             </div>
                             <div class="form-group">
-                                {!! Form::label('coutry', trans('profile.country')) !!}
+                                {!! Form::label('coutry', trans('profile.country')) !!}<span class="text-danger">*</span>
                                 <select name="country" class="form-control">
                                     @foreach($countries as $country)
                                         <option value="{{ $country->id }}"
@@ -73,12 +74,12 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                {!! Form::label('state', trans('profile.state') ) !!}
+                                {!! Form::label('state', trans('profile.state') ) !!}<span class="text-danger">*</span>
                                 {!! Form::hidden('user_state_id', $user->state_id ) !!}
                                 <select name="state" class="form-control"></select>
                             </div>
                             <div class="form-group">
-                                {!! Form::label('city', trans('profile.city') ) !!}
+                                {!! Form::label('city', trans('profile.city') ) !!}<span class="text-danger">*</span>
                                 {!! Form::hidden('user_city_id', $user->city_id ) !!}
                                 <select name="city" class="form-control"></select>
                             </div>
@@ -86,6 +87,22 @@
                                 {!! Form::label('about', trans('profile.about') ) !!}
                                 {!! Form::textarea('about', !empty($user->profile->about) ? $user->profile->about : '', ['class' => 'form-control']) !!}
                             </div>
+                            @if(\Auth::user()->hasRole('female'))
+                                <h3>{{ trans('profile.passport_data') }}</h3>
+                                <div class="form-group">
+                                    <label for="passno">{{ trans('profile.passno') }}</label><span class="text-danger">*</span>
+                                    {!! Form::text('passno', !empty($passport->passno) ? $passport->passno : '', ['class' => 'form-control', 'required' => 'required']) !!}
+                                </div>
+                                <div class="form-group">
+                                    <label for="pass_date">{{ trans('profile.pass_date') }}</label><span class="text-danger">*</span>
+                                    {!! Form::date('pass_date', !empty($passport->date) ? $passport->date : '', ['class'=>'form-control', 'required' => 'required']) !!}
+                                </div>
+                                <div class="form-group">
+                                    <label for="pass_photo">{{ trans('profile.pass_photo') }}</label><span class="text-danger">*</span>
+                                    <img class="img-responsive" src="{{ url('/uploads/'.  ((isset($passport->cover))?$passport->cover:"")) }}">
+                                    <input type="file" class="form-control file" name="pass_photo" value=""  accept="image/*">
+                                </div>
+                            @endif
                         </div>
 
 
@@ -93,11 +110,30 @@
                             <h3>{{trans('profile.lookingFor')}}</h3>
                             <div class="form-group">
                                 {!! Form::label('l_age_start', trans('profile.l_age_start') ) !!}
-                                {!! Form::number('l_age_start', !empty($user->profile->l_age_start) ? $user->profile->l_age_start : '18', ['class' => 'form-control'] )!!}
+                                {!! Form::number('l_age_start', !empty($user->profile->l_age_start) ? $user->profile->l_age_start : 18, ['class' => 'form-control'] )!!}
                             </div>
                             <div class="form-group">
                                 {!! Form::label('l_age_stop', trans('profile.l_age_stop') ) !!}
-                                {!! Form::number('l_age_stop', !empty($user->profile->l_age_stop) ? $user->profile->l_age_stop : '40', ['class' => 'form-control'] )!!}
+                                {!! Form::number('l_age_stop', !empty($user->profile->l_age_stop) ? $user->profile->l_age_stop : 99, ['class' => 'form-control'] )!!}
+                            </div>
+                            <div class="form-group">
+                                {!! Form::label('l_height_start', 'Рост (см) от:') !!}
+                                {!! Form::number('l_height_start', !empty($user->profile->l_height_start) ? $user->profile->l_height_start : 0, ['class' => 'form-control']) !!}
+                            </div>
+
+                            <div class="form-group">
+                                {!! Form::label('l_height_stop', 'До:') !!}
+                                {!! Form::number('l_height_stop', !empty($user->profile->l_height_stop) ? $user->profile->l_height_stop : 220, ['class' => 'form-control']) !!}
+                            </div>
+
+                            <div class="form-group">
+                                {!! Form::label('l_weight_start', 'Вес (кг) от:') !!}
+                                {!! Form::number('l_weight_start', !empty($user->profile->l_weight_start) ? $user->profile->l_weight_start : 0, ['class' => 'form-control']) !!}
+                            </div>
+
+                            <div class="form-group">
+                                {!! Form::label('l_weight_stop', 'До:') !!}
+                                {!! Form::number('l_weight_stop', !empty($user->profile->l_weight_stop) ? $user->profile->l_weight_stop : 500, ['class' => 'form-control']) !!}
                             </div>
                             <div class="form-group">
                                 {!! Form::label('looking', trans('profile.looking') ) !!}
@@ -320,6 +356,9 @@
 
             $('input[name="avatar"]').change(function(){
                 $('#preview-avatar').css('display', 'none');
+            });
+            $('input[name="pass_photo"]').change(function(){
+                $('#preview-pass-photo').css('display', 'none');
             });
 
             $('select[name="country"]').on('change', function(){

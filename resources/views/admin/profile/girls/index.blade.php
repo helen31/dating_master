@@ -70,52 +70,55 @@
                 @endforeach
                 </tbody>
             </table>
+            {!! $girls->render() !!}
         </div>
     </section>
-    <div class="modal fade in" id="migrate-user" tabindex="-1" role="dialog" aria-labelledby="migrate-user" style="display: none;">
-        <style>
-            .modal-body {
-                width: 100%;
-                display: inline-block;
-                padding: 0!important;
-            }
-            .modalContent {
-                background: url(/assets/img/patterns/gray_pattern.gif);
-                border: 10px solid #fafafa;
-                padding: 15px;
-            }
-        </style>
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="modalContent col-md-12">
-                        <div class="col-md-12" style="margin-bottom: 15px">
-                            <div class="pull-right">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    @if( Auth::user()->hasRole('Owner') )
+        <div class="modal fade in" id="migrate-user" tabindex="-1" role="dialog" aria-labelledby="migrate-user" style="display: none;">
+            <style>
+                .modal-body {
+                    width: 100%;
+                    display: inline-block;
+                    padding: 0!important;
+                }
+                .modalContent {
+                    background: url(/assets/img/patterns/gray_pattern.gif);
+                    border: 10px solid #fafafa;
+                    padding: 15px;
+                }
+            </style>
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="modalContent col-md-12">
+                            <div class="col-md-12" style="margin-bottom: 15px">
+                                <div class="pull-right">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                </div>
+                                <h4 class="pull-left"><i class="fa fa-magic"></i>Change partner</h4>
                             </div>
-                            <h4 class="pull-left"><i class="fa fa-magic"></i>Change partner</h4>
-                        </div>
-                        {!! Form::open(['url' => '/admin/girl/changepartner', 'class' => 'form', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
-                            <input type="hidden" name="girl_id" value="">
+                            {!! Form::open(['url' => '/admin/girl/changepartner', 'class' => 'form', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                                <input type="hidden" name="girl_id" value="">
 
-                            <div class="form-group col-md-12">
-                                <label for="first_name">Current partner</label>
-                                <select type="text" name="partner_list" class="form-control" placeholder="First Name" required="">
-                                        <option value="1">Administrator</option>
-                                    @foreach($partners as $parnter)
-                                        <option value="{{$parnter->id}}">{{'('.$parnter->id.') '.$parnter->first_name.' '.$parnter->last_name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group col-md-12" style="    text-align: center;">
-                                <button class="btn btn-pink btn-sm" type="submit" id="createAccount">Change partner</button>
-                            </div>
-                        {!! Form::close() !!}
+                                <div class="form-group col-md-12">
+                                    <label for="first_name">Current partner</label>
+                                    <select type="text" name="partner_list" class="form-control" placeholder="First Name" required="">
+                                            <option value="1">Administrator</option>
+                                        @foreach($partners as $parnter)
+                                            <option value="{{$parnter->id}}">{{'('.$parnter->id.') '.$parnter->first_name.' '.$parnter->last_name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-12" style="    text-align: center;">
+                                    <button class="btn btn-pink btn-sm" type="submit" id="createAccount">Change partner</button>
+                                </div>
+                            {!! Form::close() !!}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endif
     <script>
         function ChangeOpen(girl_id,partner_id) {
             if(partner_id==0){

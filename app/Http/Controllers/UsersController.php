@@ -6,12 +6,15 @@ use App\Models\Album;
 use App\Models\Country;
 use App\Models\Messages;
 use App\Models\Profile;
+use App\Models\Passport;
 use App\Models\Session;
 use App\Models\Smiles;
 use App\Models\State;
 use App\Models\User;
 use App\Services\ZodiacSignService;
 use Illuminate\Http\Request;
+
+use Carbon\Carbon;
 
 class UsersController extends Controller
 {
@@ -24,16 +27,20 @@ class UsersController extends Controller
      * @var Profile
      */
     private $profile;
-
+    /**
+     * @var Passport
+     */
+    private $passport;
     /**
      * @var ZodiacSignService
      */
     private $zodiacSignService;
 
-    public function __construct(User $user, Profile $profile, ZodiacSignService $zodiacSignService)
+    public function __construct(User $user, Profile $profile, Passport $passport, ZodiacSignService $zodiacSignService)
     {
         $this->user = $user;
         $this->profile = $profile;
+        $this->passport = $passport;
         $this->zodiacSignService = $zodiacSignService;
         parent::__construct();
     }
@@ -96,10 +103,15 @@ class UsersController extends Controller
                 'english_level'     => $this->profile->getEnum('english_level'),
             ];
 
+            $user = $this->user->find($id);
+            $passport = $this->passport->where('user_id', '=', $id)->first();
+            $countries = Country::all_order();
+
             return view('client.profile.edit')->with([
-                'user'      => $this->user->find($id),
                 'selects'   => $selects,
-                'countries' => Country::all_order(),
+                'user'      => $user,
+                'passport'  => $passport,
+                'countries' => $countries,
                 'id'        => $id,
             ]);
         } else
@@ -240,7 +252,13 @@ class UsersController extends Controller
             'first_name' => 'required',
             'second_name'  => 'required',
             'email'      => 'required',
+            'birthday'   => 'required',
+            'phone'     => 'required',
+            'passno'    => 'required',
+            'pass_date' => 'required',
         ]);
+
+        /* Обновление данных пользователя - таблица users */
 
         $user = User::find($id);
 
@@ -263,8 +281,30 @@ class UsersController extends Controller
         $user->country_id = $request->input('country');
         $user->state_id   = $request->input('state');
         $user->city_id    = $request->input('city');
+        $user->status_id  = 5;
 
         $user->save();
+
+        /* Сохранение паспортных данных девушки - таблица passport */
+
+        if(\Auth::user()->hasRole('female')) {
+            if( empty((Passport::where('user_id', '=', $id)->first())) ){
+                $passport = new Passport();
+                $passport->user_id = $id;
+            }else{
+                $passport = Passport::where('user_id', '=', $id)->first();
+            }
+            $passport->passno = str_replace(' ', '', $request->input('passno'));
+            $passport->date = $request->input('pass_date');
+
+            if ($request->hasFile('pass_photo')) {
+                $user_passport = $this->upload($request->file('pass_photo'));
+                $passport->cover = $user_passport;
+            }
+            $passport->save();
+        }
+
+        /* Сохранение профиля пользователя, таблица profiles */
 
         if( empty((Profile::where('user_id', '=', $id)->first())) ){
 
@@ -278,7 +318,7 @@ class UsersController extends Controller
                 $profile->gender   = "---";
             }
             $profile->user_id   = $id;
-            $profile->birthday   = new \DateTime($request->input('birthday'));  //check age new \DateTime($request->input('birthday'));
+            $profile->birthday   = $request->input('birthday');
             $profile->height    = $request->input('height');
             $profile->weight   = $request->input('weight');
             $profile->eyes       = $request->input('eyes');
@@ -303,7 +343,7 @@ class UsersController extends Controller
         } else {
             $profile = Profile::where('user_id', '=', $id)->first();
             $profile->user_id   = $id;
-            $profile->birthday  = new \DateTime($request->input('birthday'));  //check age new \DateTime($request->input('birthday'));
+            $profile->birthday  = $request->input('birthday');
             $profile->height    = $request->input('height');
             $profile->weight    = $request->input('weight');
             $profile->eyes       = $request->input('eyes');
@@ -326,5 +366,15 @@ class UsersController extends Controller
             $profile->save();
             return redirect('/profile/show/'.$id);
         }
+    }
+
+    /* Определение возраста девушки
+        Принимает: дату рождения в формате 'Y-m-d'
+        Возвращает: возраст (int)
+     */
+    private function age($birthday)
+    {
+        $age = Carbon::now()->diffInYears(Carbon::createFromFormat('Y-m-d', $birthday));
+        return $age;
     }
 }

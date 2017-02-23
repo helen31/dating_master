@@ -30,7 +30,7 @@
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->name }}</td>
                             <td class="hidden-xs">
-                                <a href="{{ url('/admin/profile/'. $user->id ) }}" class="btn btn-success btn-xs" target="_blank"><i class="fa fa-eye"></i></a>
+                                <a href="{{ url('/profile/show/'. $user->id ) }}" class="btn btn-success btn-xs" target="_blank"><i class="fa fa-eye"></i></a>
                                 <a href="{{ url('/admin/profile/edit/'.$user->id ) }}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
                                 <a href="{{ url('/admin/profile/drop/'.$user->id) }}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
                             </td>

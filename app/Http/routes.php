@@ -179,6 +179,7 @@ Route::group([  'prefix' => LaravelLocalization::setLocale().'/admin',
     //dropImageAlbum
 
     Route::get('girl/drop/{id}', 'Admin\GirlsController@destroy');//
+    Route::get('girl/restore/{id}', 'Admin\GirlsController@restore');
     Route::post('girl/edit/{id}/add_album', 'Admin\GirlsController@addAlbum'); // Create Girl save albums
     Route::post('girl/edit/{id}/edit_album/{aid}', 'Admin\GirlsController@saveAlbume'); // Save editing Girl albums
     Route::post('girl/dropImageAlbum/{aid}', 'Admin\GirlsController@dropImageAlbum'); // Delete photo from Girl albums
@@ -189,7 +190,6 @@ Route::group([  'prefix' => LaravelLocalization::setLocale().'/admin',
     Route::post('girl/check', ['as' => 'check_pass', 'uses' => 'Admin\GirlsController@check']); // Check passport at DB
     Route::post('girl/store', 'Admin\GirlsController@store'); //Store new to db
     Route::post('girl/edit/{id}','Admin\GirlsController@update');// Update db
-    Route::post('girl/changeStatus', 'Admin\GirlsController@changeStatus'); //change girlStatus from edit profile page
     Route::post('girl/changepartner', 'Admin\GirlsController@changePartner'); //change girlStatus from edit profile page
     /** End Girls Profile routing */
 

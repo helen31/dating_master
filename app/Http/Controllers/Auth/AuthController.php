@@ -86,6 +86,7 @@ class AuthController extends Controller
             'password'   => bcrypt($data['password']),
             'role_id'    => $data['gender'],
             'partner_id' => 1,
+            'status_id'  => 5,
         ]);
         $user->save();
 
@@ -101,7 +102,7 @@ class AuthController extends Controller
         }
         $profile->birthday = '1900-01-01';
         $profile->l_age_start = 18;
-        $profile->l_age_stop = 65;
+        $profile->l_age_stop = 99;
 
         $profile->save();
 
