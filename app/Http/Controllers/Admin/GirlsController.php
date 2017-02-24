@@ -178,7 +178,11 @@ class GirlsController extends Controller
         $this->user->state_id = $request->input('state');
         $this->user->city_id = $request->input('city');
 
-        $this->user->partner_id = Auth::user()->id; // Партнером является текуший партнер, если это админ, то админ
+        if(Auth::user()->hasRole('Owner') || Auth::user()->hasRole('Moder') ){
+            $this->user->partner_id = 1; //Если профиль создал админ или модератор, то партнер - админ
+        }else{
+            $this->user->partner_id = Auth::user()->id; //Или партнером является создавший аккаунт партнер
+        }
         $this->user->role_id = 5; // Роль - женщина
         $this->user->status_id = 5; // Статус - на модерации
 
@@ -361,7 +365,12 @@ class GirlsController extends Controller
         $user->city_id    = $request->input('city');
 
         //Статус анкеты и сообщение модератора для приостановленных и отклоненных анкет
-        $user->status_id = $request->input('status');
+        //Партнеры не могут изменить статут девушки, поэтому у них нет $request->input('status')
+        if($request->input('status')){
+            $user->status_id = $request->input('status');
+        }else{
+            $user->status_id = 5; // Статус профиля - на модерации
+        }
         $user->status_message = NULL;
         if($user->status_id == 2 || $user->status_id == 3){
             if($request->input('status_message')){
@@ -448,7 +457,7 @@ class GirlsController extends Controller
     public function restore($id)
     {
         $user = User::withTrashed()->find($id);
-        $user->status_id = 1; //Статус профиля - активный
+        $user->status_id = 5; //Статус профиля - на модерации
         $user->deleted_at = NULL; //Снимаем дату удаления, иначе невозможно будет получить данные профиля
         $user->save();
 

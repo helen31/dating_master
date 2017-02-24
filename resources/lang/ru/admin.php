@@ -1,6 +1,10 @@
 <?php
 
 return [
-   'dashboard' => 'Dashboard',
+   'dashboard' => 'Панель управления',
+   'profiles'  => 'Профили',
+
+    'No' => '-',
+    'yes' => 'да',
 
 ];

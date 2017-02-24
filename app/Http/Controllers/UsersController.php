@@ -281,6 +281,7 @@ class UsersController extends Controller
         $user->country_id = $request->input('country');
         $user->state_id   = $request->input('state');
         $user->city_id    = $request->input('city');
+        $user->status_message = NULL;
         $user->status_id  = 5;
 
         $user->save();
@@ -336,8 +337,13 @@ class UsersController extends Controller
             $profile->looking   = $request->input('looking');
             $profile->l_age_start   = $request->input('l_age_start');
             $profile->l_age_stop    = $request->input('l_age_stop');
+            $profile->l_height_start   = $request->input('l_height_start');
+            $profile->l_height_stop    = $request->input('l_height_stop');
+            $profile->l_weight_start   = $request->input('l_weight_start');
+            $profile->l_weight_stop    = $request->input('l_weight_stop');
             $profile->finance_income   = $request->input('finance_income');
             $profile->english_level    = $request->input('english_level');
+            $profile->know_lang  = $request->input('know_lang');
             $profile->save();
             return redirect('/profile/show/'.$id);
         } else {
@@ -361,8 +367,13 @@ class UsersController extends Controller
             $profile->looking   = $request->input('looking');
             $profile->l_age_start = $request->input('l_age_start');
             $profile->l_age_stop = $request->input('l_age_stop');
+            $profile->l_height_start   = $request->input('l_height_start');
+            $profile->l_height_stop    = $request->input('l_height_stop');
+            $profile->l_weight_start   = $request->input('l_weight_start');
+            $profile->l_weight_stop    = $request->input('l_weight_stop');
             $profile->finance_income   = $request->input('finance_income');
             $profile->english_level    = $request->input('english_level');
+            $profile->know_lang  = $request->input('know_lang');
             $profile->save();
             return redirect('/profile/show/'.$id);
         }

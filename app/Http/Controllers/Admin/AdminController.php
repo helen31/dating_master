@@ -44,7 +44,8 @@ class AdminController extends Controller
                 ->where('status_id', '=', 3)
                 ->get();
 
-            $deleted = User::where('role_id', '=', '5')
+            $deleted = User::withTrashed()
+                ->where('role_id', '=', '5')
                 ->where('status_id', '=', 4)
                 ->get();
 
@@ -88,7 +89,8 @@ class AdminController extends Controller
                 ->where('status_id', '=', 3)
                 ->get();
 
-            $deleted = User::where('role_id', '=', '5')
+            $deleted = User::withTrashed()
+                ->where('role_id', '=', '5')
                 ->where('partner_id', '=', Auth::user()->id)
                 ->where('status_id', '=', 4)
                 ->get();
