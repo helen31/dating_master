@@ -1,44 +1,14 @@
 @extends('client.profile.profile')
 
-@section('profileContent')
-    <div class="col-md-10 col-md-offset-1">
-        @foreach($photos as $p)
-            <div class="photo">
-                <img src="{{ url('/uploads/'.$p->image) }}" width="100%">
-                @if(Auth::user()->id == $id)
-                    <div class="remove" data-id="{{ $p->id }}"><i class="fa fa-trash pull-right"></i></div>
-                @endif
-            </div>
-        @endforeach
-    </div>
-
-    <!-- The Modal -->
-    <div id="myModal" class="modal" onclick="document.getElementById('myModal').style.display='none'">
-
-        <!-- The Close Button -->
-        <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
-
-        <!-- Modal Content (The Image) -->
-        <img class="modal-content" id="img01">
-    </div>
-
-@stop
-
 @section('styles')
+
     <style>
         .photo{
             float: left;
             display: inline-block;
             width: 30%;
+            position: relative;
         }
-
-        .photo .remove {
-            color: red;
-            padding: 10px;
-            width: 100%;
-            cursor: pointer;
-        }
-
         img {
             padding: 10px;
             cursor: pointer;
@@ -49,7 +19,7 @@
         .modal {
             display: none; /* Hidden by default */
             position: fixed; /* Stay in place */
-            z-index: 1; /* Sit on top */
+            z-index: 2; /* Sit on top */
             padding-top: 100px; /* Location of the box */
             left: 0;
             top: 0;
@@ -102,12 +72,70 @@
                 width: 100%;
             }
         }
+        .delete_gallery{
+            position: absolute;
+            top: 10px;
+            background: red;
+            color: white;
+            /* right: 25px; */
+            width: 25px;
+            text-align: center;
+            height: 25px;
+            font-size: 20px;
+            line-height: 25px;
+            opacity: 0.7;
+            transition: 0.3s;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+        .delete_gallery:hover{
+            opacity: 1;
+            transition: 0.3s;
+            color: white;
+        }
+        .file-drop-zone-title{
+            opacity: 0!important;
+        }
     </style>
 @stop
 
-@section('scripts')
-    <script>
+@section('profileContent')
 
+    <section class="panel">
+        <header class="panel-heading">{{ trans('albums.name') }}: {{ $album->name }}</header>
+        <div class="panel-body">
+            @if (count($errors) > 0)
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            <div class="col-md-12">
+                @foreach($photos as $p)
+                    <div class="photo" id="photo-{{$p->id}}">
+                        <img src="{{ url('/uploads/albums/'.$p->image) }}" width="100%">
+                    </div>
+                @endforeach
+            </div>
+            <!-- The Modal -->
+            <div id="myModal" class="modal" onclick="document.getElementById('myModal').style.display='none'">
+
+                <!-- The Close Button -->
+                <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+
+                <!-- Modal Content (The Image) -->
+                <img class="modal-content" id="img01">
+            </div>
+        </div>
+    </section>
+@stop
+@section('scripts')
+
+    <script>
         $(function(){
             // Get the modal
             var modal = document.getElementById('myModal');
@@ -129,30 +157,6 @@
                 modal.style.display = "none";
             }
 
-        });
-
-        $(document).ready(function(){
-            $('.remove').click(function(){
-
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-
-                $.ajax({
-                    type: 'POST',
-                    url: '{{ url('remove/image') }}',
-                    data: {id : $(this).data('id')},
-                    success: function( response ){
-                        console.log(response);
-                        $(this).parent().remove();
-                    },
-                    error: function( response ){
-                        console.log(response);
-                    }
-                })
-            });
         });
     </script>
 @stop

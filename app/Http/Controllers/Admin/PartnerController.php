@@ -216,7 +216,30 @@ class PartnerController extends Controller
 
         return redirect('/admin/partners');
     }
+    /**
+     * Приостановление профиля (партнером)
+     */
+    public function deactivate($id)
+    {
+        $user = User::find($id);
+        $user->status_id = 2; //Статус профиля - приостановлен
+        $user->save();
 
+        \Session::flash('flash_success', trans('flash.profile_update_success'));
+        return redirect('/admin/dashboard');
+    }
+    /**
+     * Активация профиля (партнером)
+     */
+    public function activate($id)
+    {
+        $user = User::find($id);
+        $user->status_id = 5; //Статус профиля - на модерации
+        $user->save();
+
+        \Session::flash('flash_success', trans('flash.profile_update_success'));
+        return redirect('/admin/dashboard');
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -226,8 +249,15 @@ class PartnerController extends Controller
      */
     public function destroy($id)
     {
+        //Передаем девушек админу
+        $girls = User::where('partner_id', '=', $id)->get();
+        foreach($girls as $girl){
+            $girl->partner_id = 1;
+            $girl->save();
+        }
+        //Удаляем партнера
         User::where('id', $id)->delete();
-        \Session::flash('flash_success', 'Drop success!');
+        \Session::flash('flash_success', 'Drop success');
 
         return redirect('/admin/partners');
     }

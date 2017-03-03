@@ -58,6 +58,17 @@
     <section class="panel">
         <header class="panel-heading">
             Редактировать анкету
+            @if(Auth::user()->hasRole('Partner'))
+                @if($user->status_id == 2)
+                    <a href="{{ url(App::getLocale().'/admin/partner/activate/'.$user->id) }}" class="btn btn-success btn-xs" >
+                        <i class="fa fa-arrow-up"></i>  Активировать
+                    </a>
+                @else
+                    <a href="{{ url(App::getLocale().'/admin/partner/deactivate/'.$user->id) }}" class="btn btn-warning btn-xs" >
+                        <i class="fa fa-stop-circle-o"></i>  Приостановить
+                    </a>
+                @endif
+            @endif
             <a href="{{ url(App::getLocale().'/admin/girl/drop/'.$user->id) }}" class="btn btn-danger btn-xs" >
                 <i class="fa fa-trash-o"></i>  Удалить анкету
             </a>
@@ -77,7 +88,7 @@
 
             @if(($user->status_id == 2 || $user->status_id == 3) && $user->status_message != NULL )
                 <div class="alert alert-info">
-                    <p>Анкета приостановлена или отклонена модератором</p>
+                    <p>Анкета приостановлена или отклонена</p>
                     <p><b><i>Причина:</i></b> {{ $user->status_message }}</p>
                 </div>
             @endif
@@ -402,7 +413,7 @@
                                             <div class="item col-md-4" id="gallerey-{{$a->id}}">
                                                 <div class="row text-center">
                                                     <a href="{{ url(App::getLocale().'/admin/girl/edit/'.$user->id.'/edit_album/'.$a->id) }}">
-                                                        <img src="{{ url('/uploads/'.$a->cover_image) }}" width="90%">
+                                                        <img src="{{ url('/uploads/albums/'.$a->cover_image) }}" width="90%">
                                                         <div class="text-center">{{ $a->name }}</div>
                                                     </a>
                                                     <a class="delete_gallery" href="#" onclick="deleteGallery({{$a->id}});"  ><i class="fa fa-trash-o"></i></a>
@@ -412,7 +423,7 @@
                                         <div class="item last_create col-md-4">
                                             <a href="{{url(App::getLocale().'/admin/girl/edit/'.$user->id.'/add_album') }}">
                                                 <img style="    width: 100%;" class="create" src="/public/uploads/add_image.png">
-                                                <div class="text-center">{{ trans('add.photo') }}</div>
+                                                <div class="text-center">{{ trans('albums.add') }}</div>
                                             </a>
                                         </div>
                                     </div>
@@ -630,7 +641,7 @@
 
         })
         function deleteGallery($gaId){
-            $.post( "/admin/girl/deleteProfileFoto/"+$gaId, {_token : $('input[name="_token').val()} ).done( function( data ) {
+            $.post( "/admin/girl/deleteAlbum/"+$gaId, {_token : $('input[name="_token').val()} ).done( function( data ) {
 
                 $("#gallerey-"+$gaId).remove();
 

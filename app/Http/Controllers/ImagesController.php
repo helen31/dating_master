@@ -10,14 +10,19 @@ use Illuminate\Support\Facades\Validator;
 
 class ImagesController extends Controller
 {
+    /*
+     * Возвращает форму добавления новой фотки в альбом
+     */
     public function getForm($id)
     {
         $album = Album::findOrFail($id);
 
-        return view('albums.addimage')
+        return view('albums.album')
             ->with('album', $album);
     }
-
+    /*
+     * Сохраняет новое фото в альбоме
+     */
     public function postAdd(Request $request)
     {
         $rules = [
@@ -47,7 +52,9 @@ class ImagesController extends Controller
 
         return Redirect::route('show_album', ['id' => $request->input('album_id')]);
     }
-
+    /*
+     * Удаляет фото из альбома
+     */
     public function getDelete($id)
     {
         $image = Images::find($id);

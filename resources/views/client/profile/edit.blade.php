@@ -100,7 +100,7 @@
                                 <div class="form-group">
                                     <label for="pass_photo">{{ trans('profile.pass_photo') }}</label><span class="text-danger">*</span>
                                     <img class="img-responsive" src="{{ url('/uploads/'.  ((isset($passport->cover))?$passport->cover:"")) }}">
-                                    <input type="file" class="form-control file" name="pass_photo" value=""  accept="image/*">
+                                    <input type="file" class="form-control file" name="pass_photo" value=""  accept="image/*" data-show-upload="false" data-show-caption="true">
                                 </div>
                             @endif
                         </div>

@@ -8,10 +8,22 @@
                 <div class="row">
 
                     <header class="text-center">
-                        @if(!Auth::user() || Auth::user()->hasRole('male'))
+                        @if(!Auth::user())
+                            @if($_POST && $search_attrs['looking'] == 4)
+                                <h2>{{ trans('search.mans') }}</h2>
+                            @else
+                                <h2>{{ trans('search.girls') }}</h2>
+                            @endif
+                        @elseif(Auth::user()->hasRole('female'))
+                            <h2>{{ trans('search.mans') }}</h2>
+                        @elseif(Auth::user()->hasRole('male'))
                             <h2>{{ trans('search.girls') }}</h2>
                         @else
-                            <h2>{{ trans('search.mans') }}</h2>
+                            @if($_POST && $search_attrs['looking'] == 4)
+                                <h2>{{ trans('search.mans') }}</h2>
+                            @else
+                                <h2>{{ trans('search.girls') }}</h2>
+                            @endif
                         @endif
                     </header>
 

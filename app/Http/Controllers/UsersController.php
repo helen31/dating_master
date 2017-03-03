@@ -7,6 +7,7 @@ use App\Models\Country;
 use App\Models\Messages;
 use App\Models\Profile;
 use App\Models\Passport;
+use App\Models\profileImages;
 use App\Models\Session;
 use App\Models\Smiles;
 use App\Models\State;
@@ -68,11 +69,13 @@ class UsersController extends Controller
             ->where('users.id', '=', $id)
             ->first();
 
+        $profile_images = profileImages::where('user_id', '=', $id)->get();
         $albums = Album::where('user_id', '=', $id)->get();
 
         return view('client.profile.show')->with([
             'u' => $user,
             'id' => $id,
+            'profile_images' => $profile_images,
             'albums' => $albums,
             'sign'  => $this->zodiacSignService->getSignByBirthday($user->birthday),
         ]); 
@@ -141,12 +144,33 @@ class UsersController extends Controller
      */
     public function profilePhoto(int $id)
     {
+        $profile_images = profileImages::where('user_id', '=', $id)->get();
         $albums = Album::where('user_id', '=', $id)->get();
 
         return view('client.profile.photos')->with([
+            'profile_images' => $profile_images,
             'albums' => $albums,
             'id' => $id,
         ]);
+    }
+    public function  profilePhotoAdd($id, Request $request){
+
+        if($request->hasFile('profile_photo')){
+            $profile_photos = $request->file('profile_photo');
+            foreach($profile_photos as $photo){
+                $profile_image = new profileImages();
+                $profile_image->url = $this->upload($photo);
+                $profile_image->user_id = $id;
+                $profile_image->save();
+            }
+        }
+        return redirect('profile/'.$id.'/photo');
+    }
+    public function profilePhotoDelete($photo_id){
+        $image = profileImages::find($photo_id);
+        $this->removeFile('/uploads/'.$image->image);
+        profileImages::destroy($photo_id);
+        return response('success', 200);
     }
 
     /**
@@ -248,15 +272,25 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'first_name' => 'required',
-            'second_name'  => 'required',
-            'email'      => 'required',
-            'birthday'   => 'required',
-            'phone'     => 'required',
-            'passno'    => 'required',
-            'pass_date' => 'required',
-        ]);
+        if(\Auth::user()->hasRole('Female')){
+            $this->validate($request, [
+                'first_name' => 'required',
+                'second_name'  => 'required',
+                'email'      => 'required',
+                'birthday'   => 'required',
+                'phone'     => 'required',
+                'passno'    => 'required',
+                'pass_date' => 'required',
+            ]);
+        }else{
+            $this->validate($request, [
+                'first_name' => 'required',
+                'second_name'  => 'required',
+                'email'      => 'required',
+                'birthday'   => 'required',
+                'phone'     => 'required',
+            ]);
+        }
 
         /* Обновление данных пользователя - таблица users */
 
@@ -387,5 +421,29 @@ class UsersController extends Controller
     {
         $age = Carbon::now()->diffInYears(Carbon::createFromFormat('Y-m-d', $birthday));
         return $age;
+    }
+    /**
+     * Приостановление профиля (пользователем)
+     */
+    public function deactivate($id)
+    {
+        $user = $this->user->find($id);
+        $user->status_id = 2; //Статус профиля - приостановлен
+        $user->save();
+
+        \Session::flash('flash_success', trans('flash.profile_update_success'));
+        return redirect()->back();
+    }
+    /**
+     * Активация профиля (пользователем)
+     */
+    public function activate($id)
+    {
+        $user = $this->user->find($id);
+        $user->status_id = 5; //Статус профиля - на модерации
+        $user->save();
+
+        \Session::flash('flash_success', trans('flash.profile_update_success'));
+        return redirect()->back();
     }
 }

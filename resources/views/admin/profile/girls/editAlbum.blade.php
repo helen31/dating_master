@@ -117,7 +117,7 @@
 @section('content')
 
     <section class="panel">
-        <header class="panel-heading">{{ trans('albums.create') }}</header>
+        <header class="panel-heading">{{ trans('albums.edit') }}</header>
         <div class="panel-body">
             @if (count($errors) > 0)
                 <div class="alert alert-danger">
@@ -135,7 +135,7 @@
                 </div>
                 <div class="form-group">
                     {!! Form::label(trans('albums.cover')) !!}
-                    {!! Form::file('cover_image', ['class' => 'file','id'=>'cover_image', 'accept' => 'image/*'],"uploads/".$album->cover_image) !!}
+                    {!! Form::file('cover_image', ['class' => 'file','id'=>'cover_image', 'accept' => 'image/*'],"uploads/albums/".$album->cover_image) !!}
                 </div>
                 <div class="form-group">
                     {!! Form::label(trans('albums.choose')) !!}
@@ -151,7 +151,7 @@
                 <div class="col-md-12">
                     @foreach($photos as $p)
                         <div class="photo" id="photo-{{$p->id}}">
-                            <img src="{{ url('/uploads/'.$p->image) }}" width="100%">
+                            <img src="{{ url('/uploads/albums/'.$p->image) }}" width="100%">
                             <a class="delete_gallery" href="#" onclick="deleteFoto(event,{{$p->id}});"  ><i class="fa fa-trash-o"></i></a>
                         </div>
                     @endforeach
@@ -183,7 +183,7 @@
             validateInitialCount: true,
             overwriteInitial: true,
             initialPreview: [
-                "<img style='height:160px' src='/uploads/{{$album->cover_image}}'>",
+                "<img style='height:160px' src='/uploads/albums/{{$album->cover_image}}'>",
             ],
             allowedFileExtensions: ["jpg", "png", "gif", "jpeg"]
         });

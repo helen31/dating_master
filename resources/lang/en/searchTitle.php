@@ -8,7 +8,7 @@ return [
 	'woman'							=>	'Woman',
 	'man1'							=>	'Man',
 	'woman1'						=> 'Woman',
-	'lookingForA'					=> 'Looking for a',
+	'lookingForA'					=> 'I am looking for a',
 	'age' 							=> 'Age',
 	'findYourTrueLove'				=> 'FIND YOUR TRUE LOVE',
 	'findAPerson'					=> 'Find a person',

@@ -6,11 +6,12 @@ return [
 
     'my'        => 'My Profile',
     'primary'   => 'My profile',
-    'photo'     => 'My Photos',
-    'video'     => 'My Video',
+    'photo'     => 'Profile photos',
+    'video'     => 'Video',
     'smiles'    => 'Smiles',
-    'gifts'     => 'My Gifts',
+    'gifts'     => 'Gifts',
     'Myphotos'    => 'My photos',
+    'gallery'   => 'Gallery',
 
     /* -- Form Profile Labels -- */
 

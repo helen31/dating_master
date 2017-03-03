@@ -79,6 +79,10 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
+        $status_id = 5; //При создании статус анкеты женщины - на модерации
+        if($data['gender'] == 4){
+            $status_id = 1; //А мужчины - активный
+        }
         $user = new User([
             'first_name' => $data['first_name'],
             'last_name'  => $data['last_name'],
@@ -86,7 +90,7 @@ class AuthController extends Controller
             'password'   => bcrypt($data['password']),
             'role_id'    => $data['gender'],
             'partner_id' => 1,
-            'status_id'  => 5,
+            'status_id'  => $status_id,
         ]);
         $user->save();
 

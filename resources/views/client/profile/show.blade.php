@@ -2,6 +2,14 @@
 
 @section('profileContent')
     <style>
+        .grg-img-photo{
+            height: 160px;
+            width: auto;
+        }
+        .grg-photo-frame{
+            float: left;
+            padding: 4px;
+        }
         .item.last_create a{
             opacity: 0.9;
             transition: 0.2s;
@@ -29,7 +37,7 @@
                         </div>
                         <div class="text-right">ID: {{ $u->uid }}</div>
                         <div class="text-right">{{ trans('profile.age') }}: {{ date('Y-m-d') - $u->birthday }}</div>
-                        <div class="text-right">From: {{ trans('country.'.$u->country) }}</div>
+                        <div class="text-right">From: {{ (\App::getLocale() == 'ru') ? $u->country : $u->country_en }}</div>
                         <div class="icons">
                             <i class="fa fa-smile-o" aria-hidden="true"></i>
                             <i class="fa fa-envelope-o" aria-hidden="true"></i>
@@ -39,16 +47,16 @@
                 </div>
                 <div class="col-md-12 col-xs-12">
                     <div class="four_icons">
-                            <div class="col-xs-3">Photos</div>
-                            <div class="col-xs-3">Videos</div>
-                            <div class="col-xs-3">Likes</div>
-                            <div class="col-xs-3">Gift</div>
+                            <div class="col-xs-3">{{ trans('profile.photo') }}</div>
+                            <div class="col-xs-3">{{ trans('profile.video') }}</div>
+                            <div class="col-xs-3">{{ trans('profile.smiles') }}</div>
+                            <div class="col-xs-3">{{ trans('profile.gifts') }}</div>
                     </div>
                 </div>
                 <div class="col-md-12 col-xs-12">
                     <div class="col-md-6 col-xs-6">
                         <ul class="mob_info">
-                            <li>{{ trans('profile.country') }}: {{ trans('country.'.$u->country) }}</li>
+                            <li>{{ trans('profile.country') }}: {{ (\App::getLocale() == 'ru') ? $u->country : $u->country_en }}</li>
                             <li>{{ trans('profile.height') }}: {{ $u->height }}</li>
                             <li>{{ trans('profile.eyes') }}: {{ trans('profile.'.$u->eyes) }}</li>
 
@@ -56,7 +64,7 @@
                     </div>
                     <div class="col-md-6 col-xs-6">
                         <ul class="mob_info">
-                            <li>{{ trans('profile.horoscope') }}: horoscope (Db err)</li>
+                            <li>{{ trans('profile.horoscope') }}: {{ trans('horoscope.'.$sign) }}</li>
                             <li>{{ trans('profile.height') }}: {{ $u->weight }}</li>
                             <li>{{ trans('profile.hair') }}: {{ trans('profile.'.$u->hair) }}</li>
                         </ul>
@@ -88,7 +96,7 @@
                         <div class="col-md-6"><strong>{{ trans('profile.city') }}:</strong> {{ (\App::getLocale() == 'ru') ? $u->city : $u->city_en }}</div>
                     </div>
                     <div class="row info">
-                        <div class="col-md-6"><strong>{{ trans('profile.zodiac') }}:</strong> {{trans('horoscope.'.$sign) }}</div>
+                        <div class="col-md-6"><strong>{{ trans('profile.zodiac') }}:</strong> {{ trans('horoscope.'.$sign) }}</div>
                         <div class="col-md-6"><strong>{{ trans('profile.height') }}:</strong> {{ $u->height }}</div>
                     </div>
                     <div class="row info">
@@ -135,12 +143,13 @@
                             </div>  
                         </div>
                     </div>
-                    <!-- todo: fix view -->
+                    <!--
                         <div class="col-md-2">
                             <button name="horoscope" class="btn btn-success">Show horoscope compability</button>
                             <button name="flp" class="btn btn-success">○	имя + фамилия + телефон </button>
                             <button name="fle" class="btn btn-success">○	имя + фамилия + email </button>
                         </div>
+                    -->
                 </div>
                 <div class="row col-md-12">
                     <div>
@@ -149,7 +158,6 @@
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="presentation" class="active"><a href="#about" aria-controls="about" role="tab" data-toggle="tab">{{ trans('profile.about') }}</a></li>
                             <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">{{ trans('profile.looking') }}</a></li>
-                            <li role="presentation"><a href="#partner" aria-controls="partner" role="tab" data-toggle="tab">@Partner link</a></li>
                         </ul>
 
                         <!-- Tab panes -->
@@ -160,34 +168,40 @@
                             <div role="tabpanel" class="tab-pane" id="profile">
                                 {{ $u->looking }}
                             </div>
-                            <div role="tabpanel" class="tab-pane" id="partner">
-                                @Partner massage (Need edit DB table for it.)
-                            </div>
                         </div>
 
                     </div>
                 </div>
-                <div class="row col-md-12 gallery">
-                <hr />
-                    <header>Gallery</header>
-                    <div class="owl row online">
-                        @foreach($albums as $a)
-                            <div class="item col-md-4">
-                                <div class="row text-center">
-                                    <a href="{{ url(App::getLocale().'/profile/'.$id.'/gallery/'.$a->id) }}">
-                                        <img src="{{ url('/uploads/'.$a->cover_image) }}" width="250px">
-                                        <div class="text-center">{{ $a->name }}</div>
-                                    </a>
+                <div class="col-md-12">
+                    <br>
+                    <hr>
+                    <header>{{ trans('profile.photo') }}</header>
+                    <br>
+                    @foreach($profile_images as $p_image)
+                        <div class="grg-photo-frame" id="photo-{{$p_image->id}}">
+                            <img class="grg-img-photo" src="{{ url('/uploads/'.$p_image->url) }}">
+                        </div>
+                    @endforeach
+                </div>
+                <div class="col-md-12">
+                    @if($u->gender = 'female' && count($albums) > 0)
+                        <br>
+                        <hr>
+                        <header>{{ trans('albums.albums') }}</header>
+                        <br>
+                        <div class="owl row online">
+                            @foreach($albums as $a)
+                                <div class="item col-md-4">
+                                    <div class="row text-center">
+                                        <a href="{{ url(App::getLocale().'/profile/'.$id.'/show_album/'.$a->id) }}">
+                                            <img src="{{ url('/uploads/albums/'.$a->cover_image) }}" width="250px">
+                                            <div class="text-center">{{ $a->name }}</div>
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
-                        @endforeach
-                            <div class="item last_create col-md-4">
-                                <a href="#">
-                                    <img style="    width: 100%;" class="create" src="/public/uploads/add_image.png">
-                                    <div class="text-center">{{ trans('add.photo') }}</div>
-                                </a>
-                            </div>
-                    </div>
+                            @endforeach
+                        </div>
+                    @endif
                 </div>
             </div>
 

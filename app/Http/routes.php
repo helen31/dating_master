@@ -77,24 +77,28 @@ Route::group([  'prefix'        => LaravelLocalization::setLocale(),
     Route::get('profile/message', 'MessagesController@index');
     Route::get('profile/{id}', 'UsersController@edit');
     Route::get('profile/{id}/photo', 'UsersController@profilePhoto');
+    Route::get('profile/{id}/albums', 'AlbumController@profileAlbum');
     Route::get('profile/{id}/video', 'UsersController@profileVideo');
     Route::get('profile/{id}/mail', 'UsersController@profileMail');
     Route::get('profile/{id}/smiles', 'UsersController@profileSmiles');
     Route::get('profile/{id}/gifts', 'UsersController@profileGifts');
     Route::get('profile/{id}/finance', 'UsersController@profileFinance');
 
-
-    Route::get('profile/album/add', 'AlbumController@create');
-    Route::get('profile/{id}/gallery/{aid}', 'AlbumController@show');
-
-    Route::post('profile/album/add', 'AlbumController@make');
-    //todo edit album
+    Route::post('profile/{id}/photo', 'UsersController@profilePhotoAdd');
+    Route::post('profile/dropProfilePhoto/{photo_id}', 'UsersController@profilePhotoDelete'); // Delete photo from Girl
 
     Route::post('profile/message', 'MessagesController@send');
     Route::post('profile/update/{id}', 'UsersController@update');
 
-    Route::post('remove/album', 'AlbumController@drop');
-    Route::post('remove/image', 'AlbumController@dropImage');
+
+    /* Albums */
+    Route::get('profile/{id}/add_album', 'AlbumController@createAlbum'); // Create album form
+    Route::get('profile/{id}/edit_album/{aid}', 'AlbumController@editAlbum'); // Edit album form
+
+    Route::post('profile/{id}/add_album', 'AlbumController@addAlbum'); // Create and save albums and inner photos
+    Route::post('profile/{id}/edit_album/{aid}', 'AlbumController@saveAlbum'); // Save editing albums
+    Route::post('profile/dropImageAlbum/{aid}', 'AlbumController@dropImageAlbum'); // Delete photo from albums
+    Route::post('profile/deleteAlbum/{albumID}', 'AlbumController@deleteAlbum'); // Delete album with inner photo
 
 
     /** Videos */
@@ -150,9 +154,12 @@ Route::group([  'prefix' => LaravelLocalization::setLocale().'/admin',
     Route::get('partner/show/{id}', 'Admin\PartnerController@show');
     Route::get('partner/edit/{id}', 'Admin\PartnerController@edit');
     Route::get('partner/drop/{id}', 'Admin\PartnerController@destroy');
+    Route::get('partner/activate/{id}', 'Admin\PartnerController@activate');//Активация анкеты девушки
+    Route::get('partner/deactivate/{id}', 'Admin\PartnerController@deactivate'); //Деактивация анкеты девушки
 
     Route::post('partner/store', 'Admin\PartnerController@store');
     Route::post('partner/edit/{id}', 'Admin\PartnerController@update');
+
     /** End partners profile routing */
 
     /** Start Moderator Profile routing */
@@ -181,7 +188,7 @@ Route::group([  'prefix' => LaravelLocalization::setLocale().'/admin',
     Route::get('girl/drop/{id}', 'Admin\GirlsController@destroy');//
     Route::get('girl/restore/{id}', 'Admin\GirlsController@restore');
     Route::post('girl/edit/{id}/add_album', 'Admin\GirlsController@addAlbum'); // Create Girl save albums
-    Route::post('girl/edit/{id}/edit_album/{aid}', 'Admin\GirlsController@saveAlbume'); // Save editing Girl albums
+    Route::post('girl/edit/{id}/edit_album/{aid}', 'Admin\GirlsController@saveAlbum'); // Save editing Girl albums
     Route::post('girl/dropImageAlbum/{aid}', 'Admin\GirlsController@dropImageAlbum'); // Delete photo from Girl albums
     Route::post('girl/dropProfileFoto/{fid}', 'Admin\GirlsController@dropProfileFoto'); // Delete photo from Girl albums
     //showAlbum
@@ -278,6 +285,8 @@ Route::group([ 'prefix' => LaravelLocalization::setLocale(),
     Route::get('users/online', 'UsersController@online');
 
     Route::get('profile/show/{id}', 'UsersController@show');
+    Route::get('profile/{id}/show_album/{aid}', 'AlbumController@showAlbum'); // Edit album
+
 
     /** Payments */
     Route::get('pricing', 'PaymentsController@addBalance');

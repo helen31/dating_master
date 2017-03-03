@@ -29,6 +29,7 @@ class GirlsController extends Controller
     private $user;
     private $profile;
     private $profileImages;
+    private $album;
     private $passport;
     private $passport_photos = [];
 
@@ -37,7 +38,7 @@ class GirlsController extends Controller
         $this->middleware('auth');
 
         $this->user = $user;
-        $this->Album = $album;
+        $this->album = $album;
         $this->profile = $profile;
         $this->passport = $passport;
         $this->profileImages=$profileImages;
@@ -426,7 +427,6 @@ class GirlsController extends Controller
         \Session::flash('flash_success', trans('flash.profile_update_success'));
         return redirect()->back();
     }
-
     /**
      * Удаление профиля девушки
      *
@@ -531,8 +531,8 @@ class GirlsController extends Controller
     {
         $photos = Images::where('album_id', '=', $aid)->get();
         $album_Data = Album::where('id', '=' ,$aid)->get()[0];
-        return view('admin.profile.girls.editAlbume')->with([
-            'heading' => 'Edit Albume',
+        return view('admin.profile.girls.editAlbum')->with([
+            'heading' => 'Edit Album',
             'photos' => $photos,
             'id'     => $id,
             'album' => $album_Data,
@@ -567,7 +567,7 @@ class GirlsController extends Controller
          */
         $album = new Album();
         $album->name          = $request->input('name');
-        $album->cover_image   = $this->upload($request->file('cover_image'));
+        $album->cover_image   = $this->upload($request->file('cover_image'), 'albums/');
         $album->user_id       = $id;
         $album->save();
         /**
@@ -576,18 +576,18 @@ class GirlsController extends Controller
         foreach ($request->allFiles()['files'] as $file) {
             $image = new Images();
             $image->album_id = $album->id;
-            $image->image = $this->upload($file);
+            $image->image = $this->upload($file, 'albums/');
             $image->save();
         }
         return redirect('/'.\App::getLocale().'/admin/girl/edit/'.$id);
     }
 
-    public function saveAlbume(Request $request,$id,$aid){
-        $album = $this->Album->find($aid);
+    public function saveAlbum(Request $request,$id,$aid){
+        $album = $this->album->find($aid);
         $album->name=$request->input('name');
         $files=$request->allFiles();
         if(isset($files['cover_image'])){
-            $album->cover_image=$this->upload($files['cover_image']);
+            $album->cover_image=$this->upload($files['cover_image'],'albums/');
         }
         $album->save();
 
@@ -595,7 +595,7 @@ class GirlsController extends Controller
             if(!is_null($file)){
                 $image = new Images();
                 $image->album_id = $aid;
-                $image->image = $this->upload($file);
+                $image->image = $this->upload($file, 'albums/');
                 $image->save();
             }
         }
@@ -617,7 +617,7 @@ class GirlsController extends Controller
     public function dropImageAlbum($aid)
     {
         $image = Images::find($aid);
-        $this->removeFile('/uploads/'.$image->image);
+        $this->removeFile('/uploads/albums/'.$image->image);
         Images::destroy($aid);
         return response('success', 200);
     }
@@ -632,7 +632,7 @@ class GirlsController extends Controller
     {
         $images = Images::where('album_id', '=', $albumId);
         foreach ($images as $i){
-            $this->removeFile('/uploads/'.$i->image);
+            $this->removeFile('/uploads/albums/'.$i->image);
         }
 
         Album::destroy($albumId);

@@ -1,6 +1,9 @@
 <ul class="nav">
     <li><a href="/{{ App::getLocale() }}/profile/show/{{ Auth::user()->id }}">{{ trans('profile.my') }}</a></li>
     <li><a href="/{{ App::getLocale() }}/profile/{{ Auth::user()->id }}/photo/">{{ trans('profile.photo') }}</a></li>
+    @if( Auth::user()->hasRole('Female') )
+        <li><a href="/{{ App::getLocale() }}/profile/{{ Auth::user()->id }}/albums/">{{ trans('albums.albums') }}</a></li>
+    @endif
     <li><a href="/{{ App::getLocale() }}/profile/{{ Auth::user()->id }}/video/">{{ trans('profile.video') }}</a></li>
     <li><a href="/{{ App::getLocale() }}/search">{{ trans('search.search') }}</a></li>
     <li><a href="/{{ App::getLocale() }}/profile/{{ Auth::user()->id }}/mail/">{{ trans('mail.mail') }}</a></li>

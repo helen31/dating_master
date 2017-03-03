@@ -114,14 +114,16 @@ class Controller extends BaseController
     
     /**
      * Upload file to storage
+     * Если нужно поместить файл во внутреннюю папку, например в uploads/albums/,
+     * нужно указать $folder = 'albums/'
      *
      * @param object $file
      * @return string $name
      */
-    public function upload($file)
+    public function upload($file, $folder='')
     {
         $name = time()."-".$file->getClientOriginalName();
-        $destination = public_path().'/uploads/';
+        $destination = public_path().'/uploads/'.$folder;
         $file->move($destination, $name);
 
         return $name;

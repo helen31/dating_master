@@ -106,11 +106,11 @@ ul.mob_info {
 }
 .btn-default {
     border-color: #B02642;
-    font-size: 16px;
+    /*font-size: 16px;*/
 }
 .btn-default i{
     color: #B02642;
-    font-size: 26px;
+    /*font-size: 26px;*/
 }
 .dropdown.btn.btn-default.pull-right {
     border-color: transparent;
@@ -320,9 +320,8 @@ hr {
 }
 .form-control {
     padding: 5px 5px;
-}
-.form-control[name="I"] {
-    width: 123px;
+    margin: 0;
+    z-index: 0;
 }
 .navi {
     text-align: right;
@@ -462,32 +461,6 @@ li.profile_name {
     font-size: 30px;
 }
 
-
-/*------------------
-    Search Form
-------------------*/
-.col-md-8 .search-form select.form-control {
-    width: 75px;
-    float: right;
-}
-.col-md-8 .search-form label {
-    line-height: 40px;
-}
-label[for="drink"] {
-    /*float: right;*/
-    margin-right: 35px;
-}
-.form-control[name="looking"] {
-    min-width: 122px;
-}
-.search-form .text-right a {
-    color: #fff;
-    margin-bottom: 5px;
-    display: block;
-}
-select[name='age_start'], select[name='age_stop'] {
-    max-width: 49px;
-}
 /* ---------------
     PAGINATION
 -----------------*/
@@ -594,18 +567,11 @@ select[name='age_start'], select[name='age_stop'] {
     .search-form center {
         font-size: 16px;
     }
-    .form-control[name="looking"], .form-control[name="I"] {
-        width: 95px;
-        min-width: 95px;
-    }
     #button-login, #button-register {
         font-size: 12px;
     }
 }
 @media screen and (max-width: 992px) {
-    .form-control[name="looking"], .form-control[name="I"] {
-        width: 123px;
-    }
     .text-right {
         text-align: center;
     }
@@ -692,14 +658,7 @@ select[name='age_start'], select[name='age_stop'] {
     #footer a {
         text-align: center;
     }
-/* --- @Search    ---*/
-    label[for="drink"] {
-        float: left;
-    }
-    .col-md-8 .search-form select.form-control {
-        width: 100%;
-        max-width: 200px;
-    }
+
 /* --- @Profile --- */
     #profileMenu {
         display: none;
@@ -875,4 +834,11 @@ select[name='age_start'], select[name='age_stop'] {
     #profileMenu {
         display: block;
     }
+}
+/* --- Search ---- */
+.grg-search-input{
+    padding: 5px;
+}
+.grg-long-select{
+    max-width: 200px;
 }
