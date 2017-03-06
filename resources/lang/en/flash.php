@@ -7,9 +7,12 @@ return [
     'profile_add_success' => 'Profile has been successfully added',
     'profile_update_success' => 'Profile has been successfully updated',
 
-    'profile_deactive' => 'Your profile is deactive by moderator',
+    'profile_deactive' => 'Your profile is deactive',
     'profile_dismiss' => 'Your profile is dismissed by moderator',
+    'profile_onmoderation' => 'Your profile has been send to moderator',
     'profile_is_not_visible' => 'Therefore, other people are not yet seeing you',
+    'profile_is_not_visible_moder' => 'Your profile will be visible when it is approved by the moderator',
+    'profile_deleted' => 'Your profile has been deleted',
     'reason' => 'Reason',
     'eliminate' => 'Correct the reason to activate your account again',
 

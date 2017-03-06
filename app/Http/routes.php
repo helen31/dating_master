@@ -84,6 +84,10 @@ Route::group([  'prefix'        => LaravelLocalization::setLocale(),
     Route::get('profile/{id}/gifts', 'UsersController@profileGifts');
     Route::get('profile/{id}/finance', 'UsersController@profileFinance');
 
+    Route::get('profile/activate/{id}', 'UsersController@activate'); // Активировать аккаунт
+    Route::get('profile/deactivate/{id}', 'UsersController@deactivate'); // Деактивировать аккаунт
+    Route::get('profile/drop/{id}', 'UsersController@delete'); // Удалить аккаунт
+
     Route::post('profile/{id}/photo', 'UsersController@profilePhotoAdd');
     Route::post('profile/dropProfilePhoto/{photo_id}', 'UsersController@profilePhotoDelete'); // Delete photo from Girl
 

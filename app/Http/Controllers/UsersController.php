@@ -431,7 +431,6 @@ class UsersController extends Controller
         $user->status_id = 2; //Статус профиля - приостановлен
         $user->save();
 
-        \Session::flash('flash_success', trans('flash.profile_update_success'));
         return redirect()->back();
     }
     /**
@@ -443,7 +442,15 @@ class UsersController extends Controller
         $user->status_id = 5; //Статус профиля - на модерации
         $user->save();
 
-        \Session::flash('flash_success', trans('flash.profile_update_success'));
         return redirect()->back();
+    }
+    public function delete($id)
+    {
+        $user = $this->user->find($id);
+        $user->status_id = 4; //Статус профиля - удален
+        $user->save();
+        $user->delete();
+
+        return redirect('/');
     }
 }

@@ -65,7 +65,7 @@
                     </a>
                 @else
                     <a href="{{ url(App::getLocale().'/admin/partner/deactivate/'.$user->id) }}" class="btn btn-warning btn-xs" >
-                        <i class="fa fa-stop-circle-o"></i>  Приостановить
+                        <i class="fa fa-pause"></i>  Приостановить
                     </a>
                 @endif
             @endif

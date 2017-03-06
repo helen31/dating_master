@@ -90,6 +90,10 @@ return [
     'contacts'  => 'Contacts',
     'required_fields' => 'Required fields',
 
+    'activate' => 'Activate profile',
+    'deactivate' => 'Deactivate profile',
+    'drop' => 'Delete profile',
+
     /* -- Smiles -- */
 
     'smile'     => 'You have wink from ',

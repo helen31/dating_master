@@ -9,7 +9,22 @@
 
 @section('profileContent')
     <section class="panel panel-default">
-        <header class="panel-heading">{{ trans('profile.edit') }}</header>
+        <header class="panel-heading">
+            {{ trans('profile.edit') }}
+            @if(Auth::user()->status_id == 2)
+                <a href="{{ url(App::getLocale().'/profile/activate/'.Auth::user()->id) }}" class="btn btn-success btn-xs" >
+                    <i class="fa fa-arrow-up"></i>  {{ trans('profile.activate') }}
+                </a>
+            @else
+                <a href="{{ url(App::getLocale().'/profile/deactivate/'.Auth::user()->id) }}" class="btn btn-warning btn-xs" >
+                    <i class="fa fa-pause"></i>  {{ trans('profile.deactivate') }}
+                </a>
+            @endif
+            <a href="{{ url(App::getLocale().'/profile/drop/'.Auth::user()->id) }}" class="btn btn-danger btn-xs" >
+                <i class="fa fa-trash-o"></i>  {{ trans('profile.drop') }}
+            </a>
+        </header>
+
         <div class="panel-body">
             @if (count($errors) > 0)
                 <div class="alert alert-danger">
