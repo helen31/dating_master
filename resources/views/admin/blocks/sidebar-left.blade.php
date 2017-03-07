@@ -48,7 +48,7 @@
             @endif
             <li class="menu-list">
                 <a href=""><i class="fa fa-female "></i>
-                    <span>{{ trans('admin/sidebar-left.profiles') }}</span></a>
+                    <span>{{ trans('admin/sidebar-left.girls') }}</span></a>
                 <ul class="child-list">
 
                     <li><a href="{{ url(App::getLocale().'/admin/girls') }}"> {{ trans('admin/sidebar-left.allProfiles') }}</a></li>
@@ -61,6 +61,20 @@
                     <li><a href="{{ url(App::getLocale().'/admin/girls/moderation') }}"> {{ trans('admin/sidebar-left.moderation') }}</a></li>
                 </ul>
             </li>
+            @if(Auth::User()->hasRole('Owner') || Auth::User()->hasRole('Moder'))
+                <li class="menu-list">
+                    <a href=""><i class="fa fa-male "></i>
+                        <span>{{ trans('admin/sidebar-left.men') }}</span></a>
+                    <ul class="child-list">
+                        <li><a href="{{ url(App::getLocale().'/admin/men') }}"> {{ trans('admin/sidebar-left.allProfiles') }}</a></li>
+                        <li><a href="{{ url(App::getLocale().'/admin/man/active') }}">{{ trans('admin/sidebar-left.active') }}</a></li>
+                        <li><a href="{{ url(App::getLocale().'/admin/man/deactive') }}"> {{ trans('admin/sidebar-left.deactive') }}</a></li>
+                        <li><a href="{{ url(App::getLocale().'/admin/man/dismiss') }}"> {{ trans('admin/sidebar-left.dismiss') }}</a></li>
+                        <li><a href="{{ url(App::getLocale().'/admin/man/deleted') }}"> {{ trans('admin/sidebar-left.deleted') }}</a></li>
+                        <li><a href="{{ url(App::getLocale().'/admin/man/moderation') }}"> {{ trans('admin/sidebar-left.moderation') }}</a></li>
+                    </ul>
+                </li>
+            @endif
             @if( Auth::User()->hasRole('Partner'))
                 <li>
                     <a href="{{ url(App::getLocale().'/admin/finance') }}"> <i class="fa fa-money"></i>{{ trans('admin/sidebar-left.financeReports') }}</a>

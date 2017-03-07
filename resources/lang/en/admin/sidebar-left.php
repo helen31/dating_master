@@ -34,5 +34,7 @@ return[
 	'addPage'		=> 'Add page',
 	'horoscope'		=> 'Horoscope',
 	'profile'		=> 'Profile',
+    'girls'         => 'Girls',
+    'men'           => 'Men',
 
 ];

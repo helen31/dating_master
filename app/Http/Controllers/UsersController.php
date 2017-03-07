@@ -15,6 +15,7 @@ use App\Models\User;
 use App\Services\ZodiacSignService;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
 class UsersController extends Controller
@@ -316,7 +317,11 @@ class UsersController extends Controller
         $user->state_id   = $request->input('state');
         $user->city_id    = $request->input('city');
         $user->status_message = NULL;
-        $user->status_id  = 5;
+        if(Auth::user()->hasRole('Male')){
+            $user->status_id = 1; //Статус профиля - активный
+        }else{
+            $user->status_id = 5; //Статус профиля - на модерации
+        }
 
         $user->save();
 
@@ -413,7 +418,7 @@ class UsersController extends Controller
         }
     }
 
-    /* Определение возраста девушки
+    /* Определение возраста
         Принимает: дату рождения в формате 'Y-m-d'
         Возвращает: возраст (int)
      */
@@ -439,7 +444,11 @@ class UsersController extends Controller
     public function activate($id)
     {
         $user = $this->user->find($id);
-        $user->status_id = 5; //Статус профиля - на модерации
+        if(Auth::user()->hasRole('Male')){
+            $user->status_id = 1; //Статус профиля - активный
+        }else{
+            $user->status_id = 5; //Статус профиля - на модерации
+        }
         $user->save();
 
         return redirect()->back();

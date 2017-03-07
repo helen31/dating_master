@@ -204,6 +204,18 @@ Route::group([  'prefix' => LaravelLocalization::setLocale().'/admin',
     Route::post('girl/changepartner', 'Admin\GirlsController@changePartner'); //change girlStatus from edit profile page
     /** End Girls Profile routing */
 
+    /** Start Men Profile routing **/
+    Route::get('men', 'Admin\ManController@index'); //All
+    Route::get('man/{status}', 'Admin\ManController@getByStatus'); //Return all by status
+    Route::get('man/edit/{id}', 'Admin\ManController@edit'); // Edit man profile
+
+    Route::get('man/drop/{id}', 'Admin\ManController@destroy');
+    Route::get('man/restore/{id}', 'Admin\ManController@restore');
+
+    Route::post('man/dropProfileFoto/{fid}', 'Admin\ManController@dropProfileFoto'); // Delete photo from Girl albums
+    Route::post('man/edit/{id}','Admin\ManController@update');// Update db
+    /** End Men Profile routing **/
+
 
     /** Start Gifts  */
     Route::get('gifts/', 'Admin\GiftsController@index');
