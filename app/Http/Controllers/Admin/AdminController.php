@@ -53,21 +53,62 @@ class AdminController extends Controller
                 ->where('status_id', '=', 5)
                 ->get();
 
+            $noprofile = User::where('role_id', '=', '5')
+                ->where('status_id', '=', 6)
+                ->get();
+
+            $men = User::where('role_id', '=', '4')->get();
+
+            $m_active = User::where('role_id', '=', '4')
+                ->where('status_id', '=', 1)
+                ->get();
+            $m_deactive = User::where('role_id', '=', '4')
+                ->where('status_id', '=', 2)
+                ->get();
+
+            $m_dismiss = User::where('role_id', '=', '4')
+                ->where('status_id', '=', 3)
+                ->get();
+
+            $m_deleted = User::withTrashed()
+                ->where('role_id', '=', '4')
+                ->where('status_id', '=', 4)
+                ->get();
+
+            $m_moderation = User::where('role_id', '=', '4')
+                ->where('status_id', '=', 5)
+                ->get();
+
+            $m_noprofile = User::where('role_id', '=', '4')
+                ->where('status_id', '=', 6)
+                ->get();
+
             $partner = User::where('role_id', '=', '3')->get();
             $moderator = User::where('role_id', '=', '2')->get();
-            $man = User::where('role_id', '=', '4')->get();
+
 
             return view('admin.dashboard')->with([
                 'heading' => $heading,
+
                 'girls' => $girls,
                 'active' => $active,
                 'deactive' => $deactive,
                 'dismiss' => $dismiss,
                 'deleted' => $deleted,
                 'moderation' => $moderation,
+                'noprofile' => $noprofile,
+
+                'men' => $men,
+                'm_active' => $m_active,
+                'm_deactive' => $m_deactive,
+                'm_dismiss' => $m_dismiss,
+                'm_deleted' => $m_deleted,
+                'm_moderation' => $m_moderation,
+                'm_noprofile' => $m_noprofile,
+
                 'partner' => $partner,
                 'moderator' => $moderator,
-                'man' => $man,
+
             ]);
         }
         if(Auth::user()->hasRole('Partner')){

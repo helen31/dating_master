@@ -17,8 +17,9 @@
                 @if( Auth::user()->hasRole('Owner') )
                     <th>{{trans('/admin/index.partner')}}</th>
                 @endif
-                <th>{{trans('/admin/index.online')}}</th>
-                <th>{{trans('/admin/index.webCam')}}</th>
+                <th>Online</th>
+                <th>Camera</th>
+                <th>Hot</th>
                 <th>{{trans('/admin/index.lastEntrance')}}</th>
                 <th><i class="fa fa-cogs"></i>{{trans('/admin/index.control')}}</th>
                 </thead>
@@ -29,24 +30,46 @@
                         <td>{{ $girl->first_name }} {{ $girl->last_name }}</td>
                         <td><img width="150px" src="{{ url('uploads/'.$girl->avatar)}}"></td>
                         @if( Auth::user()->hasRole('Owner') )
-                            <td>{{ $girl->partner_id }}</td> <!-- Уточнить что выводить -->
+                            <td>
+                                @if($girl->partner_id != 1)
+                                    <a href="{{ url('admin/partner/show/'.$girl->partner_id) }}">
+                                        {{ \App\Http\Controllers\Admin\GirlsController::getPartnerNameByID($girl->partner_id) }}
+                                    </a>
+                                @else
+                                   Admin
+                                @endif
+                            </td>
                         @endif
 
-                        <td>
+                        <td style="text-align:center;">
                             @if($girl->isOnline())
-                                <button class="btn btn-small online_btn"> Online </button>
+                                <i class="fa fa-eye"></i>
+                                <p>Online</p>
                             @else
-                                <span class="red">{{ trans('admin.No') }}</span>
+                                -
                             @endif
                         </td>
-                        <td>
+                        <td style="text-align:center;">
                             @if($girl->webcam !== 0)
-                                <span class="green">{{ trans('admin.yes') }}</span>
+                                <i class="fa fa-desktop"></i>
+                                <p>WebCam</p>
                             @else
-                                <span class="red">{{ trans('admin.No') }}</span>
+                                -
                             @endif
                         </td>
-                        <td> {{ $girl->last_login }} </td>
+                        <td style="text-align:center;">
+                            @if($girl->hot !== 0)
+                                <i class="fa fa-heart"></i>
+                                <p>Hot</p>
+                            @else
+                                -
+                            @endif
+                        </td>
+
+                        <td>
+                            <p>{{ date('d-m-Y', strtotime($girl->last_login)) }}</p>
+                            <p><i class="fa fa-clock-o"></i>  {{ date('H:i', strtotime($girl->last_login)) }}</p>
+                        </td>
                         <td>
                             @if($girl->status->id == 4)<!-- Если анкета удалена, отображается только кнопка "Восстановить" -->
                                 <a href="{{ url('/admin/girl/restore/'.$girl->id) }}" class="btn btn-danger btn-xs"><i class="fa fa-chevron-circle-up"></i>  Восстановить</a>

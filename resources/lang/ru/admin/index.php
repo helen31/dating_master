@@ -47,4 +47,11 @@ return[
 	'refresh'	=> 'Обновить',
 	'address'	=> 'Адрес',
 
+    'active'          => 'активный',
+    'onmoderation'    => 'на модерации',
+    'dismiss'         => 'отклонен',
+    'deactive'        => 'приостановлен',
+    'deleted'         => 'удален',
+    'noprofile'       => 'не завершен'
+
 ];

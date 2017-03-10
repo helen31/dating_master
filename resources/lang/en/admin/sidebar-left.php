@@ -20,6 +20,7 @@ return[
 	'dismiss'		=> 'Dismiss',
 	'deleted'		=> 'Deleted',
 	'moderation'	=> 'Moderation',
+    'noprofile'     => 'Not finished',
 	'financeReports'=> 'Finance reports',
 	'sender'		=> 'Sender',
 	'gifts'			=> 'Gifts',

@@ -20,6 +20,7 @@ return[
 	'dismiss'		=> 'Отклоненные',
 	'deleted'		=> 'Удаленные',
 	'moderation'	=> 'На модерации',
+    'noprofile'     => 'Не завершенные',
 	'financeReports'=> 'Финансовые отчеты',
 	'sender'		=> 'Рассылка',
 	'gifts'			=> 'Подарки',

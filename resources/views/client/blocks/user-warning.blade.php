@@ -1,4 +1,8 @@
-@if(Auth::user()->status_id == 2 || Auth::user()->status_id == 3 || Auth::user()->status_id == 5)
+@if(Auth::user()->status_id == 2 ||
+    Auth::user()->status_id == 3 ||
+    Auth::user()->status_id == 5 ||
+    Auth::user()->status_id == 6
+    )
     <br>
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
@@ -19,6 +23,11 @@
                 @if(Auth::user()->status_id == 5)
                     <p>{{ trans('flash.profile_onmoderation') }}</p>
                     <p>{{ trans('flash.profile_is_not_visible_moder') }}</p>
+                @endif
+
+                @if(Auth::user()->status_id == 6)
+                    <p>{{ trans('flash.register_success') }}</p>
+                    <p>{{ trans('flash.profile_empty') }}</p>
                 @endif
 
             </div>

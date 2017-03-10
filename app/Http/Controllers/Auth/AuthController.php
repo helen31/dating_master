@@ -67,7 +67,6 @@ class AuthController extends Controller
             'checkTerms' => 'required',
         ]);
     }
-
     /**
      * Create a new user instance after a valid registration.
      * Создает нового пользователя после успешной регистрации (в таблице users)
@@ -79,10 +78,7 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        $status_id = 5; //При создании статус анкеты женщины - на модерации
-        if($data['gender'] == 4){
-            $status_id = 1; //А мужчины - активный
-        }
+        $status_id = 6; //Статус - профиль не заполнен
         $user = new User([
             'first_name' => $data['first_name'],
             'last_name'  => $data['last_name'],

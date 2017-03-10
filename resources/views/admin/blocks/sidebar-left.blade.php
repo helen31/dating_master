@@ -59,6 +59,7 @@
                     <li><a href="{{ url(App::getLocale().'/admin/girls/dismiss') }}"> {{ trans('admin/sidebar-left.dismiss') }}</a></li>
                     <li><a href="{{ url(App::getLocale().'/admin/girls/deleted') }}"> {{ trans('admin/sidebar-left.deleted') }}</a></li>
                     <li><a href="{{ url(App::getLocale().'/admin/girls/moderation') }}"> {{ trans('admin/sidebar-left.moderation') }}</a></li>
+                    <li><a href="{{ url(App::getLocale().'/admin/girls/noprofile') }}"> {{ trans('admin/sidebar-left.noprofile') }}</a></li>
                 </ul>
             </li>
             @if(Auth::User()->hasRole('Owner') || Auth::User()->hasRole('Moder'))
@@ -72,6 +73,7 @@
                         <li><a href="{{ url(App::getLocale().'/admin/man/dismiss') }}"> {{ trans('admin/sidebar-left.dismiss') }}</a></li>
                         <li><a href="{{ url(App::getLocale().'/admin/man/deleted') }}"> {{ trans('admin/sidebar-left.deleted') }}</a></li>
                         <li><a href="{{ url(App::getLocale().'/admin/man/moderation') }}"> {{ trans('admin/sidebar-left.moderation') }}</a></li>
+                        <li><a href="{{ url(App::getLocale().'/admin/man/noprofile') }}"> {{ trans('admin/sidebar-left.noprofile') }}</a></li>
                     </ul>
                 </li>
             @endif

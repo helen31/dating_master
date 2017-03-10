@@ -1,10 +1,38 @@
-@section('style')
-
-@stop
 @extends('admin.layout')
 
-
 @section('content')
+    <!-- Набор стилей для обозначения статуса анкеты в админке -->
+    <style>
+        .grg-active,
+        .grg-onmoderation,
+        .grg-dismiss,
+        .grg-deactive,
+        .grg-deleted,
+        .grg-noprofile
+        {
+            padding:4px;
+            text-align:center;
+            color: #FFF;
+        }
+        .grg-active{
+            background-color: #00D035;
+        }
+        .grg-onmoderation{
+            background-color: #69C2FE;
+        }
+        .grg-dismiss{
+            background-color: #E58226;
+        }
+        .grg-deactive{
+            background-color: #E4BA00;
+        }
+        .grg-deleted{
+            background-color: #E55957;
+        }
+        .grg-noprofile{
+            background-color: #777777;
+        }
+    </style>
 
     <section class="panel">
         <heading>
@@ -13,50 +41,59 @@
         <div class="panel-body">
             <table class="table table-hovered">
                 <thead>
-                <th>ID</th>
-                <th>{{trans('/admin/index.name')}}/{{trans('/admin/index.surname')}}</th>
-                <th>{{trans('/admin/index.avatar')}}</th>
-                @if( Auth::user()->hasRole('Owner') )
-                    <th>{{trans('/admin/index.partner')}}</th>
-                @endif
-                <th>{{trans('/admin/index.online')}}</th>
-                <th>{{trans('/admin/index.webCam')}}</th>
-                <th>Hot block</th>
-                <th>{{trans('/admin/index.lastEntrance')}}</th>
-                <th><i class="fa fa-cogs"></i> {{trans('/admin/index.control')}}</th>
+                    <th>ID</th>
+                    <th>Имя/Фамилия</th>
+                    <th>{{ trans('/admin/index.avatar') }}</th>
+                    <th>{{ trans('/admin/index.online') }}</th>
+                    <th>Camera</th>
+                    <th>Hot</th>
+                    <th>Посл. вход</th>
+                    <th><i class="fa fa-cogs"></i> {{ trans('/admin/index.control') }}</th>
                 </thead>
                 <tbody>
                 @foreach($girls as $girl)
                     <tr>
                         <td>{{ $girl->id }}</td>
-                        <td>{{ $girl->first_name }} {{ $girl->last_name }}</td>
+                        <td>
+                            <p><strong>{{ $girl->first_name }} {{ $girl->last_name }}</strong></p>
+                            <p class="{{ 'grg-'.$girl->stat_name }}">{{ trans('admin/index.'.$girl->stat_name) }}</p>
+                            @if(Auth::user()->hasRole('Owner') || Auth::user()->hasRole('Moder'))
+                                @if($girl->partner_id != 1)
+                                    <p><i>Партнер: <a href="{{ url('admin/partner/show/'.$girl->partner_id) }}">{{ \App\Http\Controllers\Admin\GirlsController::getPartnerNameByID($girl->partner_id) }}</a></i></p>
+                                @endif
+                            @endif
+                        </td>
                         <td><img width="150px" src="{{ url('uploads/'.$girl->avatar)}}"></td>
-                        @if( Auth::user()->hasRole('Owner') )
-                            <td>{{ $girl->partner_id }}</td> <!-- Уточнить что выводить -->
-                        @endif
 
-                        <td>
+                        <td style="text-align:center;">
                             @if($girl->isOnline())
-                               <button class="btn btn-small online_btn"> Online </button>
+                                <i class="fa fa-eye"></i>
+                                <p>Online</p>
                             @else
-                                <span class="red">{{ trans('admin.No') }}</span>
+                                -
                             @endif
                         </td>
-                        <td>
+                        <td style="text-align:center;">
                             @if($girl->webcam !== 0)
-                                <span class="green">{{ trans('admin.yes') }}</span>
+                                <i class="fa fa-desktop"></i>
+                                <p>WebCam</p>
                             @else
-                                <span class="red">{{ trans('admin.No') }}</span>
+                                -
+                            @endif
+                        </td>
+                        <td style="text-align:center;">
+                            @if($girl->hot !== 0)
+                                <i class="fa fa-heart"></i>
+                                <p>Hot</p>
+                            @else
+                                -
                             @endif
                         </td>
                         <td>
-                            @if($girl->hot !== 0)
-                                <span class="green">{{ trans('admin.yes') }}</span>
-                            @else
-                                <span class="red">{{ trans('admin.No') }}</span>
-                            @endif
+                            <p>{{ date('d-m-Y', strtotime($girl->last_login)) }}</p>
+                            <p><i class="fa fa-clock-o"></i>  {{ date('H:i', strtotime($girl->last_login)) }}</p>
                         </td>
-                        <td> {{ $girl->last_login }} </td>
+
                         <td>
                             <a target="_blank" href="{{ url(App::getLocale().'/profile/show/'.$girl->id) }}" class="btn btn-success btn-xs"><i class="fa fa-check"></i></a>
                             @if( Auth::user()->hasRole('Owner') )

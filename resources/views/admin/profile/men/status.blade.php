@@ -15,6 +15,7 @@
                 <th>{{trans('/admin/index.name')}}/{{trans('/admin/index.surname')}}</th>
                 <th>{{trans('/admin/index.avatar')}}</th>
                 <th>{{trans('/admin/index.online')}}</th>
+                <th>VIP</th>
                 <th>{{trans('/admin/index.lastEntrance')}}</th>
                 <th><i class="fa fa-cogs"></i>{{trans('/admin/index.control')}}</th>
                 </thead>
@@ -24,16 +25,27 @@
                         <td>{{ $man->id }}</td>
                         <td>{{ $man->first_name }} {{ $man->last_name }}</td>
                         <td><img width="150px" src="{{ url('uploads/'.$man->avatar)}}"></td>
-
-                        <td>
+                        <td style="text-align:center;">
                             @if($man->isOnline())
-                                <button class="btn btn-small online_btn"> Online </button>
+                                <i class="fa fa-eye"></i>
+                                <p>Online</p>
                             @else
-                                <span class="red">{{ trans('admin.No') }}</span>
+                                -
+                            @endif
+                        </td>
+                        <td style="text-align:center;">
+                            @if($man->vip == 1)
+                                <i class="fa fa-star"></i>
+                                <p>VIP</p>
+                            @else
+                                -
                             @endif
                         </td>
 
-                        <td> {{ $man->last_login }} </td>
+                        <td>
+                            <p>{{ date('d-m-Y', strtotime($man->last_login)) }}</p>
+                            <p><i class="fa fa-clock-o"></i>  {{ date('H:i', strtotime($man->last_login)) }}</p>
+                        </td>
                         <td>
                             @if($man->status->id == 4)<!-- Если анкета удалена, отображается только кнопка "Восстановить" -->
                                 <a href="{{ url('/admin/man/restore/'.$man->id) }}" class="btn btn-danger btn-xs"><i class="fa fa-chevron-circle-up"></i>  Восстановить</a>

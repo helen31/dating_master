@@ -45,7 +45,10 @@ class ManController extends Controller
     public function index()
     {
         if (Auth::user()->hasRole('Owner') || Auth::user()->hasRole('Moder')) {
-            $men = User::where('role_id', '=', '4')->paginate(15);
+            $men = User::where('role_id', '=', '4')
+                ->leftJoin('status', 'status.id', '=', 'users.status_id')
+                ->select(['users.*', 'status.name as stat_name'])
+                ->paginate(15);
 
             return view('admin.profile.men.index')->with([
                 'heading' => 'Все мужчины',
@@ -139,6 +142,7 @@ class ManController extends Controller
 
         $user->first_name = $request->input('first_name');
         $user->last_name  = $request->input('second_name');
+        $user->vip = $request->input('vip') ? 1 : 0;
 
         if ($request->hasFile('avatar')) {
             $user_avatar = $this->upload($request->file('avatar'));
@@ -270,15 +274,10 @@ class ManController extends Controller
             $men = User::withTrashed()->where('role_id', '=', '4')
                 ->where('status_id', '=', $s->id)
                 ->paginate(15);
-        } elseif (Auth::user()->hasRole('Partner')) {
-            $men = User::withTrashed()->where('role_id', '=', '4')
-                ->where('partner_id', '=', Auth::user()->id)
-                ->where('status_id', '=', $s->id)
-                ->paginate(15);
         }
 
         return view('admin.profile.men.status')->with([
-            'heading' => 'Мужчины по статусу анкеты '.$status,
+            'heading' => 'Мужчины по статусу анкеты: '.trans('admin/control.'.$status),
             'men'   => $men,
         ]);
     }

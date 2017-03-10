@@ -11,18 +11,20 @@
     <section class="panel panel-default">
         <header class="panel-heading">
             {{ trans('profile.edit') }}
-            @if(Auth::user()->status_id == 2)
-                <a href="{{ url(App::getLocale().'/profile/activate/'.Auth::user()->id) }}" class="btn btn-success btn-xs" >
-                    <i class="fa fa-arrow-up"></i>  {{ trans('profile.activate') }}
-                </a>
-            @else
-                <a href="{{ url(App::getLocale().'/profile/deactivate/'.Auth::user()->id) }}" class="btn btn-warning btn-xs" >
-                    <i class="fa fa-pause"></i>  {{ trans('profile.deactivate') }}
+            @if(Auth::user()->status_id != 6)
+                @if(Auth::user()->status_id == 2)
+                    <a href="{{ url(App::getLocale().'/profile/activate/'.Auth::user()->id) }}" class="btn btn-success btn-xs" >
+                        <i class="fa fa-arrow-up"></i>  {{ trans('profile.activate') }}
+                    </a>
+                @else
+                    <a href="{{ url(App::getLocale().'/profile/deactivate/'.Auth::user()->id) }}" class="btn btn-warning btn-xs" >
+                        <i class="fa fa-pause"></i>  {{ trans('profile.deactivate') }}
+                    </a>
+                @endif
+                <a href="{{ url(App::getLocale().'/profile/drop/'.Auth::user()->id) }}" class="btn btn-danger btn-xs" >
+                    <i class="fa fa-trash-o"></i>  {{ trans('profile.drop') }}
                 </a>
             @endif
-            <a href="{{ url(App::getLocale().'/profile/drop/'.Auth::user()->id) }}" class="btn btn-danger btn-xs" >
-                <i class="fa fa-trash-o"></i>  {{ trans('profile.drop') }}
-            </a>
         </header>
 
         <div class="panel-body">
@@ -43,7 +45,7 @@
                             <div class="form-group">
                                 {!! Form::label('avatar', trans('profile.avatar')) !!}<br/>
                                 <img class="img-responsive" src="{{ url('/uploads/'. $user->avatar) }}" id="preview-avatar">
-                                <input type="file" class="form-control file" name="avatar" accept="image/*" value="{{ $user->avatar }}">
+                                <input type="file" class="form-control file" name="avatar" accept="image/*" value="{{ $user->avatar }}" data-show-upload="false" data-show-caption="true">
                             </div>
                             <p class="text-danger">* {{ trans('profile.required_fields') }}</p>
                             <div class="form-group">

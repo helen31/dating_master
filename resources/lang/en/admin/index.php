@@ -49,5 +49,11 @@ return[
 	'refresh'	=> 'Refresh',
 	'address'	=> 'Address',
 
+    'active'          => 'active',
+    'onmoderation'    => 'on moderation',
+    'dismiss'         => 'dismiss',
+    'deactive'        => 'deactive',
+    'deleted'         => 'deleted',
+    'noprofile'       => 'not finished'
 
 ];

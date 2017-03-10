@@ -19,6 +19,7 @@ use App\Models\Images;
 use App\Services\ZodiacSignService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
@@ -55,7 +56,11 @@ class GirlsController extends Controller
     {
         if (Auth::user()->hasRole('Owner') || Auth::user()->hasRole('Moder')) {
             $partners = User::where('role_id', '=', '3')->get();
-            $girls = User::where('role_id', '=', '5')->paginate(15);
+
+            $girls = User::where('role_id', '=', '5')
+                ->leftJoin('status', 'status.id', '=', 'users.status_id')
+                ->select(['users.*', 'status.name as stat_name'])
+                ->paginate(15);
 
             return view('admin.profile.girls.index')->with([
                 'heading' => 'Все девушки',
@@ -66,6 +71,8 @@ class GirlsController extends Controller
 
             $girls = User::where('role_id', '=', '5')
                                 ->where('partner_id', '=', Auth::user()->id)
+                                ->leftJoin('status', 'status.id', '=', 'users.status_id')
+                                ->select(['users.*', 'status.name as stat_name'])
                                 ->paginate(15);
 
             return view('admin.profile.girls.index')->with([
@@ -491,7 +498,7 @@ class GirlsController extends Controller
             }
 
         return view('admin.profile.girls.status')->with([
-            'heading' => 'Девушки по статусу анкеты '.$status,
+            'heading' => 'Девушки по статусу анкеты: '.trans('admin/control.'.$status),
             'girls'   => $girls,
         ]);
     }
@@ -525,7 +532,17 @@ class GirlsController extends Controller
         $age = Carbon::now()->diffInYears(Carbon::createFromFormat('Y-m-d', $birthday));
         return $age;
     }
+    /*
+     * Принимает ID партнера
+    * Возвращает имя и фамилию партнера в одну строку
+    */
+    public static function getPartnerNameByID($partner_id){
+        $partner = DB::table('users')->select('first_name', 'last_name')
+         ->where('id', '=', $partner_id)->first();
 
+        $partner_name = $partner->first_name.' '.$partner->last_name;
+        return $partner_name;
+    }
 
     public function editAlbum($id, $aid)
     {
@@ -559,7 +576,7 @@ class GirlsController extends Controller
      * @param $id
      * @return Redirect
      */
-    public function addAlbum(Request $request,$id)
+    public function addAlbum(Request $request, $id)
     {
         //$id=\Auth::user()->id;
         /**
