@@ -8,6 +8,8 @@ class Smiles extends Model
 {
     protected $table = 'smiles';
 
+    protected $fillable = ['from', 'to', 'updated_at'];
+
     public function fromUser()
     {
         return $this->belongsTo('App\Models\User', 'from');
@@ -19,7 +21,7 @@ class Smiles extends Model
     }
 
     public function getSmileFromUser($to){
-        
+
         $smile = \DB::table('smiles')->where('from','=',\Auth::user()->id)->where('to','=',$to)->select('to')->get();
         return $smile;
     }

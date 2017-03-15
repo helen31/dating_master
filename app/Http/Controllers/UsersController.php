@@ -224,11 +224,11 @@ class UsersController extends Controller
      */
     public function profileSmiles(int $id)
     {
-        $smiles = \DB::table('smiles')
-            ->select('users.id', 'users.first_name')
-            ->join('users', 'users.id', '=', 'smiles.from')
-            ->where('smiles.to', '=', $id)
-            ->get();
+        $smiles = Smiles::where('smiles.to', '=', $id)
+            ->leftJoin('users', 'users.id', '=', 'smiles.from')
+            ->select('users.first_name', 'users.avatar', 'smiles.from', 'smiles.to', 'smiles.updated_at')
+            ->orderBy('updated_at', 'DESC')
+            ->paginate(15);
 
         return view('client.profile.smiles')->with([
             'smiles' => $smiles

@@ -8,7 +8,7 @@ return [
     'primary'   => 'My profile',
     'photo'     => 'Profile photos',
     'video'     => 'Video',
-    'smiles'    => 'Smiles',
+    'smiles'    => 'Winks',
     'gifts'     => 'Gifts',
     'Myphotos'    => 'My photos',
     'gallery'   => 'Gallery',
@@ -94,9 +94,11 @@ return [
     'deactivate' => 'Deactivate profile',
     'drop' => 'Delete profile',
 
-    /* -- Smiles -- */
+    /* -- Bagges - smiles (winks), mail and others -- */
 
     'smile'     => 'You have wink from ',
+    'wink'      => 'Wink',
+    'leave_message' => 'Leave a message',
 
     /* -- Attributes -- */
 

@@ -18,6 +18,96 @@
             opacity: 1;
             transition: 0.2s;
         }
+        /* Animation */
+        .grg-tada {
+            -webkit-animation-duration: 0.4s;
+            -moz-animation-duration: 0.4s;
+            -o-animation-duration: 0.4s;
+            animation-duration: 0.4s;
+            -webkit-animation-timing-function: ease;
+            -moz-animation-timing-function: ease;
+            -o-animation-timing-function: ease;
+            animation-timing-function: ease;
+        }
+
+        .grg-tada:active {
+            -webkit-animation-name: Tada;
+            -moz-animation-name: Tada;
+            -o-animation-name: Tada;
+            animation-name: Tada;
+        }
+
+        @-webkit-keyframes Tada {
+            0% {
+                -webkit-transform:scale(1)
+            }
+            10%, 20% {
+                -webkit-transform:scale(0.9) rotate(-3deg)
+            }
+            30%, 50%, 70%, 90% {
+                -webkit-transform:scale(1.1) rotate(3deg)
+            }
+            40%, 60%, 80% {
+                -webkit-transform:scale(1.1) rotate(-3deg)
+            }
+            100% {
+                -webkit-transform:scale(1) rotate(0)
+            }
+        }
+        @-moz-keyframes Tada {
+            0% {
+                -moz-transform:scale(1)
+            }
+            10%,20% {
+                -moz-transform:scale(0.9) rotate(-3deg)
+            }
+            30%, 50%, 70%, 90% {
+                -moz-transform:scale(1.1) rotate(3deg)
+            }
+            40%, 60%, 80% {
+                -moz-transform:scale(1.1) rotate(-3deg)
+            }
+            100% {
+                -moz-transform:scale(1) rotate(0)
+            }
+        }
+        @-o-keyframes Tada {
+            0% {
+                -o-transform:scale(1)
+            }
+            10%,20% {
+                -o-transform:scale(0.9) rotate(-3deg)
+            }
+            30%, 50%, 70%, 90% {
+                -o-transform:scale(1.1) rotate(3deg)
+            }
+            40%, 60%, 80% {
+                -o-transform:scale(1.1) rotate(-3deg)
+            }
+            100% {
+                -o-transform:scale(1) rotate(0)
+            }
+        }
+        @keyframes Tada {
+            0% {
+                transform:scale(1)
+            }
+            10%, 20% {
+                transform:scale(0.9) rotate(-3deg)
+            }
+            30%, 50%, 70%, 90% {
+                transform:scale(1.1) rotate(3deg)
+            }
+            40%, 60%, 80% {
+                transform:scale(1.1) rotate(-3deg)
+            }
+            100% {
+                transform:scale(1) rotate(0)
+            }
+        }
+
+
+
     </style>
     <div class="row">
         <div class="hidden">
@@ -125,32 +215,33 @@
                         <div class="col-md-6"></div>
                     </div>
                 </div>
-                <div class="row" id="buttons">
-                    <div class="col-md-4">
-                        <div class="row girl-action">
-                            <div class="col-md-4 col-sm-4 col-xs-4 col-lg-3">
-                                <img src="/assets/img/video.png" alt="Webcam online" title="Webcam online">
+                @if(Auth::user()->id != $id)
+                    <div class="row" id="buttons">
+                        <div class="col-md-4">
+                            <div class="row girl-action">
+                                <div class="col-md-4 col-sm-4 col-xs-4 col-lg-3">
+                                    <img src="/assets/img/video.png" alt="Webcam online" title="Webcam online">
+                                </div>
+                                <div class="col-md-4 col-sm-4 col-xs-4 col-lg-3">
+                                    <a href="#chat"><img src="/assets/img/interface.png" alt="Chat now" title="Chat now!"></a>
+                                </div>
+                                <div class="col-md-4 col-sm-4 col-xs-4 col-lg-3">
+                                    <a href="{{ url('/'. App::getLocale() . '/profile/'. $u->uid . '/message') }}"><img src="/assets/img/note.png" alt="Leave a message" title="{{ trans('profile.leave_message') }}"></a>
+                                </div>
+                                 <div class="col-md-4 col-sm-4 col-xs-4 col-lg-3">
+                                     <a href="javascript:;"><img class="grg-tada" src="/assets/img/smile.png" alt="Smile" title="{{ trans('profile.wink') }}" id="smile"></a>
+                                </div>
                             </div>
-                            <div class="col-md-4 col-sm-4 col-xs-4 col-lg-3">
-                                <a href="#chat"><img src="/assets/img/interface.png" alt="Chat now" title="Chat now!"></a>
-                            </div>
-                            <div class="col-md-4 col-sm-4 col-xs-4 col-lg-3">
-                                <a href="{{ url('/'. App::getLocale() . '/profile/'. $u->uid . '/message') }}"><img src="/assets/img/note.png" alt="Leave a message" title="Leave a message"></a>
-                            </div>
-
-                             <div class="col-md-4 col-sm-4 col-xs-4 col-lg-3">
-                                <a href="javascript:;"><img src="/assets/img/smile.png" alt="Smile" title="Smile" id="smile"></a>
-                            </div>  
                         </div>
+                        <!--
+                            <div class="col-md-2">
+                                <button name="horoscope" class="btn btn-success">Show horoscope compability</button>
+                                <button name="flp" class="btn btn-success">○	имя + фамилия + телефон </button>
+                                <button name="fle" class="btn btn-success">○	имя + фамилия + email </button>
+                            </div>
+                        -->
                     </div>
-                    <!--
-                        <div class="col-md-2">
-                            <button name="horoscope" class="btn btn-success">Show horoscope compability</button>
-                            <button name="flp" class="btn btn-success">○	имя + фамилия + телефон </button>
-                            <button name="fle" class="btn btn-success">○	имя + фамилия + email </button>
-                        </div>
-                    -->
-                </div>
+                @endif
                 <div class="row col-md-12">
                     <div>
 

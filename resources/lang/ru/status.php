@@ -12,4 +12,5 @@ return [
     'dismiss'       => 'Отклоненная',
     'deleted'       => 'Удаленная',
     'onmoderation'  => 'На модерации',
+    'noprofile'     => 'Не завершен',
 ];

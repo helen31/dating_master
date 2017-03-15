@@ -8,7 +8,7 @@ return [
     'primary'   => 'Мой профиль',
     'photo'     => 'Фото профиля',
     'video'     => 'Видео',
-    'smiles'    => 'Смайлы',
+    'smiles'    => 'Подмигивания',
     'gifts'     => 'Подарки',
     'Myphotos'    => 'Мои фото',
     'gallery'   => 'Галерея',
@@ -94,9 +94,11 @@ return [
     'deactivate' => 'Деактивировать аккаунт',
     'drop' => 'Удалить аккаунт',
 
-    /* -- Smiles -- */
+    /* -- Bagges - smiles (winks), mail and others -- */
 
-    'smile'     => 'Вам подмигнул/а ',
+    'smile'     => 'Вам подмигнули',
+    'wink'      => 'Подмигнуть',
+    'leave_message' => 'Оставить сообщение',
 
     /* -- Attributes -- */
 
