@@ -84,9 +84,19 @@
                 <li>
                     <a href="{{ url(App::getLocale().'/admin/sender') }}"><i class="fa fa-envelope-o"></i> {{ trans('admin/sidebar-left.sender') }}</a>
                 </li>
-                <li>
-                    <a href="{{ url(App::getLocale().'/admin/gifts') }}"><i class="fa fa-gift"></i>{{ trans('admin/sidebar-left.gifts') }}</a>
+
+                <li class="menu-list">
+                    <a href=""><i class="fa fa-gift"></i>
+                        <span>{{ trans('admin/sidebar-left.gifts') }}</span></a>
+                    <ul class="child-list">
+                        <li><a href="{{ url(App::getLocale().'/admin/presents') }}">{{ trans('admin/sidebar-left.gifts_list') }}</a></li>
+                        <li><a href="{{ url(App::getLocale().'/admin/gifts/status/not_confirmed') }}">{{ trans('admin/sidebar-left.gifts_not_confirmed') }}</a></li>
+                        <li><a href="{{ url(App::getLocale().'/admin/gifts/status/on_confirmation') }}">{{ trans('admin/sidebar-left.gifts_on_confirmation') }}</a></li>
+                        <li><a href="{{ url(App::getLocale().'/admin/gifts/status/dismissed') }}">{{ trans('admin/sidebar-left.gifts_dismissed') }}</a></li>
+                        <li><a href="{{ url(App::getLocale().'/admin/gifts/status/confirmed') }}">{{ trans('admin/sidebar-left.gifts_confirmed') }}</a></li>
+                    </ul>
                 </li>
+
                 <li>
                     <a href="{{ url(App::getLocale().'/admin/messages_from_man') }}"> <i class="fa fa-envelope-o"></i>{{ trans('admin/sidebar-left.messagesFromMan') }}</a>
                 </li>

@@ -24,7 +24,7 @@
                 </div>
             @endif
             <div class="col-md-4 col-md-offset-4">
-                {!! Form::open(['url' => 'admin/gifts/store', 'class' => 'form', 'enctype' => 'multipart/form-data']) !!}
+                {!! Form::open(['url' => 'admin/presents/store', 'class' => 'form', 'enctype' => 'multipart/form-data']) !!}
                     <div class="form-group">
                         {!! Form::label('image', trans('/admin/gifts.giftPhoto')) !!}
                         <input type="file" class="form-control file" name="image" accept="image/*">

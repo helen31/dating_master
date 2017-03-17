@@ -38,4 +38,22 @@ return[
     'girls'         => 'Девушки',
     'men'           => 'Мужчины',
 
+    /* Gifts */
+
+    'gifts_list' => 'Список подарков',
+    'gifts_not_confirmed' => 'Не подтверждены',
+    'gifts_on_confirmation' => 'На рассмотрении',
+    'gifts_dismissed' => 'Отклонены',
+    'gifts_confirmed' => 'Подтверждены',
+
+    'gift_not_confirmed' => 'Не подтвержден',
+    'gift_on_confirmation' => 'На рассмотрении',
+    'gift_dismissed' => 'Отклонен',
+    'gift_confirmed' => 'Подтвержден',
+
+    'gift_status_1' => 'Не подтвержден',
+    'gift_status_2' => 'На рассмотрении',
+    'gift_status_3' => 'Отклонен',
+    'gift_status_4' => 'Подтвержден',
+
 ];

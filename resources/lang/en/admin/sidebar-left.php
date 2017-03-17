@@ -38,4 +38,22 @@ return[
     'girls'         => 'Girls',
     'men'           => 'Men',
 
+    /* Gifts */
+
+    'gifts_list' => 'Gifts list',
+    'gifts_not_confirmed' => 'Not confirmed',
+    'gifts_on_confirmation' => 'On confirmation',
+    'gifts_dismissed' => 'Dismissed',
+    'gifts_confirmed' => 'Confirmed',
+
+    'gift_not_confirmed' => 'Not confirmed',
+    'gift_on_confirmation' => 'On confirmation',
+    'gift_dismissed' => 'Dismissed',
+    'gift_confirmed' => 'Confirmed',
+
+    'gift_status_1' => 'Not confirmed',
+    'gift_status_2' => 'On confirmation',
+    'gift_status_3' => 'Dismissed',
+    'gift_status_4' => 'Confirmed',
+
 ];

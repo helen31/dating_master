@@ -44,7 +44,7 @@
                     <p ><a href="{{ url(App::getLocale().'/admin/man/dismiss') }}" class="text-warning"><strong>{{ trans('admin/control.dismiss') }}:</strong><span class="label label-warning pull-right">{{ isset($m_dismiss) ? sizeof($m_dismiss): 0 }}</span></a></p>
                     <p ><a href="{{ url(App::getLocale().'/admin/man/deactive') }}" class="text-warning"><strong>{{ trans('admin/control.deactive') }}:</strong><span class="label label-warning pull-right">{{ isset($m_deactive) ? sizeof($m_deactive): 0 }}</span></a></p>
                     <p ><a href="{{ url(App::getLocale().'/admin/man/deleted') }}" class="text-danger"><strong>{{ trans('admin/control.deleted') }}:</strong><span class="label label-danger pull-right">{{ isset($m_deleted) ? sizeof($m_deleted): 0 }}</span></a></p>
-                    <p ><a href="{{ url(App::getLocale().'/admin/man/noprofile') }}" class="text-danger grg-noprofile"><strong>{{ trans('admin/control.noprofile') }}:</strong><span class="label label-default pull-right">{{ isset($m_deleted) ? sizeof($m_deleted): 0 }}</span></a></p>
+                    <p ><a href="{{ url(App::getLocale().'/admin/man/noprofile') }}" class="text-danger grg-noprofile"><strong>{{ trans('admin/control.noprofile') }}:</strong><span class="label label-default pull-right">{{ isset($m_noprofile) ? sizeof($m_noprofile): 0 }}</span></a></p>
                 </div>
             </section>
         @endif

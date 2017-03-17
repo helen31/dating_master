@@ -217,18 +217,28 @@ Route::group([  'prefix' => LaravelLocalization::setLocale().'/admin',
     /** End Men Profile routing **/
 
 
-    /** Start Gifts  */
-    Route::get('gifts/', 'Admin\GiftsController@index');
-    Route::get('gifts/new', 'Admin\GiftsController@create');
+    /** Start Presents  */ /* Подарки */
+    Route::get('presents/', 'Admin\PresentsController@index');
+    Route::get('presents/new', 'Admin\PresentsController@create');
+    Route::get('presents/edit/{id}', 'Admin\PresentsController@edit');
+    Route::get('presents/drop/{id}', 'Admin\PresentsController@drop');
+
+    Route::post('presents/store', 'Admin\PresentsController@store');
+    Route::post('presents/update/{id}', 'Admin\PresentsController@update');
+
+    Route::post('presents/check_lang', ['as' => 'check_lang', 'uses' => 'Admin\PresentsController@check_language']);
+    Route::post('presents/save_present_translation', ['as' => 'save_present_translation', 'uses' => 'Admin\PresentsController@save_present_translation']);
+    /** End Presents */
+
+    /** Gifts **/ /* Подарки, заказанные мужчинами */
+
+    Route::get('gifts/status/{status}', 'Admin\GiftsController@getGiftsByStatus');
     Route::get('gifts/edit/{id}', 'Admin\GiftsController@edit');
     Route::get('gifts/drop/{id}', 'Admin\GiftsController@drop');
 
-    Route::post('gifts/store', 'Admin\GiftsController@store');
     Route::post('gifts/update/{id}', 'Admin\GiftsController@update');
 
-    Route::post('gifts/check_lang', ['as' => 'check_lang', 'uses' => 'Admin\GiftsController@check_language']);
-    Route::post('gifts/save_present_translation', ['as' => 'save_present_translation', 'uses' => 'Admin\GiftsController@save_present_translation']);
-    /** End gifts */
+    /** End gifts **/
 
     /** Ticket System Routes */
     Route::get('support', 'Admin\TicketController@index');

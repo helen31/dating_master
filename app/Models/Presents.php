@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 class Presents extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'presents';
 
     protected $fillable = [
@@ -16,6 +19,11 @@ class Presents extends Model
     public function partner()
     {
         return $this->hasOne('App\Models\User', 'id', 'partner_id');
+    }
+
+    public function gift()
+    {
+        return $this->belongsToMany('App\Models\Gifts', 'id', 'present');
     }
 
     public function lang(string $lang)
@@ -55,6 +63,7 @@ class Presents extends Model
         $query = DB::table('presents')
             ->join('presents_translations', 'presents.id', '=', 'presents_translations.present_id')
             ->select('presents.id', 'presents.image', 'presents.price', 'presents_translations.title', 'presents_translations.description')
+            ->where('presents.deleted_at', '=', NULL)
             ->where('presents.partner_id', \Auth::user()->id)
             ->where('presents_translations.locale', \App::getLocale())
             ->get();

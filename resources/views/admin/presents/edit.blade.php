@@ -23,7 +23,7 @@
                 </div>
             @endif
             <div class="col-md-4 col-md-offset-4">
-                {!! Form::open(['url' => 'admin/gifts/update/'.$present->id, 'class' => 'form', 'enctype' => 'multipart/form-data']) !!}
+                {!! Form::open(['url' => 'admin/presents/update/'.$present->id, 'class' => 'form', 'enctype' => 'multipart/form-data']) !!}
                 <div class="form-group">
                     {!! Form::label('image', 'Фото подарка') !!} <br/>
                     <img src="/uploads/presents/{{ $present->image }}" id="preview-image" width="250px" alt="{{ $present->image }}"/>

@@ -8,7 +8,7 @@
 
     <section class="panel">
         <header class="panel-heading text-right">
-            <a href="{{ url(App::getLocale().'/admin/gifts/new') }}" class="btn btn-success"> {{trans('/admin/gifts.addGift')}}</a>
+            <a href="{{ url(App::getLocale().'/admin/presents/new') }}" class="btn btn-success"> {{trans('/admin/gifts.addGift')}}</a>
         </header>
         <div class="panel-body">
 
@@ -33,8 +33,8 @@
                                 <td> {{ $p->description }} </td>
                                 <td> {{ $p->price }} </td>
                                 <td>
-                                    <a href="{{ url('/admin/gifts/edit/'.$p->id) }}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
-                                    <a href="{{ url('/admin/gifts/drop/'.$p->id) }}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
+                                    <a href="{{ url('/admin/presents/edit/'.$p->id) }}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
+                                    <a href="{{ url('/admin/presents/drop/'.$p->id) }}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
                                 </td>
                             </tr>
                         @endforeach
