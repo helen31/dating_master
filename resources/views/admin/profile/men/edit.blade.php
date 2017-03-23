@@ -113,7 +113,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         {!! Form::label('avatar', 'Аватар') !!}<br/>
-                                        <img class = "img-responsive" src="{{ url('/uploads/'. $user->avatar) }}" id="preview-avatar">
+                                        <img class = "img-responsive" src="{{ url('/uploads/users/avatars/'. $user->avatar) }}" id="preview-avatar">
                                         <input type="file" class="form-control file" name="avatar" accept="image/*" >
                                     </div>
                                 </div>
@@ -193,7 +193,7 @@
                                     <div class="col-md-12">
                                         @foreach($profile_images as $p_image)
                                             <div class="photo col-md-3" style="height: 200px;" id="photo-{{$p_image->id}}">
-                                                <img src="{{ url('/uploads/'.$p_image->url) }}" width="100%">
+                                                <img src="{{ url('/uploads/users/profile_images/'.$p_image->url) }}" width="100%">
                                                 <a class="delete_gallery" href="#" onclick="deleteProfileFoto(event,'{{$p_image->id}}');"><i class="fa fa-trash-o"></i></a>
                                             </div>
                                         @endforeach

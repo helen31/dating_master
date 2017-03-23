@@ -95,7 +95,7 @@
                             @foreach($user_counter['user_data'] as $contact)
                                 @if($user_counter['contact_info']->status == 1)
                                     <?php
-                                        $url=url('/uploads/'.$contact->avatar);
+                                        $url=url('/uploads/users/avatar/'.$contact->avatar);
                                         $data_bday= date('Y-m-d') - $contact->birthday;
                                         $is_inline=($contact->sessionID==null)?('no'):('');
                                     $tab_chat.="
@@ -119,7 +119,7 @@
                                     ";?>
                                 @elseif($user_counter['contact_info']->status == 2)
                                     <?php
-                                    $url=url('/uploads/'.$contact->avatar);
+                                    $url=url('/uploads/users/avatar/'.$contact->avatar);
                                     $data_bday= date('Y-m-d') - $contact->birthday;
                                     $is_inline=($contact->sessionID==null)?('no'):('');
                                     $tab_like.="
@@ -143,7 +143,7 @@
                                     ";?>
                                 @elseif($user_counter['contact_info']->status == 3)
                                     <?php
-                                    $url=url('/uploads/'.$contact->avatar);
+                                    $url=url('/uploads/users/avatar/'.$contact->avatar);
                                     $data_bday= date('Y-m-d') - $contact->birthday;
                                     $is_inline=($contact->sessionID==null)?('no'):('');
                                     $tab_block.="

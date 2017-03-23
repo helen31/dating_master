@@ -170,7 +170,7 @@ class GirlsController extends Controller
 
         $user_avatar = 'empty_girl.png';
         if ($request->hasFile('avatar')) {
-            $user_avatar = $this->upload($request->file('avatar'));
+            $user_avatar = $this->upload($request->file('avatar'), 'users/avatars/');
         }
         $this->user->avatar = $user_avatar;
 
@@ -237,7 +237,7 @@ class GirlsController extends Controller
         $this->passport->date = $request->input('pass_date');
 
         if($request->hasFile('pass_photo')){
-            $user_passport = $this->upload($request->file('pass_photo'));
+            $user_passport = $this->upload($request->file('pass_photo'), 'users/passports/');
             $this->passport->cover=$user_passport;
         }
         $this->passport->save();
@@ -248,7 +248,7 @@ class GirlsController extends Controller
             $profile_photos = $request->file('profile_photo');
             foreach($profile_photos as $photo){
                 $profile_image = new profileImages();
-                $profile_image->url = $this->upload($photo);
+                $profile_image->url = $this->upload($photo, 'users/profile_photos/');
                 $profile_image->user_id = $this->user->id;
                 $profile_image->save();
             }
@@ -360,7 +360,7 @@ class GirlsController extends Controller
         $user->last_name  = $request->input('second_name');
 
         if ($request->hasFile('avatar')) {
-            $user_avatar = $this->upload($request->file('avatar'));
+            $user_avatar = $this->upload($request->file('avatar'),'users/avatars/');
             $user->avatar = $user_avatar;
         }
 
@@ -425,7 +425,7 @@ class GirlsController extends Controller
             $profile_photos = $request->file('profile_photo');
             foreach($profile_photos as $photo){
                 $profile_image = new profileImages();
-                $profile_image->url = $this->upload($photo);
+                $profile_image->url = $this->upload($photo, 'users/profile_photos/');
                 $profile_image->user_id = $id;
                 $profile_image->save();
             }
@@ -647,7 +647,7 @@ class GirlsController extends Controller
 
     public function dropProfileFoto($fid){
         $image = profileImages::find($fid);
-        $this->removeFile('/uploads/'.$image->image);
+        $this->removeFile('/uploads/users/profile_photos/'.$image->image);
         profileImages::destroy($fid);
         return response('success', 200);
     }

@@ -28,7 +28,7 @@
                     <tr>
                         <td>{{ $girl->id }}</td>
                         <td>{{ $girl->first_name }} {{ $girl->last_name }}</td>
-                        <td><img width="150px" src="{{ url('uploads/'.$girl->avatar)}}"></td>
+                        <td><img width="150px" src="{{ url('uploads/users/avatars/'.$girl->avatar)}}"></td>
                         @if( Auth::user()->hasRole('Owner') )
                             <td>
                                 @if($girl->partner_id != 1)

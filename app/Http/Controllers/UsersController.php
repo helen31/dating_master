@@ -160,7 +160,7 @@ class UsersController extends Controller
             $profile_photos = $request->file('profile_photo');
             foreach($profile_photos as $photo){
                 $profile_image = new profileImages();
-                $profile_image->url = $this->upload($photo);
+                $profile_image->url = $this->upload($photo, 'users/profile_photos/');
                 $profile_image->user_id = $id;
                 $profile_image->save();
             }
@@ -169,7 +169,7 @@ class UsersController extends Controller
     }
     public function profilePhotoDelete($photo_id){
         $image = profileImages::find($photo_id);
-        $this->removeFile('/uploads/'.$image->image);
+        $this->removeFile('/uploads/profile_photos/'.$image->image);
         profileImages::destroy($photo_id);
         return response('success', 200);
     }
@@ -286,7 +286,7 @@ class UsersController extends Controller
         if ($request->file('avatar')) {
             $file = $request->file('avatar');
             $user_avatar = time() . '-' . $file->getClientOriginalName();
-            $destination = public_path() . '/uploads';
+            $destination = public_path() . '/uploads/users/avatars/';
             $file->move($destination, $user_avatar);
             $user->avatar = $user_avatar;
         }
@@ -324,7 +324,7 @@ class UsersController extends Controller
             $passport->date = $request->input('pass_date');
 
             if ($request->hasFile('pass_photo')) {
-                $user_passport = $this->upload($request->file('pass_photo'));
+                $user_passport = $this->upload($request->file('pass_photo'), 'users/passports/');
                 $passport->cover = $user_passport;
             }
             $passport->save();

@@ -15,7 +15,7 @@
 
         </tr>
             <tr>
-                <td><img src="{{ url('/uploads/'. $girl->avatar) }}" alt="Girl Photo" height="100px">&nbsp;</td>
+                <td><img src="{{ url('/uploads/users/avatars/'. $girl->avatar) }}" alt="Girl Photo" height="100px">&nbsp;</td>
                 <td>{{ $girl->first_name }}</td>
                 <td> <img src="{{ url('/uploads/presents/'. $present->image) }}" alt="{{ $present->image }}" width="150px"> </td>
                 <td> {{ $present->title }} </td>

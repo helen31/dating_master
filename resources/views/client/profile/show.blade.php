@@ -114,7 +114,7 @@
             {{ csrf_field() }}
         </div>
 
-            <div class="avatar col-md-4 col-xs-6"><img src="{{ url('/uploads/'.$u->avatar) }}" width="100%"/></div>
+            <div class="avatar col-md-4 col-xs-6"><img src="{{ url('/uploads/users/avatars/'.$u->avatar) }}" width="100%"/></div>
             <div id="mobile_ver">
                 <div class="col-md-6 col-xs-6"> 
                     <div class="row info mobile_ver">
@@ -265,7 +265,7 @@
                     <br>
                     @foreach($profile_images as $p_image)
                         <div class="grg-photo-frame" id="photo-{{$p_image->id}}">
-                            <img class="grg-img-photo" src="{{ url('/uploads/'.$p_image->url) }}">
+                            <img class="grg-img-photo" src="{{ url('/uploads/users/profile_photos/'.$p_image->url) }}">
                         </div>
                     @endforeach
                 </div>

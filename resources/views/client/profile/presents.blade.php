@@ -2,7 +2,7 @@
 
 @section('profileContent')
     <h2>{{ trans('profile.gifts_choose') }}</h2>
-    <img src="{{ url('/uploads/'. $girl->avatar) }}" alt="Girl Photo" height="100px">&nbsp;{{ $girl->first_name }}
+    <img src="{{ url('/uploads/users/avatars/'. $girl->avatar) }}" alt="Girl Photo" height="100px">&nbsp;{{ $girl->first_name }}
     <br>
     <h2>{{ trans('profile.gifts_catalogue') }}</h2>
 

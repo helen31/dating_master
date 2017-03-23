@@ -63,7 +63,7 @@
                                 @endif
                             @endif
                         </td>
-                        <td><img width="150px" src="{{ url('uploads/'.$girl->avatar)}}"></td>
+                        <td><img width="150px" src="{{ url('uploads/users/avatars/'.$girl->avatar)}}"></td>
 
                         <td style="text-align:center;">
                             @if($girl->isOnline())

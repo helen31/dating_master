@@ -24,7 +24,7 @@
                     <div class="messages">
 
                         <div class="message">
-                            <div class="photo"><img src="{{ url('/uploads/'.$ticket->avatar) }}" width="150px"></div>
+                            <div class="photo"><img src="{{ url('/uploads/users/avatars/'.$ticket->avatar) }}" width="150px"></div>
                             <div class="name"><strong>{{ $ticket->first_name }}</strong>  <i>{{ date('Y-m-d H:i', strtotime($ticket->updated_at)) }}</i></div>
                             <div class="text-left">{{ $ticket->message }}</div>
                             @if( $ticket->download_file != null )
@@ -40,7 +40,7 @@
                              class="message"
                         @endif
                             >
-                            <div class="photo"><img src="{{ url('/uploads/'.$reply->avatar) }}" width="150px"></div>
+                            <div class="photo"><img src="{{ url('/uploads/users/avatars/'.$reply->avatar) }}" width="150px"></div>
                                     <div class="name"><strong>{{ $reply->first_name }}</strong>  <i>{{ date('Y-m-d H:i', strtotime($reply->updated_at)) }}</i></div>
                             <div class="text-left">{{ $reply->reply }}</div>
                             @if( $reply->download_file != null )

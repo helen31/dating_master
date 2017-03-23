@@ -61,7 +61,7 @@
                             <p><strong>{{ $man->first_name }} {{ $man->last_name }}</strong></p>
                             <p class="{{ 'grg-'.$man->stat_name }}">{{ trans('admin/index.'.$man->stat_name) }}</p>
                         </td>
-                        <td><img width="150px" src="{{ url('uploads/'.$man->avatar)}}"></td>
+                        <td><img width="150px" src="{{ url('uploads/users/avatars/'.$man->avatar)}}"></td>
 
                         <td style="text-align:center;">
                             @if($man->isOnline())

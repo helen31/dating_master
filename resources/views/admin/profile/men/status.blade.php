@@ -24,7 +24,7 @@
                     <tr>
                         <td>{{ $man->id }}</td>
                         <td>{{ $man->first_name }} {{ $man->last_name }}</td>
-                        <td><img width="150px" src="{{ url('uploads/'.$man->avatar)}}"></td>
+                        <td><img width="150px" src="{{ url('uploads/users/avatars/'.$man->avatar)}}"></td>
                         <td style="text-align:center;">
                             @if($man->isOnline())
                                 <i class="fa fa-eye"></i>

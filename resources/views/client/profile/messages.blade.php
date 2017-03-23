@@ -16,7 +16,7 @@
 
             @foreach($messages as $m)
                 <div class="message">
-                    <div class="photo"><img src="{{ url('uploads/'.$m->ava) }}" width="150px"></div>
+                    <div class="photo"><img src="{{ url('uploads/users/avatars/'.$m->ava) }}" width="150px"></div>
                     <div class="name">{{ $m->name }}</div>
                     <div class="text-left">{{ $m->message }}</div>
                 </div>
@@ -57,7 +57,7 @@
             @foreach($user_counter['user_data'] as $contact)
                 @if($user_counter['contact_info']->status == 1)
                     <?php
-                    $url=url('/uploads/'.$contact->avatar);
+                    $url=url('/uploads/users/avatars/'.$contact->avatar);
                     $data_bday= date('Y-m-d') - $contact->birthday;
                     $is_inline=($contact->sessionID==null)?('no'):('');
                     $tab_chat.="
@@ -81,7 +81,7 @@
                                     ";?>
                 @elseif($user_counter['contact_info']->status == 2)
                     <?php
-                    $url=url('/uploads/'.$contact->avatar);
+                    $url=url('/uploads/users/avatars/'.$contact->avatar);
                     $data_bday= date('Y-m-d') - $contact->birthday;
                     $is_inline=($contact->sessionID==null)?('no'):('');
                     $tab_like.="
@@ -105,7 +105,7 @@
                                     ";?>
                 @elseif($user_counter['contact_info']->status == 3)
                     <?php
-                    $url=url('/uploads/'.$contact->avatar);
+                    $url=url('/uploads/users/avatars/'.$contact->avatar);
                     $data_bday= date('Y-m-d') - $contact->birthday;
                     $is_inline=($contact->sessionID==null)?('no'):('');
                     $tab_block.="

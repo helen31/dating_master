@@ -44,7 +44,7 @@
                             <h3> {{ trans('profile.primary') }}</h3>
                             <div class="form-group">
                                 {!! Form::label('avatar', trans('profile.avatar')) !!}<br/>
-                                <img class="img-responsive" src="{{ url('/uploads/'. $user->avatar) }}" id="preview-avatar">
+                                <img class="img-responsive" src="{{ url('/uploads/users/avatars/'. $user->avatar) }}" id="preview-avatar">
                                 <input type="file" class="form-control file" name="avatar" accept="image/*" value="{{ $user->avatar }}" data-show-upload="false" data-show-caption="true">
                             </div>
                             <p class="text-danger">* {{ trans('profile.required_fields') }}</p>
@@ -116,7 +116,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="pass_photo">{{ trans('profile.pass_photo') }}</label><span class="text-danger">*</span>
-                                    <img class="img-responsive" src="{{ url('/uploads/'.  ((isset($passport->cover))?$passport->cover:"")) }}">
+                                    <img class="img-responsive" src="{{ url('/uploads/users/passports/'.  ((isset($passport->cover))?$passport->cover:"")) }}">
                                     <input type="file" class="form-control file" name="pass_photo" value=""  accept="image/*" data-show-upload="false" data-show-caption="true">
                                 </div>
                             @endif

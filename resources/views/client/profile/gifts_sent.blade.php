@@ -20,7 +20,7 @@
             <tr>
                 <td>{{ $gift->id }}</td>
                 <td><a href="{{ url('profile/show/'.$gift->to) }}">{{ $gift->girl->first_name }}</a></td>
-                <td><img src="{{ url('/uploads/'.$gift->girl->avatar) }}" height="80px"></td>
+                <td><img src="{{ url('/uploads/users/avatars/'.$gift->girl->avatar) }}" height="80px"></td>
                 <td>{{ $gift->title }}</td>
                 <td>{{ $gift->prezent->price }} LC</td>
                 <td>{{ date('d-m-Y', strtotime($gift->created_at)) }}</td>
