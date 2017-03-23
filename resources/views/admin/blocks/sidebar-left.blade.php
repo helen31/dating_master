@@ -58,7 +58,7 @@
                     <li><a href="{{ url(App::getLocale().'/admin/girls/deactive') }}"> {{ trans('admin/sidebar-left.deactive') }}</a></li>
                     <li><a href="{{ url(App::getLocale().'/admin/girls/dismiss') }}"> {{ trans('admin/sidebar-left.dismiss') }}</a></li>
                     <li><a href="{{ url(App::getLocale().'/admin/girls/deleted') }}"> {{ trans('admin/sidebar-left.deleted') }}</a></li>
-                    <li><a href="{{ url(App::getLocale().'/admin/girls/moderation') }}"> {{ trans('admin/sidebar-left.moderation') }}</a></li>
+                    <li><a href="{{ url(App::getLocale().'/admin/girls/onmoderation') }}"> {{ trans('admin/sidebar-left.moderation') }}</a></li>
                     <li><a href="{{ url(App::getLocale().'/admin/girls/noprofile') }}"> {{ trans('admin/sidebar-left.noprofile') }}</a></li>
                 </ul>
             </li>
@@ -72,12 +72,11 @@
                         <li><a href="{{ url(App::getLocale().'/admin/man/deactive') }}"> {{ trans('admin/sidebar-left.deactive') }}</a></li>
                         <li><a href="{{ url(App::getLocale().'/admin/man/dismiss') }}"> {{ trans('admin/sidebar-left.dismiss') }}</a></li>
                         <li><a href="{{ url(App::getLocale().'/admin/man/deleted') }}"> {{ trans('admin/sidebar-left.deleted') }}</a></li>
-                        <li><a href="{{ url(App::getLocale().'/admin/man/moderation') }}"> {{ trans('admin/sidebar-left.moderation') }}</a></li>
+                        <li><a href="{{ url(App::getLocale().'/admin/man/onmoderation') }}"> {{ trans('admin/sidebar-left.moderation') }}</a></li>
                         <li><a href="{{ url(App::getLocale().'/admin/man/noprofile') }}"> {{ trans('admin/sidebar-left.noprofile') }}</a></li>
                     </ul>
                 </li>
             @endif
-            @if( Auth::User()->hasRole('Partner'))
                 <li>
                     <a href="{{ url(App::getLocale().'/admin/finance') }}"> <i class="fa fa-money"></i>{{ trans('admin/sidebar-left.financeReports') }}</a>
                 </li>
@@ -100,7 +99,6 @@
                 <li>
                     <a href="{{ url(App::getLocale().'/admin/messages_from_man') }}"> <i class="fa fa-envelope-o"></i>{{ trans('admin/sidebar-left.messagesFromMan') }}</a>
                 </li>
-            @endif
             <li>
                 <a href="{{ url(App::getLocale().'/admin/support') }}"><i class="fa fa-life-ring"></i> {{ trans('admin/sidebar-left.support') }}</a>
             </li>

@@ -236,20 +236,6 @@ class UsersController extends Controller
     }
 
     /**
-     * Show users income gifts.
-     *
-     * @param int $id
-     *
-     * @return mixed1
-     */
-    public function profileGifts($id)
-    {
-        return view('client.profile.gifts')->with([
-
-        ]);
-    }
-
-    /**
      * Show users finance statistic.
      *
      * @param int $id

@@ -58,16 +58,6 @@ class Presents extends Model
         // WHERE presents.partner_id = 3 AND presents_translations.locale = Config::get('app.locale')
     }
 
-    public function getAll()
-    {
-        $query = DB::table('presents')
-            ->join('presents_translations', 'presents.id', '=', 'presents_translations.present_id')
-            ->select('presents.id', 'presents.image', 'presents.price', 'presents_translations.title', 'presents_translations.description')
-            ->where('presents.deleted_at', '=', NULL)
-            ->where('presents.partner_id', \Auth::user()->id)
-            ->where('presents_translations.locale', \App::getLocale())
-            ->get();
 
-        return $query;
-    }
+
 }

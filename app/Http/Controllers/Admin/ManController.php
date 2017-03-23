@@ -219,6 +219,32 @@ class ManController extends Controller
         return redirect()->back();
     }
     /**
+     * Приостановление профиля мужчины из админки
+     */
+    public function deactivate($id)
+    {
+        $user = $this->user->find($id);
+        $user->status_id = 2; //Статус профиля - приостановлен
+        $user->save();
+
+        \Session::flash('flash_success', trans('flash.profile_update_success'));
+
+        return redirect('admin/man/deactive');
+    }
+    /**
+     * Активация профиля мужчины из админки
+     */
+    public function activate($id)
+    {
+        $user = $this->user->find($id);
+        $user->status_id = 1; //Статус профиля - активный
+        $user->save();
+
+        \Session::flash('flash_success', trans('flash.profile_update_success'));
+
+        return redirect('admin/man/active');
+    }
+    /**
      * Удаление профиля мужчины
      *
      * Так как в модели Users используется SoftDeletes, то запись не удаляется из базы,
@@ -266,7 +292,7 @@ class ManController extends Controller
      */
     public function getByStatus($status)
     {
-        $s = Status::where('name', 'like', '%'.$status.'%')->first();
+        $s = Status::where('name', '=', $status)->first();
 
         $men = []; //without -> role moder -> error -> undefined variable on line 335
 

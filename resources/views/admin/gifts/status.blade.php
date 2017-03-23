@@ -35,7 +35,7 @@
                                 <td> {{ $gift->prezent->price }}</td>
                                 <td>
                                     @if(!empty($gift->confirm_photo))
-                                        <img src="{{ url('/uploads/confirm_photos/'.$gift->confirm_photo ) }}" alt="Confirm Photo" height="100px">
+                                        <a href="{{ url('/uploads/confirm_photos/'.$gift->confirm_photo ) }}"><img src="{{ url('/uploads/confirm_photos/'.$gift->confirm_photo ) }}" alt="Confirm Photo" height="100px"></a>
                                     @else
                                         <p>Нет фото</p>
                                     @endif

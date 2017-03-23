@@ -99,6 +99,34 @@ return [
     'smile'     => 'You have wink from ',
     'wink'      => 'Wink',
     'leave_message' => 'Leave a message',
+    'make_gift' => 'Make gift',
+
+    /* -- Gifts -- */
+
+    'gift_profile_status_1' => 'In the process of delivery',
+    'gift_profile_status_2' => 'In the process of delivery',
+    'gift_profile_status_3' => 'Declined',
+    'gift_profile_status_4' => 'Delivered',
+
+    'gift_name' => 'Gift',
+    'gift_price' => 'Price',
+    'gift_date' => 'Date',
+    'delivery_status' => 'Status',
+    'confirm_photo' => 'Confirm photo',
+
+    'gift_confirmation_absent' => 'Photo has not been added yet',
+    'gift_absent_man' => 'You have not given gifts to girls yet',
+    'gift_absent_girl' => 'You have not yet received gifts from men',
+    'gifts_choose' => 'Choose a gift for a girl',
+    'gifts_catalogue' => 'Catalogue of gifts',
+
+    'gifts_girl_photo' => 'Girl avatar',
+    'gifts_girl_name' => 'Girl name',
+    'gifts_gift_photo' => 'Gift image',
+    'gifts_order_confirmation' => 'Order confirmation',
+    'gifts_write_message' => 'Write your message for girl',
+    'gifts_confirm_order' => 'Confirm order',
+    'gifts_make_order' => 'Buy now',
 
     /* -- Attributes -- */
 

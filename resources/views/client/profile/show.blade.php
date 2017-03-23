@@ -217,20 +217,15 @@
                 </div>
                 @if(Auth::user()->id != $id)
                     <div class="row" id="buttons">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="row girl-action">
-                                <div class="col-md-4 col-sm-4 col-xs-4 col-lg-3">
-                                    <img src="/assets/img/video.png" alt="Webcam online" title="Webcam online">
-                                </div>
-                                <div class="col-md-4 col-sm-4 col-xs-4 col-lg-3">
-                                    <a href="#chat"><img src="/assets/img/interface.png" alt="Chat now" title="Chat now!"></a>
-                                </div>
-                                <div class="col-md-4 col-sm-4 col-xs-4 col-lg-3">
-                                    <a href="{{ url('/'. App::getLocale() . '/profile/'. $u->uid . '/message') }}"><img src="/assets/img/note.png" alt="Leave a message" title="{{ trans('profile.leave_message') }}"></a>
-                                </div>
-                                 <div class="col-md-4 col-sm-4 col-xs-4 col-lg-3">
-                                     <a href="javascript:;"><img class="grg-tada" src="/assets/img/smile.png" alt="Smile" title="{{ trans('profile.wink') }}" id="smile"></a>
-                                </div>
+                                <a href="#"><img src="/assets/img/video.png" alt="Webcam online" title="Webcam online"></a>
+                                <a href="#chat"><img src="/assets/img/interface.png" alt="Chat now" title="Chat now!"></a>
+                                <a href="{{ url('/'. App::getLocale() . '/profile/'. $u->uid . '/message') }}"><img src="/assets/img/note.png" alt="Leave a message" title="{{ trans('profile.leave_message') }}"></a>
+                                <a href="javascript:;"><img class="grg-tada" src="/assets/img/smile.png" alt="Smile" title="{{ trans('profile.wink') }}" id="smile"></a>
+                                @if(Auth::user()->hasRole('Male'))
+                                    <a href="{{ url('/'. App::getLocale() . '/profile/'. Auth::user()->id . '/presents/'.$u->uid) }}"><img src="/assets/img/gift-icon2.png" alt="Gifts" title="{{ trans('profile.make_gift') }}" height="64px"></a>
+                                @endif
                             </div>
                         </div>
                         <!--

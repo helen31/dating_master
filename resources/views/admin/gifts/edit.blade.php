@@ -36,12 +36,9 @@
                     <p>Кто подарил: <a href="{{ url('/profile/show/'.$gift->from) }}">ID#{{ $gift->from }}</a></p>
                     <p>Кому подарен: <a href="{{ url('/profile/show/'.$gift->to) }}">ID#{{ $gift->to }}</a></p>
                     <p>Стоимость: {{ $gift->prezent->price }} LC</p>
-                    @if($gift->girl->partner_id == 1)
-                        <p>Admin</p>
-                    @else
-                        <p>Партнер девушки: <a href="{{ url('/admin/partner/show/'.$gift->girl->partner_id) }}">ID#{{ $gift->girl->partner_id }}</a></p>
-                    @endif
+                    <p>Партнер девушки: <a href="{{ url('/admin/partner/show/'.$gift->girl->partner_id) }}">ID#{{ $gift->girl->partner_id }}</a></p>
                     <p>Статус доставки: <span class="bg-danger">&nbsp;{{ trans('admin/sidebar-left.gift_status_'.$gift->status_id) }}&nbsp;</span></p>
+                    <p>Сообщение мужчины: {{ $gift->gift_message }}</p>
                 </div>
                 <div class="col-md-12">
 

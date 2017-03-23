@@ -99,6 +99,35 @@ return [
     'smile'     => 'Вам подмигнули',
     'wink'      => 'Подмигнуть',
     'leave_message' => 'Оставить сообщение',
+    'make_gift' => 'Сделать подарок',
+
+    /* -- Gifts -- */
+
+    'gift_profile_status_1' => 'В пути',
+    'gift_profile_status_2' => 'В пути',
+    'gift_profile_status_3' => 'Отменен',
+    'gift_profile_status_4' => 'Доставлен',
+
+    'gift_name' => 'Подарок',
+    'gift_price' => 'Цена',
+    'gift_date' => 'Дата',
+    'delivery_status' => 'Статус доставки',
+    'confirm_photo' => 'Фото подтверждения',
+
+    'gift_confirmation_absent' => 'Фото еще не добавлено',
+    'gift_absent_man' => 'Вы пока не дарили подарков девушкам',
+    'gift_absent_girl' => 'Вы пока не получали подарков от мужчин',
+    'gifts_choose' => 'Выберите подарок для девушки',
+    'gifts_catalogue' => 'Каталог подарков',
+
+    'gifts_girl_photo' => 'Фото девушки',
+    'gifts_girl_name' => 'Имя девушки',
+    'gifts_gift_photo' => 'Фото подарка',
+    'gifts_order_confirmation' => 'Подтверждение заказа',
+    'gifts_write_message' => 'Напишите сообщение девушке',
+    'gifts_confirm_order' => 'Подтвердить заказ',
+    'gifts_make_order' => 'Заказать',
+
 
     /* -- Attributes -- */
 

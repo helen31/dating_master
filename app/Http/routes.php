@@ -81,7 +81,10 @@ Route::group([  'prefix'        => LaravelLocalization::setLocale(),
     Route::get('profile/{id}/video', 'UsersController@profileVideo');
     Route::get('profile/{id}/mail', 'UsersController@profileMail');
     Route::get('profile/{id}/smiles', 'UsersController@profileSmiles');
-    Route::get('profile/{id}/gifts', 'UsersController@profileGifts');
+    Route::get('profile/{id}/gifts', 'GiftsController@getGifts');
+    Route::get('profile/{id}/presents/{girl_id}', 'GiftsController@getPresents');
+    Route::get('profile/{id}/presents/{girl_id}/gift/{gift_id}', 'GiftsController@getOrderForm');
+
     Route::get('profile/{id}/finance', 'UsersController@profileFinance');
 
     Route::get('profile/activate/{id}', 'UsersController@activate'); // Активировать аккаунт
@@ -93,6 +96,7 @@ Route::group([  'prefix'        => LaravelLocalization::setLocale(),
 
     Route::post('profile/message', 'MessagesController@send');
     Route::post('profile/update/{id}', 'UsersController@update');
+    Route::post('profile/{id}/gift/order', 'GiftsController@order');
 
 
     /* Albums */
@@ -181,14 +185,14 @@ Route::group([  'prefix' => LaravelLocalization::setLocale().'/admin',
     Route::get('girls', 'Admin\GirlsController@index'); //All
     Route::get('girl/new', 'Admin\GirlsController@create'); //Add new
 
-    Route::get('girls/{status}', 'Admin\GirlsController@getByStatus'); //Return all by status
-
     Route::get('girl/edit/{id}', 'Admin\GirlsController@edit'); // Edit Girl profile
     Route::get('girl/edit/{id}/add_album', 'Admin\GirlsController@createAlbum'); // Create Girl albums
     Route::get('girl/edit/{id}/edit_album/{aid}', 'Admin\GirlsController@editAlbum'); // Edit Girl albums
 
     //dropImageAlbum
 
+    Route::get('girl/activate/{id}', 'Admin\GirlsController@activate'); // Активировать аккаунт девушки
+    Route::get('girl/deactivate/{id}', 'Admin\GirlsController@deactivate'); // Деактивировать аккаунт девушки
     Route::get('girl/drop/{id}', 'Admin\GirlsController@destroy');//
     Route::get('girl/restore/{id}', 'Admin\GirlsController@restore');
     Route::post('girl/edit/{id}/add_album', 'Admin\GirlsController@addAlbum'); // Create Girl save albums
@@ -202,18 +206,23 @@ Route::group([  'prefix' => LaravelLocalization::setLocale().'/admin',
     Route::post('girl/store', 'Admin\GirlsController@store'); //Store new to db
     Route::post('girl/edit/{id}','Admin\GirlsController@update');// Update db
     Route::post('girl/changepartner', 'Admin\GirlsController@changePartner'); //change girlStatus from edit profile page
+
+    Route::get('girls/{status}', 'Admin\GirlsController@getByStatus'); //Return all by status
     /** End Girls Profile routing */
 
     /** Start Men Profile routing **/
     Route::get('men', 'Admin\ManController@index'); //All
-    Route::get('man/{status}', 'Admin\ManController@getByStatus'); //Return all by status
     Route::get('man/edit/{id}', 'Admin\ManController@edit'); // Edit man profile
 
+    Route::get('man/activate/{id}', 'Admin\ManController@activate'); // Активировать аккаунт мужчины
+    Route::get('man/deactivate/{id}', 'Admin\ManController@deactivate'); // Деактивировать аккаунт мужчины
     Route::get('man/drop/{id}', 'Admin\ManController@destroy');
     Route::get('man/restore/{id}', 'Admin\ManController@restore');
 
     Route::post('man/dropProfileFoto/{fid}', 'Admin\ManController@dropProfileFoto'); // Delete photo from Girl albums
     Route::post('man/edit/{id}','Admin\ManController@update');// Update db
+
+    Route::get('man/{status}', 'Admin\ManController@getByStatus'); //Return all by status
     /** End Men Profile routing **/
 
 

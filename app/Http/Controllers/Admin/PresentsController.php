@@ -27,14 +27,31 @@ class PresentsController extends Controller
         view()->share('unread_ticket_count', parent::getUnreadMessagesCount());
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+    /*
+     * Функция выборки списка доступных подарков.
+     * Администратор видит общие подарки (внесенные админом)
+     * Партнер видит общие подарки и свои собственные, которые он добавил
      */
     public function index()
     {
-        $presents = $this->present->getAll();
+        if(\Auth::user()->hasRole("Moder") || \Auth::user()->hasRole("Owner")){
+            $presents = Presents::join('presents_translations', 'presents.id', '=', 'presents_translations.present_id')
+                ->select('presents.*', 'presents_translations.title', 'presents_translations.description')
+                ->where('presents.deleted_at', '=', null)
+                ->where('presents.partner_id', '=', \Auth::user()->id)
+                ->where('presents_translations.locale', \App::getLocale())
+                ->paginate(10);
+        }else{
+            $presents = Presents::join('presents_translations', 'presents.id', '=', 'presents_translations.present_id')
+                ->select('presents.*', 'presents_translations.title', 'presents_translations.description')
+                ->where('presents.deleted_at', '=', null)
+                ->where('presents.partner_id', '=', 1)
+                ->where('presents_translations.locale', \App::getLocale())
+                ->orWhere('presents.partner_id', '=', \Auth::user()->id)
+                ->where('presents_translations.locale', \App::getLocale())
+                ->orderBy('presents.partner_id', 'DESC')
+                ->paginate(10);
+        }
 
         return view('admin.presents.index')->with([
             'heading'  => 'Подарки',

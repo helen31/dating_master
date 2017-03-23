@@ -435,6 +435,32 @@ class GirlsController extends Controller
         return redirect()->back();
     }
     /**
+     * Приостановление профиля девушки из админки
+     */
+    public function deactivate($id)
+    {
+        $user = $this->user->find($id);
+        $user->status_id = 2; //Статус профиля - приостановлен
+        $user->save();
+
+        \Session::flash('flash_success', trans('flash.profile_update_success'));
+
+        return redirect('admin/girls/deactive');
+    }
+    /**
+     * Активация профиля девушки из админки
+     */
+    public function activate($id)
+    {
+        $user = $this->user->find($id);
+        $user->status_id = 5; //Статус профиля - на модерации
+        $user->save();
+
+        \Session::flash('flash_success', trans('flash.profile_update_success'));
+
+        return redirect('admin/girls/onmoderation');
+    }
+    /**
      * Удаление профиля девушки
      *
      * Так как в модели Users используется SoftDeletes, то запись не удаляется из базы,
@@ -482,7 +508,7 @@ class GirlsController extends Controller
      */
     public function getByStatus($status)
     {
-        $s = Status::where('name', 'like', '%'.$status.'%')->first();
+        $s = Status::where('name', '=', $status)->first();
 
         $girls = []; //without -> role moder -> error -> undefined variable girls on line 335
 
