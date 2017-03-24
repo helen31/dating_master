@@ -6,9 +6,9 @@
 
  <table class="table table-hover">
   <tr>
-    <th>Имя</th>
-    <th>Аватар</th>
-    <th>Дата / время</th>
+    <th>{{ trans('profile.name') }}</th>
+    <th>{{ trans('profile.avatar') }}</th>
+    <th>{{ trans('profile.wink_date') }}</th>
   </tr>
      @foreach($smiles as $smile)
          <tr>

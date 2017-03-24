@@ -98,6 +98,7 @@ return [
 
     'smile'     => 'You have wink from ',
     'wink'      => 'Wink',
+    'wink_date' => 'Date / Time',
     'leave_message' => 'Leave a message',
     'make_gift' => 'Make gift',
 
