@@ -6,7 +6,7 @@
     @endif
     <li><a href="/{{ App::getLocale() }}/profile/{{ Auth::user()->id }}/video/">{{ trans('profile.video') }}</a></li>
     <li><a href="/{{ App::getLocale() }}/search">{{ trans('search.search') }}</a></li>
-    <li><a href="/{{ App::getLocale() }}/profile/{{ Auth::user()->id }}/mail/">{{ trans('mail.mail') }}</a></li>
+    <li><a href="/{{ App::getLocale() }}/profile/{{ Auth::user()->id }}/mail/">{{ trans('profile.mail') }}</a></li>
     <li><a href="/{{ App::getLocale() }}/profile/{{ Auth::user()->id }}/smiles/">{{ trans('profile.smiles') }}</a></li>
     <li><a href="/{{ App::getLocale() }}/users/online/">{{ trans('users.online') }}</a></li>
     <li><a href="/{{ App::getLocale() }}/profile/{{ Auth::user()->id }}/gifts">{{ trans('profile.gifts') }}</a></li>

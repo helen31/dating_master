@@ -74,12 +74,12 @@ Route::group([  'prefix'        => LaravelLocalization::setLocale(),
 
     Route::post('chat/ajax', 'ChatController@ajax');
     /** Users profile */
-    Route::get('profile/message', 'MessagesController@index');
     Route::get('profile/{id}', 'UsersController@edit');
     Route::get('profile/{id}/photo', 'UsersController@profilePhoto');
     Route::get('profile/{id}/albums', 'AlbumController@profileAlbum');
     Route::get('profile/{id}/video', 'UsersController@profileVideo');
-    Route::get('profile/{id}/mail', 'UsersController@profileMail');
+    Route::get('profile/{id}/mail', 'MessagesController@index'); // Списки сообщений: исходящие, входящие и т.д.
+    Route::get('profile/{id}/correspond/{cor_id}', 'MessagesController@show'); // Переписка с конкретным пользователем
     Route::get('profile/{id}/smiles', 'UsersController@profileSmiles');
     Route::get('profile/{id}/gifts', 'GiftsController@getGifts');
     Route::get('profile/{id}/presents/{girl_id}', 'GiftsController@getPresents');
@@ -87,14 +87,17 @@ Route::group([  'prefix'        => LaravelLocalization::setLocale(),
 
     Route::get('profile/{id}/finance', 'UsersController@profileFinance');
 
+    Route::get('profile/{id}/add/{cor_id}/to_list/{list}', 'ListsController@addToList');// Добавить пользователя в определенный список: к фаворитам или черный список
+    Route::get('profile/{id}/remove/{cor_id}/from_list/{list}', 'ListsController@removeFromList');// Удалить пользователя из списка
+
     Route::get('profile/activate/{id}', 'UsersController@activate'); // Активировать аккаунт
     Route::get('profile/deactivate/{id}', 'UsersController@deactivate'); // Деактивировать аккаунт
     Route::get('profile/drop/{id}', 'UsersController@delete'); // Удалить аккаунт
 
+    Route::post('profile/correspond', 'MessagesController@sendMessage');
     Route::post('profile/{id}/photo', 'UsersController@profilePhotoAdd');
     Route::post('profile/dropProfilePhoto/{photo_id}', 'UsersController@profilePhotoDelete'); // Delete photo from Girl
 
-    Route::post('profile/message', 'MessagesController@send');
     Route::post('profile/update/{id}', 'UsersController@update');
     Route::post('profile/{id}/gift/order', 'GiftsController@order');
 

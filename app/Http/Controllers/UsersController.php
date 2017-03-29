@@ -189,33 +189,6 @@ class UsersController extends Controller
     }
 
     /**
-     * Show users income messages.
-     *
-     * @param int $id
-     *
-     * @return mixed
-     */
-    public function profileMail(int $id)
-    {
-        $from = \DB::table('messages')
-            ->select('messages.id as mid', 'messages.message', 'users.id as uid', 'users.first_name', 'users.avatar')
-            ->join('users', 'users.id', '=', 'messages.to_user')
-            ->where('messages.from_user', '=', \Auth::user()->id)
-            ->paginate(30);
-
-        $to = \DB::table('messages')
-            ->select('messages.id as mid', 'messages.message', 'users.id as uid', 'users.first_name', 'users.avatar')
-            ->join('users', 'users.id', '=', 'messages.from_user')
-            ->where('messages.to_user', '=', \Auth::user()->id)
-            ->paginate(30);
-
-        return view('client.profile.mail')->with([
-            'from'   =>  $from,
-            'to'    => $to
-        ]);
-    }
-
-    /**
      * Show users income smiles.
      *
      * @param int $id

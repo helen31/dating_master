@@ -8,6 +8,7 @@ return [
     'primary'   => 'My profile',
     'photo'     => 'Profile photos',
     'video'     => 'Video',
+    'mail'      => 'Mail',
     'smiles'    => 'Winks',
     'gifts'     => 'Gifts',
     'Myphotos'    => 'My photos',

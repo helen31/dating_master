@@ -8,6 +8,10 @@ class Messages extends Model
 {
     protected $table = 'messages';
 
+    protected $fillable = [
+        'from_user', 'to_user', 'message', 'status'
+    ];
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

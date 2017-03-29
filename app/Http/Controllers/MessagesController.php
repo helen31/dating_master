@@ -10,6 +10,8 @@ use App\Models\User;
 use App\Services\ExpenseService;
 use Illuminate\Http\Request;
 use App\Models\Messages;
+use App\Models\Lists;
+use DB;
 
 use App\Models\ChatContactList;
 
@@ -22,118 +24,176 @@ class MessagesController extends Controller
      * @var
      */
     private $expenseService;
+    private $message;
 
-    public function __construct(ExpenseService $expenseService)
+    public function __construct(ExpenseService $expenseService, Messages $message)
     {
         $this->expenseService = $expenseService;
+        $this->message = $message;
 
         parent::__construct();
     }
+/*
+ * Выводит список всех сообщений по группам: входящие, исходящие,
+ * входящие от фаворитов, входящие от администрации, входящие от черного списка
+ */
+    public function index($id){
 
-    public function index($id=19){
+        $user_id = \Auth::user()->id;
 
-        $from_user = \DB::table('messages')
-            ->select('message', 'messages.created_at as time', 'users.first_name as name', 'users.avatar as ava')
-            ->join('users', 'users.id', '=', 'messages.from_user')
-            ->where('messages.from_user', '=', $id)
-            ->where('messages.to_user', '=', \Auth::user()->id)
-            ->orderBy('messages.created_at', 'asc')
-            ->get();
-
-        $to_user =  \DB::table('messages')
-            ->select('message', 'messages.created_at as time', 'users.first_name as name', 'users.avatar as ava')
-            ->join('users', 'users.id', '=', 'messages.from_user')
-            ->where('messages.from_user', '=', \Auth::user()->id)
-            ->where('messages.to_user', '=', $id)
-            ->orderBy('messages.created_at', 'asc')
-            ->get();
-        
-        $messages = array_merge($from_user, $to_user);
-
-        $user = User::find(\Auth::user()->id);
-        $contact_lists = ChatContactList::where('user_id','=',\Auth::user()->id)->get();
-        $user_contact_list_data=array();
-        foreach ($contact_lists as $contact_list){
-            $user_contact_list_data[]=[
-                'contact_info'=> $contact_list,
-                'user_data'=> User::getUserShtInfo($contact_list['contact_id']),
-
-            ];
-        }
-        if (!\Auth::user()
-            || \Auth::user()->hasRole('Male')
-            || \Auth::user()->hasRole('Alien')
-        ){
-            $users = $this->getUsers(5);
-        } else {
-            $users = $this->getUsers(4);
+        // Получаем список всех администраторов и модераторов в виде массива
+        $admins_raw = DB::table('users')->whereIn('role_id', [1, 2])->select('id')->get();
+        $admins_array = [];
+        foreach($admins_raw as $a){
+            $admins_array[] = $a->id;
         }
 
+        // Получаем список пользователей, добавленных нашим пользователем в фавориты в виде массива
+        $favorites_raw = DB::table('lists')->where('subject_id', '=', $user_id)
+            ->where('list', '=', 1)->select('object_id')->get();
+        $favourites_array = [];
+        foreach($favorites_raw as $f){
+            $favourites_array[] = $f->object_id;
+        }
 
-        usort($messages, [$this, 'cmp_time']);
+        // Получаем список пользователей, добавленных нашим пользователем в черный список
+        $blacklist_raw = DB::table('lists')->where('subject_id', '=', $user_id)
+           ->where('list', '=', 2)->select('object_id')->get();
+        $blacklist_array = [];
+        foreach($blacklist_raw as $b){
+            $blacklist_array[] = $b->object_id;
+        }
 
-        return view('client.profile.messages')->with([
-            'messages' => $messages,
-            'to' => $id,
-            'user'  => $user,
-            'users' => $users,
-            'user_contact_list_data' =>$user_contact_list_data
+        // Получаем список входящих сообщений
+        $income = Messages::where('messages.to_user', '=', $user_id)
+            ->select('messages.*', 'users.first_name', 'users.avatar', 'users.role_id')
+            ->join('users', 'users.id', '=', 'messages.from_user')
+            ->whereNotIn('users.id', $blacklist_array) //Не показывать сообщения пользователей, входящих в черный список
+            ->orderBy('messages.created_at', 'DESC')
+            ->paginate(50);
+
+        // Количество непрочитанных входящих сообщений
+        $unread_income_count = $income->where('status', '=', 0)->count();
+
+
+        // Получаем список исходящих сообщений
+        $outcome = Messages::where('messages.from_user', '=', $user_id)
+            ->select('messages.*', 'users.first_name', 'users.avatar')
+            ->join('users', 'users.id', '=', 'messages.to_user')
+            ->orderBy('messages.created_at', 'DESC')
+            ->paginate(50);
+
+        //Получаем список сообщений от администрации
+        $admins = Messages::where('messages.to_user', '=', $user_id)
+            ->select('messages.*', 'users.first_name', 'users.avatar', 'users.role_id')
+            ->join('users', 'users.id', '=', 'messages.from_user')
+            ->whereIn('users.id', $admins_array)
+            ->orderBy('messages.created_at', 'DESC')
+            ->paginate(50);
+
+        // Количество непрочитанных сообщений от администрации
+        $unread_admins_count = $admins->where('status', '=', 0)->count();
+
+        //Получаем список сообщений от фаворитов
+        $favourites = Messages::where('messages.to_user', '=', $user_id)
+            ->select('messages.*', 'users.first_name', 'users.avatar', 'users.role_id')
+            ->join('users', 'users.id', '=', 'messages.from_user')
+            ->whereIn('users.id', $favourites_array)
+            ->orderBy('messages.created_at', 'DESC')
+            ->paginate(50);
+
+        // Количество непрочитанных сообщений от фаворитов
+        $unread_favourites_count = $favourites->where('status', '=', 0)->count();
+
+
+        //Получаем список сообщений от черного списка
+        $blacklist = Messages::where('messages.to_user', '=', $user_id)
+            ->select('messages.*', 'users.first_name', 'users.avatar', 'users.role_id')
+            ->join('users', 'users.id', '=', 'messages.from_user')
+            ->whereIn('users.id', $blacklist_array)
+            ->orderBy('messages.created_at', 'DESC')
+            ->paginate(50);
+
+        return view('client.profile.mail')->with([
+            'income' => $income,
+            'unread_income_count' => $unread_income_count,
+            'outcome' => $outcome,
+            'admins'  => $admins,
+            'unread_admins_count' => $unread_admins_count,
+            'favourites' => $favourites,
+            'unread_favourites_count' => $unread_favourites_count,
+            'blacklist' => $blacklist,
         ]);
 
     }
+    /*
+     * Вывод переписки с конкретным пользователем (входящих и исходящих сообщений)
+     */
+    public function show($id, $cor_id){
 
-    public function cmp_time($a, $b)
-    {
-        if($a->time > $b->time)
-            return 1;
-    }
+        $user_id = \Auth::user()->id;
 
-    public function send(Request $request, $id)
-    {
+        // Получаем список входящих и исходящий сообщений между пользователями $id и $cor_id
+        $messages = $this->message->where('messages.to_user', '=', $id)
+            ->where('messages.from_user', '=', $cor_id)
+            ->orWhere('messages.to_user', '=', $cor_id)
+            ->where('messages.from_user', '=', $id)
+            ->join('users', 'users.id', '=', 'messages.from_user')
+            ->select('messages.*', 'users.first_name', 'users.avatar', 'users.role_id')
+            ->orderBy('messages.created_at', 'DESC')
+            ->paginate(25);
 
-        $rules = [
-            'to'        => 'required',
-            'from'      => 'required',
-            'message'   => 'required',
-        ];
+        /* Проверяем, находиться ли корреспондент в фаворитах или черном списке пользователя
+         * Это нужно для того, чтобы выводить кнопки, например "Добавить в фавориты" или "Удалить из фаворитов"
+         * Переменные is_favourites и is_blacklist больше нуля, если корреспондент не находится в черном списке пользователя
+         */
+        $is_favourites = Lists::where('subject_id', '=', $id)
+            ->where('object_id', '=', $cor_id)
+            ->where('list', '=', 1) // Пользователь находится в списке фаворитов
+            ->get()->count();
 
-        $v = Validator::make($request->all(), $rules);
+        $is_blacklist = Lists::where('subject_id', '=', $id)
+            ->where('object_id', '=', $cor_id)
+            ->where('list', '=', 2) // Пользователь находится в черном списке
+            ->get()->count();
 
-        if($v->fails())
-        {
-            return redirect()->back()->withErrors($v->errors());
-        }
-/* @TODO: Допилить поправить.
-        if( \Auth::user()->hasRole('male') ){
 
-            if (!((float) $this->getMoney() >= (float) $this->expenseService->getCost(Constants::EXP_FLP))){
-                \Session::flash('flash-warning', trans('payments.enoughMoney'));
-                return redirect()->back();
-
-            } else {
-                $this->expenseService->setExpense(
-                    \Auth::user()->id,
-                    $request->input('to'),
-                    Constants::EXP_MESSAGE,
-                    $this->expenseService->getCost(Constants::EXP_MESSAGE)
-                );
-            }
-        }
-        dump('heek');
-*/
-        //if($request->input('to') == $id){ @TODO: ЧТО ТЫ ТУТ ХОТЕЛ СДЕЛАТЬ!?
-
-            $message = new Messages();
-            $message->from_user = $request->input('from');
-            $message->to_user   = $request->input('to');
-            $message->message   = $this->robot( $request->input('message') );
+        // Получаем список входящих непрочитанных сообщений от пользователя
+        // И присваиваем каждому сообщению статус "прочитанное"
+        $unread_messages = $this->message->where('to_user', '=', $id)
+            ->where('from_user', '=', $cor_id)
+            ->where('status', '=', 0) // Статус - непрочитанное
+            ->get();
+        foreach($unread_messages as $message){
+            $message->status = 1; // Статус - прочитанное
             $message->save();
+        }
 
-            return redirect()->back();
-        //}
 
-        //return redirect()->back();
+        return view('client.profile.mail_show')->with([
+            'cor_id'  => $cor_id,
+            'user_id' => $user_id,
+            'messages' => $messages,
+            'is_favourites' => $is_favourites,
+            'is_blacklist'  => $is_blacklist,
+        ]);
     }
 
+    public function sendMessage(Request $request)
+    {
+        $this->validate($request, [
+            'sent_message' => 'required',
+        ]);
+
+        $message = new Messages();
+        $message->from_user = $request->input('from_user');
+        $message->to_user = $request->input('to_user');
+        $message->message = $request->input('sent_message');
+        //$message->message = $this->robot($request->input('sent_message'));
+        $message->status = 0;
+        $message->save();
+
+        return redirect('profile/'.$message->from_user.'/correspond/'.$message->to_user);
+    }
 
 }
