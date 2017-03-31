@@ -12,5 +12,8 @@ return [
      'Sagittarius'  => 'Стрелец',
      'Capricorn'    => 'Козерог',
      'Aquarius'     => 'Водолей',
-     'Pisces'       => 'Рыбы'
+     'Pisces'       => 'Рыбы',
+
+    'check_compatibility' => 'Узнать совместимость по гороскопу',
+    'check_comp'          => 'Узнать совместимость',
 ];

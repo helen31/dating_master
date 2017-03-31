@@ -85,6 +85,7 @@ Route::group([  'prefix'        => LaravelLocalization::setLocale(),
     Route::get('profile/{id}/presents/{girl_id}', 'GiftsController@getPresents');
     Route::get('profile/{id}/presents/{girl_id}/gift/{gift_id}', 'GiftsController@getOrderForm');
 
+    Route::get('profile/{id}/horoscope/{cor_id}', 'HoroscopeController@show');
     Route::get('profile/{id}/finance', 'UsersController@profileFinance');
 
     Route::get('profile/{id}/add/{cor_id}/to_list/{list}', 'ListsController@addToList');// Добавить пользователя в определенный список: к фаворитам или черный список
@@ -251,6 +252,13 @@ Route::group([  'prefix' => LaravelLocalization::setLocale().'/admin',
     Route::post('gifts/update/{id}', 'Admin\GiftsController@update');
 
     /** End gifts **/
+
+    /** Messages from man **/
+
+    Route::get('messages-from-man', 'Admin\MessagesFromManController@index'); // Список сообщений от мужчин
+    Route::get('messages-from-man/{man_id}/correspond/{girl_id}', 'Admin\MessagesFromManController@show'); // Переписка с мужчиной
+    Route::post('messages-from-man/correspond', 'Admin\MessagesFromManController@sendMessage');
+    /** End Messages From Man **/
 
     /** Ticket System Routes */
     Route::get('support', 'Admin\TicketController@index');

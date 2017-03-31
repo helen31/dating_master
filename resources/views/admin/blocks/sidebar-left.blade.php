@@ -97,7 +97,7 @@
                 </li>
 
                 <li>
-                    <a href="{{ url(App::getLocale().'/admin/messages_from_man') }}"> <i class="fa fa-envelope-o"></i>{{ trans('admin/sidebar-left.messagesFromMan') }}</a>
+                    <a href="{{ url(App::getLocale().'/admin/messages-from-man') }}"> <i class="fa fa-envelope-o"></i>{{ trans('admin/sidebar-left.messagesFromMan') }}</a>
                 </li>
             <li>
                 <a href="{{ url(App::getLocale().'/admin/support') }}"><i class="fa fa-life-ring"></i> {{ trans('admin/sidebar-left.support') }}</a>

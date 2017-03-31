@@ -35,18 +35,11 @@ class MessagesController extends Controller
     }
 /*
  * Выводит список всех сообщений по группам: входящие, исходящие,
- * входящие от фаворитов, входящие от администрации, входящие от черного списка
+ * входящие от фаворитов, входящие от черного списка
  */
     public function index($id){
 
         $user_id = \Auth::user()->id;
-
-        // Получаем список всех администраторов и модераторов в виде массива
-        $admins_raw = DB::table('users')->whereIn('role_id', [1, 2])->select('id')->get();
-        $admins_array = [];
-        foreach($admins_raw as $a){
-            $admins_array[] = $a->id;
-        }
 
         // Получаем список пользователей, добавленных нашим пользователем в фавориты в виде массива
         $favorites_raw = DB::table('lists')->where('subject_id', '=', $user_id)
@@ -83,16 +76,6 @@ class MessagesController extends Controller
             ->orderBy('messages.created_at', 'DESC')
             ->paginate(50);
 
-        //Получаем список сообщений от администрации
-        $admins = Messages::where('messages.to_user', '=', $user_id)
-            ->select('messages.*', 'users.first_name', 'users.avatar', 'users.role_id')
-            ->join('users', 'users.id', '=', 'messages.from_user')
-            ->whereIn('users.id', $admins_array)
-            ->orderBy('messages.created_at', 'DESC')
-            ->paginate(50);
-
-        // Количество непрочитанных сообщений от администрации
-        $unread_admins_count = $admins->where('status', '=', 0)->count();
 
         //Получаем список сообщений от фаворитов
         $favourites = Messages::where('messages.to_user', '=', $user_id)
@@ -118,8 +101,6 @@ class MessagesController extends Controller
             'income' => $income,
             'unread_income_count' => $unread_income_count,
             'outcome' => $outcome,
-            'admins'  => $admins,
-            'unread_admins_count' => $unread_admins_count,
             'favourites' => $favourites,
             'unread_favourites_count' => $unread_favourites_count,
             'blacklist' => $blacklist,
@@ -169,7 +150,6 @@ class MessagesController extends Controller
             $message->save();
         }
 
-
         return view('client.profile.mail_show')->with([
             'cor_id'  => $cor_id,
             'user_id' => $user_id,
@@ -188,12 +168,11 @@ class MessagesController extends Controller
         $message = new Messages();
         $message->from_user = $request->input('from_user');
         $message->to_user = $request->input('to_user');
-        $message->message = $request->input('sent_message');
-        //$message->message = $this->robot($request->input('sent_message'));
+        //$message->message = $request->input('sent_message');
+        $message->message = $this->robot($request->input('sent_message'));
         $message->status = 0;
         $message->save();
 
         return redirect('profile/'.$message->from_user.'/correspond/'.$message->to_user);
     }
-
 }

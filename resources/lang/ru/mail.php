@@ -21,4 +21,6 @@ return [
     'add_to_blacklist'  => 'Добавить в черный список',
     'remove_from_favourites' => 'Удалить из фаворитов',
     'remove_from_blacklist'  => 'Удалить из черного списка',
+    'messages_from_men' => 'Сообщения от мужчин',
+    'unread_count'      => 'Количество непрочитанных сообщений',
 ];

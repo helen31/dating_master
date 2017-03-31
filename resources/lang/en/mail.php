@@ -21,4 +21,6 @@ return [
     'add_to_blacklist'  => 'Add to blacklist',
     'remove_from_favourites' => 'Remove from favourites',
     'remove_from_blacklist'  => 'Remove from blacklist',
+    'messages_from_men' => 'Messages from men',
+    'unread_count'      => 'Number of unread messages',
 ];

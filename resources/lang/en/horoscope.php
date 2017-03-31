@@ -12,5 +12,8 @@ return [
      'Sagittarius'  => 'Sagittarius',
      'Capricorn'    => 'Capricornus',
      'Aquarius'     => 'Aquarius',
-     'Pisces'       => 'Pisces'
+     'Pisces'       => 'Pisces',
+
+    'check_compatibility' => 'Check compatibility on a horoscope',
+    'check_comp'          => 'Check compatibility',
 ];

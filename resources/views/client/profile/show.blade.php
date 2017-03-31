@@ -221,10 +221,11 @@
                             <div class="row girl-action">
                                 <a href="#"><img src="/assets/img/video.png" alt="Webcam online" title="Webcam online"></a>
                                 <a href="#chat"><img src="/assets/img/interface.png" alt="Chat now" title="Chat now!"></a>
-                                <a href="{{ url('/'. App::getLocale() . '/profile/'. $u->uid . '/message') }}"><img src="/assets/img/note.png" alt="Leave a message" title="{{ trans('profile.leave_message') }}"></a>
+                                <a href="{{ url('/'. App::getLocale() . '/profile/'. Auth::user()->id . '/correspond/'.$u->uid) }}"><img src="/assets/img/note.png" alt="Leave a message" title="{{ trans('profile.leave_message') }}"></a>
                                 <a href="javascript:;"><img class="grg-tada" src="/assets/img/smile.png" alt="Smile" title="{{ trans('profile.wink') }}" id="smile"></a>
                                 @if(Auth::user()->hasRole('Male'))
                                     <a href="{{ url('/'. App::getLocale() . '/profile/'. Auth::user()->id . '/presents/'.$u->uid) }}"><img src="/assets/img/gift-icon2.png" alt="Gifts" title="{{ trans('profile.make_gift') }}" height="64px"></a>
+                                    <a href="{{ url('/'. App::getLocale() . '/profile/'. Auth::user()->id . '/horoscope/'.$u->uid) }}"><img src="/assets/img/horoscope.png" alt="Gifts" title="{{ trans('horoscope.check_compatibility') }}" height="64px"></a>
                                 @endif
                             </div>
                         </div>

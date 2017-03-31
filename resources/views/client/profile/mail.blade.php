@@ -42,14 +42,6 @@
                 </a>
             </li>
             <li role="presentation">
-                <a href="#admin" aria-controls="admin" role="tab" data-toggle="tab">
-                    {{ trans('mail.admin') }}
-                    @if($unread_admins_count > 0)
-                        <span class="badge grg-badge">{{ $unread_admins_count }}</span>
-                    @endif
-                </a>
-            </li>
-            <li role="presentation">
                 <a href="#blacklist" aria-controls="blacklist" role="tab" data-toggle="tab">
                     {{ trans('mail.blacklist') }}
                 </a>
@@ -77,11 +69,7 @@
                             @foreach($income as $m)
                                 <tr style="{{ ($m->status == 0)?'font-weight: bold;':'' }} cursor:pointer;" onclick='location.href="{{ url('profile/'.$m->to_user.'/correspond/'.$m->from_user) }}"'>
                                     <td>
-                                        @if($m->role_id == 1 || $m->role_id == 1)
-                                            <img src="{{ url('/uploads/admins/'.$m->avatar) }}" height="40px">
-                                        @else
-                                            <img src="{{ url('/uploads/users/avatars/'.$m->avatar) }}" height="40px">
-                                        @endif
+                                        <img src="{{ url('/uploads/users/avatars/'.$m->avatar) }}" height="40px">
                                         {{ $m->first_name }}
                                     </td>
                                     <td>
@@ -175,46 +163,6 @@
                     </tbody>
                 </table>
                 {!!  $favourites->render() !!}
-            </div>
-
-            <!-- Сообщения от администрации -->
-
-            <div role="tabpanel" class="tab-pane" id="admin">
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>{{ trans('mail.sender') }}</th>
-                        <th>{{ trans('mail.message') }}</th>
-                        <th>{{ trans('mail.status') }}</th>
-                        <th>{{ trans('mail.date') }}</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($admins as $m)
-                        <tr style="{{ ($m->status == 0)?'font-weight: bold;':'' }} cursor:pointer;" onclick='location.href="{{ url('profile/'.$m->to_user.'/correspond/'.$m->from_user) }}"'>
-                            <td>
-                                <img src="{{ url('/uploads/admins/'.$m->avatar) }}" height="40px">
-                                {{ $m->first_name }}
-                            </td>
-                            <td>
-                                {{ mb_substr($m->message, 0, 50) }}...
-                            </td>
-                            <td>
-                                @if($m->status == 0)
-                                    <span style="color:#B02642;">{{ trans('mail.unread') }}</span>
-                                @else
-                                    <span style="color:#A0A0A0;">{{ trans('mail.read') }}</span>
-                                @endif
-                            </td>
-                            <td>{{ date('d-m-Y H:i', strtotime($m->created_at)) }}</td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-                {!!  $admins->render() !!}
-                <p class="text-center" style="padding-bottom:8px;">
-                    Вы также можете написать администрации, воспользовашись <a href="{{ url('contacts/tickets') }}">тикет-системой</a>
-                </p>
             </div>
 
             <!-- Сообщения от черного списка -->
