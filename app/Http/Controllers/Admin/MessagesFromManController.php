@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use App\Services\ExpenseService;
 use Illuminate\Http\Request;
 use App\Models\Messages;
@@ -37,17 +38,39 @@ class MessagesFromManController extends Controller
 
         $heading = trans('mail.messages_from_men');
 
+        $user_id = Auth::user()->id;
+
+        //Получаем всех девушек, привлеченных партнером (их id в виде массива)
+        //Это нужно для показа партнеру переписки только с теми мужчинами, которые пишут их девушкам
+        $girls_raw = DB::table('users')->where('partner_id', '=', $user_id)->select('id')->get();
+        $girls_array = [];
+        foreach($girls_raw as $a){
+            $girls_array[] = $a->id;
+        }
+
         //Получаем список входящих сообщений от мужчин
-        $income = Messages::join('users', 'users.id', '=', 'messages.from_user')
-            ->where('users.role_id', '=', 4)
-            ->select('messages.*', 'users.first_name', 'users.avatar', 'users.role_id')
-            ->orderBy('messages.created_at', 'DESC')
-            ->paginate(50);
+        if(Auth::user()->hasRole('Owner') || Auth::user()->hasRole('Moder')){
+            $income = Messages::join('users', 'users.id', '=', 'messages.from_user')
+                ->where('users.role_id', '=', 4)
+                ->select('messages.*', 'users.first_name', 'users.avatar', 'users.role_id')
+                ->orderBy('messages.created_at', 'DESC')
+                ->paginate(50);
+        }elseif(Auth::user()->hasRole('Partner')){
+            $income = Messages::join('users', 'users.id', '=', 'messages.from_user')
+                ->where('users.role_id', '=', 4)
+                ->whereIn('messages.to_user', $girls_array)
+                ->select('messages.*', 'users.first_name', 'users.avatar', 'users.role_id')
+                ->orderBy('messages.created_at', 'DESC')
+                ->paginate(50);
+        }else{
+            abort(404);
+        }
 
         // Количество непрочитанных входящих сообщений от мужчин
         $unread_income_count = $income->where('status', '=', 0)->count();
 
         return view('admin.mail.mail')->with([
+            'girls' => $girls_array,
             'heading'=> $heading,
             'income' => $income,
             'unread_income_count' => $unread_income_count,
@@ -59,6 +82,9 @@ class MessagesFromManController extends Controller
     public function show($id, $cor_id){
 
         $heading = trans('mail.write_message');
+
+        //Получаем данные девушки и ее партнера
+        $girl = User::where('id', '=', $cor_id)->first();
 
         // Получаем список входящих и исходящий сообщений между пользователями $id и $cor_id
         $messages = $this->message->where('messages.to_user', '=', $id)
@@ -72,6 +98,7 @@ class MessagesFromManController extends Controller
 
         return view('admin.mail.mail_show')->with([
             'heading'  => $heading,
+            'girl'    => $girl,
             'man_id'  => $id,
             'girl_id'   => $cor_id,
             'messages' => $messages,

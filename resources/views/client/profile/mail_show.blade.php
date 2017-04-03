@@ -33,6 +33,9 @@
         .grg-btn-blacklist-remove{
             background-color: #9A9996;
         }
+        .grg-red-text{
+            color: #B02642;
+        }
     </style>
 @stop
 
@@ -55,11 +58,7 @@
         <!-- Вывод переписки пользователя и корреспондента -->
         @foreach($messages as $m)
             <div class="grg-mail-message">
-                @if($m->role_id == 1 || $m->role_id == 1)
-                    <img style="float:left;margin:5px;" src="{{ url('/uploads/admins/'.$m->avatar) }}" height="56px">
-                @else
-                    <img style="float:left;margin:5px;" src="{{ url('/uploads/users/avatars/'.$m->avatar) }}" height="56px">
-                @endif
+                <img style="float:left;margin:5px;" src="{{ url('/uploads/users/avatars/'.$m->avatar) }}" height="56px">
                 <p>
                     {{ $m->first_name }}&nbsp;&nbsp;<i>{{ date('d-m-Y H:i', strtotime($m->created_at)) }}</i>
                     &nbsp;&nbsp;
@@ -89,14 +88,16 @@
             @else
                 <a href="{{ url('profile/'.$user_id.'/add/'.$cor_id.'/to_list/2') }}" class="btn grg-btn-blacklist btn-xs" ><i class="fa fa-thumbs-down "></i>&nbsp;&nbsp;{{ trans('mail.add_to_blacklist') }}</a>
             @endif
-            <hr>
         </div>
+        <br>
 
 
         <!-- Форма отправки сообщения -->
         {!! Form::open(['action' => 'MessagesController@sendMessage', 'class' => 'form', 'method' => 'POST']) !!}
             <div class="form-group">
-                {!! Form::label('sent_message', trans('mail.your_message') ) !!}
+                {!! Form::label('sent_message', trans('mail.write_message_for') ) !!}<strong>:</strong>
+                <img style="float:left;margin:5px;" src="{{ url('/uploads/users/avatars/'.$cor->avatar) }}" height="40px">
+                <p class="grg-red-text"><strong>{{ $cor->first_name }}</strong></p>
                 {!! Form::textarea('sent_message', '', ['class' => 'form-control', 'required' => 'required']) !!}
             </div>
             <input name="to_user" type="hidden" value="{{ $cor_id }}">

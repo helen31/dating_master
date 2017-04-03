@@ -30,7 +30,7 @@
                     </thead>
                     <tbody>
                     @foreach($income as $m)
-                        <tr style="{{ ($m->status == 0)?'font-weight: bold;':'' }} cursor:pointer;" onclick='location.href="{{ url(''.App::getLocale().'/admin/messages-from-man/'.$m->from_user.'/correspond/'.$m->to_user) }}"'>
+                        <tr style="{{ ($m->status == 0)?'font-weight: bold;':'' }} cursor:pointer;" onclick='location.href="{{ url('/'.App::getLocale().'/admin/messages-from-man/'.$m->from_user.'/correspond/'.$m->to_user) }}"'>
                             <td>
                                 <img src="{{ url('/uploads/users/avatars/'.$m->avatar) }}" height="40px">
                                 {{ $m->first_name }}

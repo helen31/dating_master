@@ -15,6 +15,8 @@ return [
     'unread'    => 'Unread',
     'date'      => 'Date / time',
     'write_message' => 'Write message',
+    'write_message_for' => 'Write message for',
+    'write_message_from' => 'Write message from',
     'your_message'  => 'Your message',
     'send_message'  => 'Send message',
     'add_to_favourites' => 'Add to favourites',
@@ -23,4 +25,5 @@ return [
     'remove_from_blacklist'  => 'Remove from blacklist',
     'messages_from_men' => 'Messages from men',
     'unread_count'      => 'Number of unread messages',
+    'partner'    => 'Partner',
 ];

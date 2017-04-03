@@ -15,6 +15,8 @@ return [
     'unread'    => 'Не прочитанное',
     'date'      => 'Дата / время',
     'write_message' => 'Написать сообщение',
+    'write_message_for' => 'Напишите сообщение для',
+    'write_message_from' => 'Сообщение от пользователя',
     'your_message'  => 'Ваше сообщение',
     'send_message'  => 'Отправить сообщение',
     'add_to_favourites' => 'Добавить к фаворитам',
@@ -23,4 +25,5 @@ return [
     'remove_from_blacklist'  => 'Удалить из черного списка',
     'messages_from_men' => 'Сообщения от мужчин',
     'unread_count'      => 'Количество непрочитанных сообщений',
+    'partner'    => 'Партнер девушки',
 ];

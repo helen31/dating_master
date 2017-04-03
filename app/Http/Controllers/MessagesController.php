@@ -114,6 +114,9 @@ class MessagesController extends Controller
 
         $user_id = \Auth::user()->id;
 
+        // Получаем имя и название файла фото собеседника для выведения в переписку
+        $cor = User::where('id', '=', $cor_id)->select('first_name', 'avatar')->first();
+
         // Получаем список входящих и исходящий сообщений между пользователями $id и $cor_id
         $messages = $this->message->where('messages.to_user', '=', $id)
             ->where('messages.from_user', '=', $cor_id)
@@ -152,6 +155,7 @@ class MessagesController extends Controller
 
         return view('client.profile.mail_show')->with([
             'cor_id'  => $cor_id,
+            'cor' => $cor,
             'user_id' => $user_id,
             'messages' => $messages,
             'is_favourites' => $is_favourites,
@@ -168,7 +172,6 @@ class MessagesController extends Controller
         $message = new Messages();
         $message->from_user = $request->input('from_user');
         $message->to_user = $request->input('to_user');
-        //$message->message = $request->input('sent_message');
         $message->message = $this->robot($request->input('sent_message'));
         $message->status = 0;
         $message->save();

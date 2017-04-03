@@ -39,7 +39,11 @@
         <!-- Форма отправки сообщения -->
         {!! Form::open(['action' => 'Admin\MessagesFromManController@sendMessage', 'class' => 'form', 'method' => 'POST']) !!}
         <div class="form-group">
-            {!! Form::label('sent_message', trans('mail.your_message') ) !!}
+            {!! Form::label('sent_message', trans('mail.write_message_from') ) !!}:&nbsp;
+            <a href="{{ url('profile/show/'.$girl->id) }}">{{ $girl->first_name.' '.$girl->last_name }}</a>.&nbsp;&nbsp;
+            @if($girl->partner_id != 1 && (Auth::user()->hasRole('Owner') || Auth::user()->hasRole('Moder')))
+                {{ trans('mail.partner') }}:&nbsp;<a href="{{ url('/admin/partner/show/'.$girl->partner_id) }}">{{ \App\Http\Controllers\Admin\GirlsController::getPartnerNameByID($girl->partner_id) }}</a>
+            @endif
             {!! Form::textarea('sent_message', '', ['class' => 'form-control', 'required' => 'required']) !!}
         </div>
         <input name="to_user" type="hidden" value="{{ $man_id }}">
