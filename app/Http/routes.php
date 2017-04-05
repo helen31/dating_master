@@ -85,7 +85,8 @@ Route::group([  'prefix'        => LaravelLocalization::setLocale(),
     Route::get('profile/{id}/presents/{girl_id}', 'GiftsController@getPresents');
     Route::get('profile/{id}/presents/{girl_id}/gift/{gift_id}', 'GiftsController@getOrderForm');
 
-    Route::get('profile/{id}/horoscope/{cor_id}', 'HoroscopeController@show');
+    Route::get('profile/{id}/horoscope/{cor_id}', 'HoroscopeController@show'); // Страница с кнопкой "Проверить совместимость"
+    Route::get('profile/{id}/horoscope/{cor_id}/check', 'HoroscopeController@check'); // Страница с текстом совместимости по гороскопу
     Route::get('profile/{id}/finance', 'UsersController@profileFinance');
 
     Route::get('profile/{id}/add/{cor_id}/to_list/{list}', 'ListsController@addToList');// Добавить пользователя в определенный список: к фаворитам или черный список

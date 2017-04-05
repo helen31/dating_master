@@ -11,8 +11,6 @@ use App\Http\Requests;
 
 class HoroscopeController extends Controller
 {
-    //todo Refactor this shit
-
     private $horoscope;
     private $h = [];
 
@@ -23,20 +21,18 @@ class HoroscopeController extends Controller
         foreach($this->horoscope as $hp){
             $this->h[$hp->id] = $hp->name;
         }
-        /** todo: refactor this shit */
         view()->share('new_ticket_messages', parent::getUnreadMessages());
         view()->share('unread_ticket_count', parent::getUnreadMessagesCount());
         view()->share('unread_contact_count', parent::getContactUnread());
         view()->share('unread_contact_message', parent::getContactMessages());
-        view()->share('notice', 'Нажмите сохранить перед сменой языка!');
     }
 
     public function index()
     {
-        $compare = Horoscope::all();
+        $compare = Horoscope::select('id', 'primary', 'secondary')->paginate(25);
 
         return view('admin.horoscope')->with([
-            'heading'   => trans('horoscope.horoscope'),
+            'heading'   => trans('admin/horoscope.horoscope'),
             'horoscope' => $this->h,
             'compare'   => $compare
         ]);
@@ -45,7 +41,7 @@ class HoroscopeController extends Controller
     public function create()
     {
         return view('admin.horoscope.add')->with([
-            'heading'   => trans('horoscope.add'),
+            'heading'   => trans('admin/horoscope.add'),
             'horoscope' => $this->horoscope
         ]);
     }
@@ -80,7 +76,7 @@ class HoroscopeController extends Controller
             }
         }
 
-        \Session::flash('flash_success', trans('horoscope.addSuccess'));
+        \Session::flash('flash_success', trans('admin/horoscope.addSuccess'));
         return redirect(\App::getLocale().'/admin/horoscope');
 
     }
@@ -92,7 +88,7 @@ class HoroscopeController extends Controller
         $trans = HoroscopeTranslate::where('compare', '=', $id)->get();
 
         return view('admin.horoscope.edit')->with([
-            'heading'    => trans('horoscope.edit'),
+            'heading'    => trans('admin/horoscope.edit_text'),
             'horoscope'  => $this->h,
             'hor'        => $hor,
             'trans'      => $trans,
@@ -114,13 +110,13 @@ class HoroscopeController extends Controller
         $ht->text = $request->input('text');
 
         if( $ht->save() ){
-            \Session::flash('flash_success', trans('horoscope.updSuccess'));
+            \Session::flash('flash_success', trans('admin/horoscope.updSuccess'));
             return redirect()->back();
 
         }
 
 
-        \Session::flash('flash_error', trans('horoscope.updError'));
+        \Session::flash('flash_error', trans('admin/horoscope.updError'));
         return redirect()->back();
     }
 

@@ -19,20 +19,19 @@
 
 @section('content')
     <section class="panel panel-default">
-        <header class="panel-heading">{{ $heading }}</header>
         <div class="panel-body">
-            {!! Form::open(['url' => '/admin/horoscope/edit/'.$id]) !!}
+            {!! Form::open(['action' => ['Admin\HoroscopeController@update', $id], 'method' => 'POST']) !!}
                 {!! Form::hidden('row', '') !!}
                 <div class="form-group">
-                    <label for="start">{{ trans('/admin/horoscope.begin') }}</label>
-                    <b>{{ $horoscope[$hor->primary] }}</b>
+                    <label for="start">{{ trans('admin/horoscope.from') }}:</label>
+                    <b>{{ trans('admin/horoscope.'.$horoscope[$hor->primary]) }}</b>
                 </div>
                 <div class="form-group">
-                    <label for="stop">{{ trans('/admin/horoscope.end') }}</label>
-                    <b>{{ $horoscope[$hor->secondary] }}</b>
+                    <label for="stop">{{ trans('admin/horoscope.to') }}:</label>
+                    <b>{{ trans('admin/horoscope.'.$horoscope[$hor->secondary]) }}</b>
                 </div>
                 <div class="form-group">
-                    <lable for="locale">{{ trans('/admin/horoscope.locale') }}</lable>
+                    <lable for="locale">{{ trans('admin/horoscope.locale') }}</lable>
                     <select name="locale" class="form-control">
                         @foreach( Config::get('app.locales') as $locale )
 
@@ -43,11 +42,11 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="text">{{ trans('/admin/horoscope.text') }}</label>
+                    <label for="text">{{ trans('admin/horoscope.text') }}</label>
                     {!! Form::textarea('text', null, ['class' => 'form-control summernote']) !!}
                 </div>
                 <div class="text-center">
-                    {!! Form::submit(trans('/admin/horoscope.save'), ['class' => 'btn btn-success']) !!}
+                    {!! Form::submit(trans('admin/horoscope.save'), ['class' => 'btn btn-success']) !!}
                 </div>
             {!! Form::close() !!}
         </div>

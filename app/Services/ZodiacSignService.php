@@ -15,18 +15,18 @@ final class ZodiacSignService
      * @var array
      */
     private static $signs = [
-        356 => 'Capricorn',
-        326 => 'Sagittarius',
-        296 => 'Scorpio',
-        266 => 'Libra',
-        235 => 'Virgo',
-        203 => 'Leo',
-        172 => 'Cancer',
+        355 => 'Capricorn',
+        325 => 'Sagittarius',
+        295 => 'Scorpio',
+        265 => 'Libra',
+        232 => 'Virgo',
+        202 => 'Leo',
+        171 => 'Cancer',
         140 => 'Gemini',
-        111 => 'Taurus',
+        109 => 'Taurus',
         78  => 'Aries',
-        51  => 'Pisces',
-        20  => 'Aquarius',
+        49  => 'Pisces',
+        19  => 'Aquarius',
         0   => 'Capricorn',
 
 

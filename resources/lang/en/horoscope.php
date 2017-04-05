@@ -10,7 +10,7 @@ return [
      'Libra'        => 'Libra',
      'Scorpio'      => 'Scorpio',
      'Sagittarius'  => 'Sagittarius',
-     'Capricorn'    => 'Capricornus',
+     'Capricorn'    => 'Capricorn',
      'Aquarius'     => 'Aquarius',
      'Pisces'       => 'Pisces',
 

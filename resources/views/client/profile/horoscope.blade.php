@@ -13,19 +13,26 @@
 
     </tr>
     <tr>
-        <td><img src="{{ url('/uploads/users/avatars/1490266220-adam-smith.png') }}" height="80px"></td>
-        <td>Adam</td>
-        <td>{{ date('d-m-Y', strtotime('1978-02-15')) }}</td>
-        <td>Водолей</td>
+        <td><img src="{{ url('/uploads/users/avatars/'.$man->avatar) }}" height="80px"></td>
+        <td>{{ $man->first_name }}</td>
+        <td>{{ date('d-m-Y', strtotime($man->birthday)) }}</td>
+        <td>{{ trans('horoscope.'.$man->sign) }}</td>
     </tr>
     <tr>
-        <td><img src="{{ url('/uploads/users/avatars/1490265611-svetlana-ivanova.jpg') }}" height="80px"></td>
-        <td>Svetlana</td>
-        <td>{{ date('d-m-Y', strtotime('1980-03-15')) }}</td>
-        <td>Рыбы</td>
+        <td><img src="{{ url('/uploads/users/avatars/'.$girl->avatar) }}" height="80px"></td>
+        <td>{{ $girl->first_name }}</td>
+        <td>{{ date('d-m-Y', strtotime($girl->birthday)) }}</td>
+        <td>{{ trans('horoscope.'.$girl->sign) }}</td>
     </tr>
 </table>
-<a class="btn btn-success" href="#" role="button">{{ trans('horoscope.check_comp') }} - 1 LC</a>
-
+@if(isset($compare))
+    <div class="panel panel-default">
+        <div class="panel-body">
+           {!! $compare->text !!}
+        </div>
+    </div>
+@else
+    <a class="btn btn-success" href="{{ url('profile/'.$id.'/horoscope/'.$cor_id.'/check') }}" role="button">{{ trans('horoscope.check_comp') }} - 1 LC</a>
+@endif
 
 @stop

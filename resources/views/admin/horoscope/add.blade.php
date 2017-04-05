@@ -4,9 +4,9 @@
     <section class="panel panel-default">
         <header class="panel-heading">{{ $heading }}</header>
         <div class="panel-body">
-            {!! Form::open(['url' => '/admin/horoscope/add']) !!}
+            {!! Form::open(['action' => 'Admin\HoroscopeController@store', 'method' => 'POST']) !!}
                 <div class="form-group">
-                    <label for="start">{{ trans('/admin/horoscope.begin') }}</label>
+                    <label for="start">{{ trans('admin/horoscope.begin') }}</label>
                     <select name="start" class="form-control">
                         @foreach($horoscope as $h)
                             <option value="{{ $h->id }}">{{ trans('/admin/horoscope.'.$h->name) }}</option>
@@ -14,7 +14,7 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="stop">{{ trans('/admin/horoscope.end') }}</label>
+                    <label for="stop">{{ trans('admin/horoscope.end') }}</label>
                     <select name="stop" class="form-control">
                         @foreach($horoscope as $h)
                             <option value="{{ $h->id }}">{{ trans('/admin/horoscope.'.$h->name) }}</option>
@@ -33,11 +33,11 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="text">{{ trans('/admin/horoscope.text') }}</label>
+                    <label for="text">{{ trans('admin/horoscope.text') }}</label>
                     {!! Form::textarea('text', null, ['class' => 'form-control summernote']) !!}
                 </div>
                 <div class="text-center">
-                    {!! Form::submit(trans('/admin/horoscope.save'), ['class' => 'btn btn-success']) !!}
+                    {!! Form::submit(trans('admin/horoscope.save'), ['class' => 'btn btn-success']) !!}
                 </div>
             {!! Form::close() !!}
         </div>
