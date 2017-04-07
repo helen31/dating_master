@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Album;
 use App\Models\Country;
 use App\Models\Messages;
+use App\Models\RequestLists;
 use App\Models\Profile;
 use App\Models\Passport;
 use App\Models\profileImages;
@@ -420,5 +421,61 @@ class UsersController extends Controller
         $user->delete();
 
         return redirect('/');
+    }
+
+    /* Вывод страницы для на которой можно получить контактные данные девушек */
+    public function showGirlContacts($id, $cor_id){
+
+        /* Получаем "открытые" данные девушки */
+        $girl = User::select('users.*', 'profile.birthday')
+            ->leftJoin('profile', 'profile.user_id', '=', 'users.id')
+            ->where('users.id', '=', $cor_id)
+            ->first();
+
+        /* Проверяем, получал ли раньше мужчина контактные данные данной девушки
+         * Если он получил их раньше, они будут отображаться вместо кнопки "Получить /контактные данные/"
+         */
+        $know_email = RequestLists::where('subject_id', '=', $id)
+            ->where('object_id', '=', $cor_id)
+            ->where('list', '=', 1) // Пользователь находится в списке фаворитов
+            ->get()->count();
+
+        $know_phone = RequestLists::where('subject_id', '=', $id)
+            ->where('object_id', '=', $cor_id)
+            ->where('list', '=', 2) // Пользователь находится в черном списке
+            ->get()->count();
+
+        return view('client.profile.contacts_request')->with([
+            'id'  => $id,
+            'cor_id' => $cor_id,
+            'girl' => $girl,
+            'know_email' => $know_email,
+            'know_phone' => $know_phone,
+        ]);
+    }
+
+    /* Получение имени, фамилии и телефона девушки */
+    public function getGirlPhone($id, $cor_id){
+
+            $list_record = new RequestLists();
+            $list_record->subject_id = $id;
+            $list_record->object_id = $cor_id;
+            $list_record->list = 2; //Список пар, в которых мужчина получил телефон девушки
+            $list_record->save();
+
+            return redirect('profile/'.$id.'/contacts/'.$cor_id);
+    }
+
+    /* Получение имени, фамилии и е-мейла девушки */
+    public function getGirlEmail($id, $cor_id){
+
+        $list_record = new RequestLists();
+        $list_record->subject_id = $id;
+        $list_record->object_id = $cor_id;
+        $list_record->list = 1; //Список пар, в которых мужчина получил e-mail девушки
+        $list_record->save();
+
+        return redirect('profile/'.$id.'/contacts/'.$cor_id);
+
     }
 }

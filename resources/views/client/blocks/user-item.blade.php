@@ -29,7 +29,7 @@
         @if($u->isOnline())
             <div class="col-md-6"><button class="btn btn-small online_btn"> Online </button></div>
         @endif
-        <div class="col-md-6 g_id"> <b>ID </b>: {{ $u->id }} </div>
+        <div class="col-md-6 g_id"> <b>ID </b>: {{ $u->id }}</div>
         <div class="col-md-12 profile"> <a href="{{ url('/'.App::getLocale().'/profile/show/'.$u->id) }}" class="btn btn-small btn-profile">{{ trans('buttons.profile') }}</a></div>
     </div>
 </div>

@@ -130,6 +130,11 @@ return [
     'gifts_confirm_order' => 'Подтвердить заказ',
     'gifts_make_order' => 'Заказать',
 
+    /* -- Get girl hidden contacts -- */
+
+    'request_contacts' => 'Запросить контактные данные',
+    'request_surname_phone' => 'Узнать фамилию и телефон',
+    'request_surname_email' => 'Узнать фамилию и e-mail',
 
     /* -- Attributes -- */
 

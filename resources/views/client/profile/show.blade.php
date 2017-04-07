@@ -226,6 +226,7 @@
                                 @if(Auth::user()->hasRole('Male'))
                                     <a href="{{ url('/'. App::getLocale() . '/profile/'. Auth::user()->id . '/presents/'.$u->uid) }}"><img src="/assets/img/gift-icon2.png" alt="Gifts" title="{{ trans('profile.make_gift') }}" height="64px"></a>
                                     <a href="{{ url('/'. App::getLocale() . '/profile/'. Auth::user()->id . '/horoscope/'.$u->uid) }}"><img src="/assets/img/horoscope.png" alt="Gifts" title="{{ trans('horoscope.check_compatibility') }}" height="64px"></a>
+                                    <a href="{{ url('/'. App::getLocale() . '/profile/'. Auth::user()->id . '/contacts/'.$u->uid) }}"><img src="/assets/img/contacts.png" alt="Gifts" title="{{ trans('horoscope.check_compatibility') }}" height="64px"></a>
                                 @endif
                             </div>
                         </div>

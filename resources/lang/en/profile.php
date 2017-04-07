@@ -130,6 +130,13 @@ return [
     'gifts_confirm_order' => 'Confirm order',
     'gifts_make_order' => 'Buy now',
 
+    /* -- Get girl hidden contacts -- */
+
+    'request_contacts' => 'Request contacts',
+    'request_surname_phone' => 'Request surname and phone',
+    'request_surname_email' => 'Request surname and email',
+
+
     /* -- Attributes -- */
 
     /* Gender */
@@ -197,7 +204,7 @@ return [
 
     /* Marital status */
 
-    'Ddvorced_male' => 'Divorced',
+    'divorced_male' => 'Divorced',
     'widowed_male' => 'Widowed',
     'not_married_male' => 'Not married',
     'married_male' =>'Married',
