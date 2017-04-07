@@ -22,7 +22,7 @@ use Carbon\Carbon;
 class UsersController extends Controller
 {
     /**
-     * @var User
+     * @var User - Git Test
      */
     private $user;
 
