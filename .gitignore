@@ -9,5 +9,6 @@
 .idea/phpspec.xml
 .idea/workspace.xml
 .idea/
+nbproject/
 webstat/
 
