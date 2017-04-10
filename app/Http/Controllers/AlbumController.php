@@ -20,7 +20,7 @@ class AlbumController extends Controller
 
     /**
      * AlbumController constructor.
-     * @param ExpenseService $expenseService
+     * @param ExpenseService $expenseService ...
      */
     public function __construct(Album $album, ExpenseService $expenseService)
     {
