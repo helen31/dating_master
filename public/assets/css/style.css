@@ -4205,7 +4205,7 @@ table.sliders tr td {
     border-radius: 5px 5px 0px 0px;
 }
 .panel-heading  .nav.nav-tabs > li > a{
-color:black;
+    color:black;
     text-transform: capitalize;
 }
 .panel-heading  .nav.nav-tabs li.active{

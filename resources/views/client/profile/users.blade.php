@@ -28,7 +28,7 @@
         }
         .item img{
             display: block;
-            width: 75%;
+            width: 100%;
             margin: 0 auto;
             padding-top: 20px;
             -webkit-transform-style: preserve-3d;

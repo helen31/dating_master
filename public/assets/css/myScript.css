@@ -598,6 +598,7 @@ li.profile_name {
     opacity: 1;
     filter: grayscale(0%);
 }
+
 /* ---   @MEDIA   ---*/
 @media screen and (max-width: 1200px) {
     /* #photo {
@@ -818,7 +819,7 @@ li.profile_name {
 }
 @media screen and (max-width: 386px) {
     .logo_text {
-        font-size: 16px;
+        font-size: 20px;
     }
     .girl__title h2 {
         font-size: 22px;
@@ -851,6 +852,16 @@ li.profile_name {
         line-height: 34px;
         padding-right: -102px;
         margin-right: -51px;
+    }
+
+    #photo{
+        max-height: 412px;
+        min-height: 412px;
+    }
+
+    .gla-item-online {
+        font-size: 20px;
+        width: 87px;
     }
 }
 
@@ -940,5 +951,20 @@ li.profile_name {
     }
     .gla-container-title{
         font-size: 22px;
+    }
+
+    .girl__title h2 {
+        font-size: 22px;
+        text-align: center;
+        margin: 16px 0 49px;
+    }
+
+    .owl-nav {
+        position: absolute;
+        top: -46px;
+        right: 50%;
+        line-height: 34px;
+        padding-right: -102px;
+        margin-right: -51px;
     }
 }
