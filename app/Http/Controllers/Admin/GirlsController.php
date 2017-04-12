@@ -15,6 +15,7 @@ use App\Models\profileImages;
 
 use App\Models\Album;
 use App\Models\Images;
+use App\Models\Videos;
 
 use App\Services\ZodiacSignService;
 use Carbon\Carbon;

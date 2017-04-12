@@ -24,8 +24,4 @@ class VideoController extends Controller
         return view('client.profile.video.create');
     }
 
-    public function show()
-    {
-        return view('client.profile.video_show');
-    }
 }

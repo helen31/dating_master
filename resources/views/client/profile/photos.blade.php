@@ -87,11 +87,12 @@
     </div>
     <div class="col-md-12"><br></div>
     <div class="form-group text-center col-md-12">
-        {!! Form::open(['url' => 'profile/'.$id.'/photo', 'class' => 'form', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+        {!! Form::open(['url' => '#', 'class' => 'form', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
         <input id="profile_photo" type="file" name="profile_photo[]" multiple="multiple" class="file grg-fileinput" accept="image/*"
                data-show-upload="false" data-show-caption="true">
         <br>
         {!! Form::submit(trans('buttons.save'), ['class' => 'btn btn-success']) !!}
+
         {!! Form::close() !!}
     </div>
 </div>
