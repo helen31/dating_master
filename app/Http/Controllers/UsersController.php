@@ -155,7 +155,7 @@ class UsersController extends Controller
             'id' => $id,
         ]);
     }
-    public function  profilePhotoAdd($id, Request $request){
+    public function  profilePhotoAdd(Request $request, $id){
 
         if($request->hasFile('profile_photo')){
             $profile_photos = $request->file('profile_photo');
@@ -166,11 +166,12 @@ class UsersController extends Controller
                 $profile_image->save();
             }
         }
-        return redirect('profile/'.$id.'/photo');
+        return redirect(\App::getLocale().'/profile/'.$id.'/photo');
+
     }
     public function profilePhotoDelete($photo_id){
         $image = profileImages::find($photo_id);
-        $this->removeFile('/uploads/profile_photos/'.$image->image);
+        $this->removeFile('/uploads/users/profile_photos/'.$image->image);
         profileImages::destroy($photo_id);
         return response('success', 200);
     }

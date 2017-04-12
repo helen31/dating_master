@@ -67,7 +67,7 @@ Route::group([
 
 
 Route::group([  'prefix'        => LaravelLocalization::setLocale(),
-                'middleware'    => ['web', 'auth', 'roles', 'localeSessionRedirect', 'localizationRedirect'],
+                'middleware'    => ['web', 'auth', 'roles'/*, 'localeSessionRedirect', 'localizationRedirect'*/],
                 'roles'         => ['Alien', 'Male', 'Female']
 ], function(){
     Route::get('chat', 'ChatController@index');
@@ -127,7 +127,7 @@ Route::group([  'prefix'        => LaravelLocalization::setLocale(),
 
 /** Admin route group */
 Route::group([  'prefix' => LaravelLocalization::setLocale().'/admin',
-                'middleware' => ['web', 'auth', 'roles','localeSessionRedirect', 'localizationRedirect'],
+                'middleware' => ['web', 'auth', 'roles'/*,'localeSessionRedirect', 'localizationRedirect'*/],
                 'roles' => ['Owner', 'Moder', 'Partner']
 ], function(){
 

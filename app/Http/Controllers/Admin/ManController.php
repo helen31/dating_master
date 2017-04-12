@@ -209,7 +209,7 @@ class ManController extends Controller
             $profile_photos = $request->file('profile_photo');
             foreach($profile_photos as $photo){
                 $profile_image = new profileImages();
-                $profile_image->url = $this->upload($photo, 'users/profile_photos');
+                $profile_image->url = $this->upload($photo, 'users/profile_photos/');
                 $profile_image->user_id = $id;
                 $profile_image->save();
             }
@@ -320,7 +320,7 @@ class ManController extends Controller
 
     public function dropProfileFoto($fid){
         $image = profileImages::find($fid);
-        $this->removeFile('/uploads/users/profile_photos'.$image->image);
+        $this->removeFile('/uploads/users/profile_photos/'.$image->image);
         profileImages::destroy($fid);
         return response('success', 200);
     }
