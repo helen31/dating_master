@@ -119,6 +119,7 @@ Route::group([  'prefix'        => LaravelLocalization::setLocale(),
 
     /** Videos */
     Route::get('profile/{id}/video/add', 'VideoController@create');
+    Route::get('profile/{id}/video/show/{vid}', 'VideoController@show');
 
     Route::post('wink', 'SmilesController@sendSmile');
     Route::get('wink', 'SmilesController@getSmileFromUser');

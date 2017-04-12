@@ -24,13 +24,8 @@ class VideoController extends Controller
         return view('client.profile.video.create');
     }
 
-    public function upload(Request $request)
+    public function show()
     {
-
-    }
-
-    public function drop($id)
-    {
-
+        return view('client.profile.video_show');
     }
 }

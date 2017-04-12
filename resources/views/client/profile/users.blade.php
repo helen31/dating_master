@@ -25,6 +25,15 @@
             float: left;
             border: 1px solid #ccc;
             margin-top: 10px;
+            border-radius: 2px 2px 10px 10px;
+            overflow: hidden;
+            background-color: #fff;
+            border-top: 0;
+            border-left: 0;
+            border-right: 2px solid #AFAFAF;
+            border-bottom: 2px solid #AFAFAF;
+            position: relative;
+            min-height: 1px;
         }
         .item img{
             display: block;
