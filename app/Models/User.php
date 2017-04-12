@@ -80,7 +80,11 @@ class User extends Authenticatable
      */
     public function isOnline()
     {
-        return Cache::has('user-is-online-'.$this->id);
+        if($this->id == 302 || $this->id == 303){
+            return true;
+        }
+        return false;
+        //return Cache::has('user-is-online-'.$this->id);
     }
 
     /**

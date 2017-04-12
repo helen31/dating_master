@@ -11,18 +11,18 @@
                 <div class="cub">
                     @if( $u->webcam !== 0)
                         <li>
-                            <img src="/assets/img/video1.png" alt="Webcam online" title="Webcam online">
+                            <img src="/assets/img/video1.png" class="gla-item-online-img" alt="Webcam online" title="Webcam online">
                         </li>
                     @endif
                 </div>
                 <div class="cub">
                     <li>
-                        <a href="#chat"><img src="/assets/img/interface1.png" alt="Chat now" title="Chat now!"></a>
+                        <a href="#chat"><img src="/assets/img/interface1.png" class="gla-item-online-img" alt="Chat now" title="Chat now!"></a>
                     </li>
                 </div>
                 <div class="cub">
                     <li>
-                        <a href="{{ url('/'.App::getLocale().'/profile/'.$u->id.'/message/') }}"><img src="{{ url('/assets/img/note1.png') }}" alt="Leave a message" title="Leave a message"></a>
+                        <a href="{{ url('/'.App::getLocale().'/profile/'.$u->id.'/message/') }}"><img src="{{ url('/assets/img/note1.png') }}" class="gla-item-online-img" alt="Leave a message" title="Leave a message"></a>
                     </li>
                 </div>
             </ul>

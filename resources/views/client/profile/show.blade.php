@@ -137,10 +137,10 @@
                 </div>
                 <div class="col-md-12 col-xs-12">
                     <div class="four_icons">
-                            <div class="col-xs-3">{{ trans('profile.photo') }}</div>
-                            <div class="col-xs-3">{{ trans('profile.video') }}</div>
-                            <div class="col-xs-3">{{ trans('profile.smiles') }}</div>
-                            <div class="col-xs-3">{{ trans('profile.gifts') }}</div>
+                        <div class="col-xs-3">{{ trans('profile.photo') }}</div>
+                        <div class="col-xs-3">{{ trans('profile.video') }}</div>
+                        <div class="col-xs-3">{{ trans('profile.smiles') }}</div>
+                        <div class="col-xs-3">{{ trans('profile.gifts') }}</div>
                     </div>
                 </div>
                 <div class="col-md-12 col-xs-12">
@@ -230,13 +230,6 @@
                                 @endif
                             </div>
                         </div>
-                        <!--
-                            <div class="col-md-2">
-                                <button name="horoscope" class="btn btn-success">Show horoscope compability</button>
-                                <button name="flp" class="btn btn-success">○	имя + фамилия + телефон </button>
-                                <button name="fle" class="btn btn-success">○	имя + фамилия + email </button>
-                            </div>
-                        -->
                     </div>
                 @endif
                 <div class="row col-md-12">
@@ -260,6 +253,8 @@
 
                     </div>
                 </div>
+
+                <!--Profile photos-->
                 <div class="col-md-12">
                     <br>
                     <hr>
@@ -271,6 +266,7 @@
                         </div>
                     @endforeach
                 </div>
+                <!--Albums-->
                 <div class="col-md-12">
                     @if($u->gender = 'female' && count($albums) > 0)
                         <br>
@@ -290,6 +286,43 @@
                             @endforeach
                         </div>
                     @endif
+                </div>
+                <!--Videos-->
+                <div class="col-md-12">
+                    <br>
+                    <hr>
+                    <header>{{ trans('profile.video') }}</header>
+                    <br>
+                    <div class="row text-centre">
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                            <a href="#">
+                                <div class="gla-cover-img gla-cover-img_width">
+                                    <img src="/uploads/video/1.jpg" alt="poster" object->
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                            <a href="#">
+                                <div class="gla-cover-img gla-cover-img_width">
+                                    <img src="/uploads/video/2.jpg" alt="poster" object->
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                            <a href="#">
+                                <div class="gla-cover-img gla-cover-img_width">
+                                    <img src="/uploads/video/Amazing-Girls-Image-.jpg" alt="poster" object->
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                            <a href="#">
+                                <div class="gla-cover-img gla-cover-img_width">
+                                    <img src="/uploads/video/Girls-Pic-In-High-Quality.jpg" alt="poster" object->
+                                </div>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
 
