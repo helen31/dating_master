@@ -23,7 +23,6 @@
                 <li><a href="http://facebook.com" target="_blank"><i class="fa fa-facebook"></i></a></li>
                 <li><a href="http://google.com" target="_blank"><i class="fa fa-google"></i></a></li>
                 <li><a href="http://twitter.com" target="_blank"><i class="fa fa-twitter"></i></a></li>
-                
             </ul>
         </div>
     </div>
