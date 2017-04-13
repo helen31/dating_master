@@ -136,6 +136,13 @@ return [
     'request_surname_phone' => 'Request surname and phone',
     'request_surname_email' => 'Request surname and email',
 
+    /* -- Video -- */
+    'video_not_supported' => 'Your browser does not support the video format',
+    'video_name'          => 'Name',
+    'video_description'   => 'Description',
+    'cover_label'         => 'Video cover (supported formats: jpg, png, gif)',
+    'video_label'         => 'Video file (supported formats: mpeg4)',
+    'add_video'           => 'Add video',
 
     /* -- Attributes -- */
 

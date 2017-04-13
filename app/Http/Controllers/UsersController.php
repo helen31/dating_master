@@ -11,6 +11,7 @@ use App\Models\Passport;
 use App\Models\profileImages;
 use App\Models\Session;
 use App\Models\Smiles;
+use App\Models\Videos;
 use App\Models\State;
 use App\Models\User;
 use App\Services\ZodiacSignService;
@@ -73,12 +74,14 @@ class UsersController extends Controller
 
         $profile_images = profileImages::where('user_id', '=', $id)->get();
         $albums = Album::where('user_id', '=', $id)->get();
+        $videos = Videos::where('uid', '=', $id)->get();
 
         return view('client.profile.show')->with([
             'u' => $user,
             'id' => $id,
             'profile_images' => $profile_images,
             'albums' => $albums,
+            'videos' => $videos,
             'sign'  => $this->zodiacSignService->getSignByBirthday($user->birthday),
         ]); 
     }
@@ -185,8 +188,12 @@ class UsersController extends Controller
      */
     public function profileVideo(int $id)
     {
-        return view('client.profile.video')->with([
+        $id = Auth::user()->id;
+        $videos = Videos::where('uid', '=', $id)->get();
 
+        return view('client.profile.video')->with([
+            'id' => $id,
+            'videos' => $videos,
         ]);
     }
 
