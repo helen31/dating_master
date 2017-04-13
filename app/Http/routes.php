@@ -116,10 +116,14 @@ Route::group([  'prefix'        => LaravelLocalization::setLocale(),
     Route::post('profile/dropImageAlbum/{aid}', 'AlbumController@dropImageAlbum'); // Delete photo from albums
     Route::post('profile/deleteAlbum/{albumID}', 'AlbumController@deleteAlbum'); // Delete album with inner photo
 
-
     /** Videos */
-    Route::get('profile/{id}/video/add', 'VideoController@create');
-    Route::get('profile/{id}/video/show/{vid}', 'VideoController@show');
+
+    Route::get('profile/{id}/video/show/{vid}', 'VideoController@show');// Show one choosen video
+
+    Route::post('profile/{id}/video/add', 'VideoController@addVideo');// Add video to profile
+    Route::post('profile/deleteVideo/{videoID}', 'VideoController@deleteVideo');// Delete video from profile
+
+    /* Winks */
 
     Route::post('wink', 'SmilesController@sendSmile');
     Route::get('wink', 'SmilesController@getSmileFromUser');

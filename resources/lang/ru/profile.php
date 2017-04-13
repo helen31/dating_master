@@ -136,6 +136,14 @@ return [
     'request_surname_phone' => 'Узнать фамилию и телефон',
     'request_surname_email' => 'Узнать фамилию и e-mail',
 
+    /* -- Video -- */
+    'video_not_supported' => 'Ваш браузер не поддерживает данный видео-формат',
+    'video_name'          => 'Название видео',
+    'video_description'   => 'Описание видео',
+    'cover_label'         => 'Загрузите обложку для видео (в формате jpg, png или gif)',
+    'video_label'         => 'Загрузите Ваше видео (в формате mpeg4)',
+    'add_video'           => 'Добавить видео',
+
     /* -- Attributes -- */
 
     /* Gender */
