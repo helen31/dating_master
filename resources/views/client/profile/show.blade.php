@@ -106,6 +106,31 @@
             }
         }
 
+        /**Pohup Window Smile**/
+        .grg-tada_link{
+            text-decoration: none;
+            position: relative;
+        }
+
+        .grg-tada{
+
+        }
+
+        .smilePopupWindow{
+            display: none;
+            //opacity: 0;
+            position: absolute;
+            top: -57px;
+            left: -41px;
+            width: 222%;
+            text-align: center;
+            border-radius: 11px;
+            color: #ffffff;
+            //border: 1px solid red;
+            text-shadow: 2px 2px 4px #000000;
+            font-weight: 900;
+            font-size: 15px;
+        }
 
 
     </style>
@@ -222,7 +247,10 @@
                                 <a href="#"><img src="/assets/img/video.png" alt="Webcam online" title="Webcam online"></a>
                                 <a href="#chat"><img src="/assets/img/interface.png" alt="Chat now" title="Chat now!"></a>
                                 <a href="{{ url('/'. App::getLocale() . '/profile/'. Auth::user()->id . '/correspond/'.$u->uid) }}"><img src="/assets/img/note.png" alt="Leave a message" title="{{ trans('profile.leave_message') }}"></a>
-                                <a href="javascript:;"><img class="grg-tada" src="/assets/img/smile.png" alt="Smile" title="{{ trans('profile.wink') }}" id="smile"></a>
+                                <a href="javascript:;" class="grg-tada_link">
+                                    <img class="grg-tada" src="/assets/img/smile.png" alt="Smile" title="{{ trans('profile.wink') }}" id="smile">
+                                    <span class="smilePopupWindow">Вы подмигнули</span>
+                                </a>
                                 @if(Auth::user()->hasRole('Male'))
                                     <a href="{{ url('/'. App::getLocale() . '/profile/'. Auth::user()->id . '/presents/'.$u->uid) }}"><img src="/assets/img/gift-icon2.png" alt="Gifts" title="{{ trans('profile.make_gift') }}" height="64px"></a>
                                     <a href="{{ url('/'. App::getLocale() . '/profile/'. Auth::user()->id . '/horoscope/'.$u->uid) }}"><img src="/assets/img/horoscope.png" alt="Gifts" title="{{ trans('horoscope.check_compatibility') }}" height="64px"></a>
@@ -304,21 +332,21 @@
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <a href="#">
                                 <div class="gla-cover-img gla-cover-img_width">
-                                    <img src="/uploads/video/2.jpg" alt="poster" object->
+                                    <img src="/uploads/video/2.jpg" alt="poster">
                                 </div>
                             </a>
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <a href="#">
                                 <div class="gla-cover-img gla-cover-img_width">
-                                    <img src="/uploads/video/Amazing-Girls-Image-.jpg" alt="poster" object->
+                                    <img src="/uploads/video/Amazing-Girls-Image-.jpg" alt="poster">
                                 </div>
                             </a>
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <a href="#">
                                 <div class="gla-cover-img gla-cover-img_width">
-                                    <img src="/uploads/video/Girls-Pic-In-High-Quality.jpg" alt="poster" object->
+                                    <img src="/uploads/video/Girls-Pic-In-High-Quality.jpg" alt="poster">
                                 </div>
                             </a>
                         </div>
@@ -419,5 +447,18 @@
         /**
          * todo: funciton for appending data to modal
          */
+    </script>
+
+    <!--You have winked-->
+    <script>
+        $('#smile').on('click', function (event) {
+            event.preventDefault();
+
+            $(event.target).parent('.grg-tada_link').find('.smilePopupWindow').show(600, function (event) {
+                var currentElem = $(this);
+
+                setTimeout( function(){ currentElem.hide(); }, 800);
+            });
+        })
     </script>
 @stop

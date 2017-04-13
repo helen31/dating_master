@@ -101,9 +101,10 @@ ul.mob_info {
 .dropdown.btn.btn-default.pull-right {
     padding: 5px 0;
 }
-.modal-content {
+/**.modal-content {
     padding: 20px 0
-}
+}**/
+
 .btn-default {
     border-color: #B02642;
     /*font-size: 16px;*/
@@ -597,10 +598,13 @@ li.profile_name {
     height: 320px;
 }
 
+.girl-action{
+    margin-top: 30px;
+}
+
 /**for albums**/
 .gla-item-margin{
     margin-bottom: 2.5%;
-    border:1px solid red;
 }
 
 .gla-cover-img_before:before{
@@ -608,9 +612,10 @@ li.profile_name {
     display: none;
 }
 .gla-cover-img_before{
-    width: 250px;
-    height: 230px;
+    width: 330px;
+    height: 250px;
     margin: 0;
+    padding: 0;
 }
 
 .gla-name{
@@ -620,10 +625,10 @@ li.profile_name {
 
 .delete_gallery{
     text-align: center;
-    position: absolute;
-    top: 4%;
+    //position: absolute;
+    //top: 4%;
     font-size: 27px;
-    right: 7%;
+    //right: 7%;
     color: rgba(109, 109, 109, 0.6);
     cursor: pointer;
 }
@@ -638,6 +643,28 @@ li.profile_name {
 #menu__f span {
     font-size: 30px;
 }
+
+.gla-nav{
+    text-align: left!important;
+    padding: 0 0 0 10px;
+}
+
+footer .soc_icons{
+    text-align: center!important;
+}
+
+footer .soc_icons li{
+    display: inline-block;
+}
+
+footer .soc_icons .fa{
+    font-size: 14px!important;
+}
+
+.gla-card{
+    text-align: right;
+}
+
 
 /* ---------------
     PAGINATION
@@ -750,6 +777,11 @@ li.profile_name {
     #button-login, #button-register {
         font-size: 12px;
     }
+
+    .gla-cover-img_before {
+        width: 287px;
+        height: 240px;
+    }
 }
 @media screen and (max-width: 992px) {
     .text-right {
@@ -762,6 +794,9 @@ li.profile_name {
         width: 90px;
     }
 
+    .gla-nav{
+        text-align: center!important;
+    }
 }
 @media screen and (max-width: 768px) {
     .logo {

@@ -1,10 +1,10 @@
 <div class="container">
     <div id="footer">
         <div class="row text-center">
-            <div class="col-md-3 col-sm-6">
+            <div class="col-md-4 col-sm-12">
                 <div id="menu__f">
                     <span>{{trans('nav.company')}}</span>
-                    <ul class="nav">
+                    <ul class="nav gla-nav">
                         <li><a href="/{{ App::getLocale() }}/">{{trans('nav.welcome')}}</a></li>
                         <li><a href="/{{ App::getLocale() }}/about">{{trans('nav.about')}}</a></li>
                         <li><a href="/{{ App::getLocale() }}/blog">{{trans('nav.blog')}}</a></li>
@@ -13,33 +13,34 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-md-3 col-sm-6">
+            <div class="col-md-4 col-sm-12">
                 <div id="menu__f">
-                    <span>{{trans('nav.aboutUs')}}</span>
+                    <span>{{trans('nav.information')}}</span>
+                    <ul class="nav gla-nav">
+                        <li><a href="/{{ App::getLocale() }}/">{{trans('nav.safetyPolicy')}}</a></li>
+                        <li><a href="/{{ App::getLocale() }}/">{{trans('nav.workRules')}}</a></li>
+                        <li><a href="/{{ App::getLocale() }}/">Lorem ipsum</a></li>
+                        <li><a href="/{{ App::getLocale() }}/">Lorem ipsum</a></li>
+                    </ul>
                 </div>
             </div>
-            <div class="col-md-3 col-sm-6">
-                <div id="menu__f">
-                    <span>{{trans('nav.dating')}}</span>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6">
+            <div class="col-md-4 col-sm-12">
                 <div id="menu__f">
                 <span>{{trans('nav.social')}}</span>
-                    <ul class="nav">
-                        @foreach($pages as $page)
-                            <li><a href="{{ $page->slug }}">{{ $page->title }}</a></li>
-                        @endforeach
+                    <ul class="nav soc_icons">
+                        <li><a href="http://facebook.com" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="http://google.com" target="_blank"><i class="fa fa-google"></i></a></li>
+                        <li><a href="http://twitter.com" target="_blank"><i class="fa fa-twitter"></i></a></li>
                     </ul>
                 </div>
             </div>
         </div>
         <hr style="color: #ccc">
-        <div class="row text-center">
-            <div class="col-md-6">
-                COPY
+        <div class="row">
+            <div class="col-md-6 col-sm-6">
+                © 2017 All Rights Reserved
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 col-sm-6 gla-card">
                 <i class="fa fa-cc-visa" aria-hidden="true"></i>  <i class="fa fa-cc-mastercard" aria-hidden="true"></i>  <i class="fa fa-cc-paypal" aria-hidden="true"></i>
             </div>
         </div>

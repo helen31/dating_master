@@ -30,7 +30,7 @@
             display: none; /* Hidden by default */
             position: fixed; /* Stay in place */
             z-index: 2; /* Sit on top */
-            padding-top: 100px; /* Location of the box */
+            padding-top: 3%; /* Location of the box */
             left: 0;
             top: 0;
             width: 100%; /* Full width */
@@ -44,7 +44,7 @@
         .modal-content {
             margin: auto;
             display: block;
-            width: 60%;
+            //width: 60%;
             max-width: 80%;
         }
 

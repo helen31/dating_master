@@ -18,7 +18,7 @@
             display: none; /* Hidden by default */
             position: fixed; /* Stay in place */
             z-index: 3; /* Sit on top */
-            padding-top: 100px; /* Location of the box */
+            padding-top: 4%; /* Location of the box */
             left: 0;
             top: 0;
             width: 100%; /* Full width */
@@ -32,9 +32,12 @@
         .modal-content {
             margin: auto;
             display: block;
-            width: 60%;
+            //width: 60%;
             max-width: 80%;
+            padding: 10px;
+            cursor: pointer;
         }
+
 
         @-webkit-keyframes zoom {
             from {-webkit-transform:scale(0)}

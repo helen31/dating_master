@@ -12,27 +12,26 @@
 
 <div role="tabpanel" class="tab-pane" id="photoalbums">
     <div class="row">
-        <div class="col-md-12">
-            <h2 class="text-center gla-title-color">Albums</h2>
-            <div class="row online text-center">
-                @foreach($albums as $a)
-                    <div class="item text-center gla-item-margin col-md-4 col-sm-6 col-xs-12" id="gallerey-{{$a->id}}">
-                        <div class="col-md-12 gla-cover-img gla-cover-img_before">
-                            <a href="{{ url(App::getLocale().'/profile/'.Auth::user()->id.'/edit_album/'.$a->id) }}">
-                                <img src="{{ url('/uploads/albums/'.$a->cover_image) }}" width="90%">
-                            </a>
-                            <a class="delete_gallery" href="#" onclick="deleteGallery({{$a->id}});"  ><i class="fa fa-trash-o"></i></a>
-                        </div>
-                        <div class="col-md-12 gla-name">{{ $a->name }}</div>
-
+        <h2 class="text-center gla-title-color">Albums</h2>
+        <div class="row online text-center">
+            @foreach($albums as $a)
+                <div class="col-md-6 col-sm-6 col-xs-12 text-center item gla-item-margin" id="gallerey-{{$a->id}}">
+                    <div class="gla-cover-img gla-cover-img_before">
+                        <a href="{{ url(App::getLocale().'/profile/'.Auth::user()->id.'/edit_album/'.$a->id) }}">
+                            <img src="{{ url('/uploads/albums/'.$a->cover_image) }}" width="90%">
+                        </a>
                     </div>
-                @endforeach
-                <div class="item last_create col-md-4 col-sm-6 col-xs-12">
-                    <a href="{{ url('/profile/'.Auth::user()->id.'/add_album') }}">
-                        <img style="    width: 100%;" class="create" src="/public/uploads/add_image.png">
-                        <div class="text-center">{{ trans('albums.add') }}</div>
-                    </a>
+                    <div class="row">
+                        <div class="col-md-6 gla-name">{{ $a->name }}</div>
+                        <a class="col-md-6 delete_gallery" href="#" onclick="deleteGallery({{$a->id}});"  ><i class="fa fa-trash-o"></i></a>
+                    </div>
                 </div>
+            @endforeach
+            <div class="item last_create col-md-4 col-sm-6 col-xs-12">
+                <a href="{{ url('/profile/'.Auth::user()->id.'/add_album') }}">
+                    <img style="width:70%;" class="create" src="/public/uploads/add_image.png">
+                    <div class="text-center">{{ trans('albums.add') }}</div>
+                </a>
             </div>
         </div>
     </div>
