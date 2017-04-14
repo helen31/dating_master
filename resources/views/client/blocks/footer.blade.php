@@ -37,7 +37,7 @@
         </div>
         <hr style="color: #ccc">
         <div class="row">
-            <div class="col-md-6 col-sm-6">
+            <div class="col-md-6 col-sm-6 gla-rights">
                 © 2017 All Rights Reserved
             </div>
             <div class="col-md-6 col-sm-6 gla-card">

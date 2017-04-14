@@ -6,31 +6,48 @@
         <div class="row map-bg">
             <div class="container">
                 <div class="row">
-
-                    <header class="text-center">
+                    <header class="text-left">
                         @if(!Auth::user())
                             @if($_POST && $search_attrs['looking'] == 4)
-                                <h2>{{ trans('search.mans') }}</h2>
+                                <h2 class="gla-container-title">{{ trans('search.mans') }}</h2>
                             @else
-                                <h2>{{ trans('search.girls') }}</h2>
+                                <h2 class="gla-container-title">{{ trans('search.girls') }}</h2>
                             @endif
                         @elseif(Auth::user()->hasRole('female'))
-                            <h2>{{ trans('search.mans') }}</h2>
+                            <h2 class="gla-container-title">{{ trans('search.mans') }}</h2>
                         @elseif(Auth::user()->hasRole('male'))
-                            <h2>{{ trans('search.girls') }}</h2>
+                            <h2 class="gla-container-title">{{ trans('search.girls') }}</h2>
                         @else
                             @if($_POST && $search_attrs['looking'] == 4)
-                                <h2>{{ trans('search.mans') }}</h2>
+                                <h2 class="gla-container-title">{{ trans('search.mans') }}</h2>
                             @else
-                                <h2>{{ trans('search.girls') }}</h2>
+                                <h2 class="gla-container-title">{{ trans('search.girls') }}</h2>
                             @endif
                         @endif
                     </header>
-
-                    <div class="col-md-12">
+                    <div class="row lightpink">
+                        <div class="container">
+                            <div class="main_items"><!--container for item-->
+                                <div class="owl online">
+                                    @if($_POST && $search_attrs['is_online']==1)
+                                        @foreach($users as $u)
+                                            @if($u->isOnline())
+                                                @include('client.blocks.user-item')
+                                            @endif
+                                        @endforeach
+                                    @else
+                                        @foreach($users as $u)
+                                            @include('client.blocks.user-item')
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <!--<div class="col-md-12">
                         <div class="users col-md-offset-1">
                             <div class="main_items">
-                                @if($_POST && $search_attrs['is_online']==1)
+                               @if($_POST && $search_attrs['is_online']==1)
                                     @foreach($users as $u)
                                         @if($u->isOnline())
                                             @include('client.blocks.user-item')
@@ -43,7 +60,7 @@
                                 @endif
                             </div>
                         </div>
-                    </div>
+                    </div>-->
 
                 </div>
                 <div class="row text-center" id="pagination">
@@ -180,4 +197,6 @@
     });
 
 </script>
+@section('scripts')
+
 @stop
