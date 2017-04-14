@@ -11,6 +11,7 @@ use App\Models\State;
 use App\Models\Status;
 use App\Models\User;
 use App\Models\profileImages;
+use App\Models\Videos;
 
 use App\Services\ZodiacSignService;
 use Carbon\Carbon;
@@ -89,6 +90,7 @@ class ManController extends Controller
         $countries = Country::orderBy('name')->get();
         $states = State::all();
         $statuses = Status::all();
+        $videos = Videos::where('uid', '=', $id)->get();
 
         return view('admin.profile.men.edit')->with([
             'heading'   => 'Редактировать профиль',
@@ -97,6 +99,7 @@ class ManController extends Controller
             'countries' => $countries,
             'states'    => $states,
             'statuses'  => $statuses,
+            'videos'     => $videos,
             'zodiac_list' => ZodiacSignService::getAll(),
             'profile_images' => $profile_images,
         ]);
@@ -322,6 +325,46 @@ class ManController extends Controller
         $image = profileImages::find($fid);
         $this->removeFile('/uploads/users/profile_photos/'.$image->image);
         profileImages::destroy($fid);
+        return response('success', 200);
+    }
+
+    /*
+    * Add mans video to database
+    */
+    public function addVideo(Request $request, $id)
+    {
+
+        $this->validate($request, [
+            'name'        => 'required',
+            'description' => 'required',
+            'cover'       => 'required',
+            'video'       => 'required',
+        ]);
+
+        $video = new Videos();
+        $video->name = $request->input('name');
+        $video->description = $request->input('description');
+        if($request->hasFile('cover')){
+            $video->cover = $this->upload($request->file('cover'), 'videos/covers/');
+        }
+        $video->video = $this->upload($request->file('video'), 'videos/videos-mp4/');
+        $video->uid = $id;
+        $video->save();
+
+        \Session::flash('flash_success', 'Ваше видео успешно добавлено');
+
+        return redirect(\App::getLocale().'/admin/girl/edit/'.$id);
+    }
+    /*
+     * Delete mans
+     * video
+     */
+    public function deleteVideo($videoID)
+    {
+        $video = Videos::find($videoID);
+        $this->removeFile('/uploads/videos/covers/'.$video->cover);
+        $this->removeFile('/uploads/videos/videos/videos-mp4/'.$video->video);
+        Videos::destroy($videoID);
         return response('success', 200);
     }
 }

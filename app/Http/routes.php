@@ -202,8 +202,6 @@ Route::group([  'prefix' => LaravelLocalization::setLocale().'/admin',
     Route::get('girl/edit/{id}/add_album', 'Admin\GirlsController@createAlbum'); // Create Girl albums
     Route::get('girl/edit/{id}/edit_album/{aid}', 'Admin\GirlsController@editAlbum'); // Edit Girl albums
 
-    //dropImageAlbum
-
     Route::get('girl/activate/{id}', 'Admin\GirlsController@activate'); // Активировать аккаунт девушки
     Route::get('girl/deactivate/{id}', 'Admin\GirlsController@deactivate'); // Деактивировать аккаунт девушки
     Route::get('girl/drop/{id}', 'Admin\GirlsController@destroy');//
@@ -212,9 +210,11 @@ Route::group([  'prefix' => LaravelLocalization::setLocale().'/admin',
     Route::post('girl/edit/{id}/edit_album/{aid}', 'Admin\GirlsController@saveAlbum'); // Save editing Girl albums
     Route::post('girl/dropImageAlbum/{aid}', 'Admin\GirlsController@dropImageAlbum'); // Delete photo from Girl albums
     Route::post('girl/dropProfileFoto/{fid}', 'Admin\GirlsController@dropProfileFoto'); // Delete photo from Girl albums
-    //showAlbum
     Route::post('girl/deleteAlbum/{albumID}', 'Admin\GirlsController@deleteAlbum'); // Edit Girl save albums
-    //    //admin/girl/deleteAlbum/3
+
+    Route::post('girl/{id}/video/add', 'Admin\GirlsController@addVideo');// Add video to profile
+    Route::post('girl/deleteVideo/{videoID}', 'Admin\GirlsController@deleteVideo');// Delete video from profile
+
     Route::post('girl/check', ['as' => 'check_pass', 'uses' => 'Admin\GirlsController@check']); // Check passport at DB
     Route::post('girl/store', 'Admin\GirlsController@store'); //Store new to db
     Route::post('girl/edit/{id}','Admin\GirlsController@update');// Update db
@@ -232,8 +232,12 @@ Route::group([  'prefix' => LaravelLocalization::setLocale().'/admin',
     Route::get('man/drop/{id}', 'Admin\ManController@destroy');
     Route::get('man/restore/{id}', 'Admin\ManController@restore');
 
-    Route::post('man/dropProfileFoto/{fid}', 'Admin\ManController@dropProfileFoto'); // Delete photo from Girl albums
+    Route::post('man/dropProfileFoto/{fid}', 'Admin\ManController@dropProfileFoto'); // Delete photo from man profile
     Route::post('man/edit/{id}','Admin\ManController@update');// Update db
+
+    Route::post('man/{id}/video/add', 'Admin\ManController@addVideo');// Add video to profile
+    Route::post('man/deleteVideo/{videoID}', 'Admin\ManController@deleteVideo');// Delete video from profile
+
 
     Route::get('man/{status}', 'Admin\ManController@getByStatus'); //Return all by status
     /** End Men Profile routing **/

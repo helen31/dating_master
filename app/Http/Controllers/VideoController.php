@@ -20,11 +20,11 @@ class VideoController extends Controller
     /*
      * Show choosen video
      */
-    public function show($id)
+    public function show($id, $vid)
     {
-        $video = Videos::where('id', '=', $id)->first();
+        $video = Videos::find($vid);
 
-        return view('client.profile.video_show.blade.php')->with([
+        return view('client.profile.video_show')->with([
             'video' => $video,
         ]);
     }

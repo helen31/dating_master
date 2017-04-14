@@ -99,6 +99,7 @@ return [
 
     'smile'     => 'You have wink from ',
     'wink'      => 'Wink',
+    'you_wink'  => 'You winked!',
     'wink_date' => 'Date / Time',
     'leave_message' => 'Leave a message',
     'make_gift' => 'Make gift',
@@ -143,6 +144,8 @@ return [
     'cover_label'         => 'Video cover (supported formats: jpg, png, gif)',
     'video_label'         => 'Video file (supported formats: mpeg4)',
     'add_video'           => 'Add video',
+    'video_24_access'     => 'Video is available for viewing within 24 hours after payment',
+    'video_delete'        => 'Delete video',
 
     /* -- Attributes -- */
 

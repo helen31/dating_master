@@ -13,7 +13,6 @@
                 <div class="col-md-12 gla-video" id="video-{{ $video->id }}">
                     <div class="col-md-12 gla-video-column">
                         <h3 class="col-md-12 col-sm-12 text-center gla-video-title">{{ $video->name }}</h3>
-                        <a class="delete_gallery" href="#" onclick="deleteProfileVideo(event,'{{ $video->id }}');"><i class="fa fa-trash-o"></i></a>
                         <div class="col-md-6 col-sm-12">
                             <div class="gla-cover-img video-width">
                                 <img src="/uploads/videos/covers/{{ $video->cover }}" alt="poster">
@@ -26,6 +25,11 @@
                                     {{ trans('profile.video_not_supported') }}
                                 </video>
                             </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12 text-left" style="margin: 5px;">
+                            <a href="#" onclick="deleteProfileVideo(event,'{{ $video->id }}');" class="btn btn-danger btn-xs" >
+                                <i class="fa fa-trash-o"></i>  {{ trans('profile.video_delete') }}
+                            </a>
                         </div>
                         <p class="col-md-12 col-sm-12 text-left">
                             <strong>{{ trans('profile.video_description') }}</strong>:&nbsp;{{ $video->description }}
@@ -42,21 +46,21 @@
 
                 <div class="form-group">
                     {!! Form::label('name', trans('profile.video_name')) !!}
-                    {!! Form::text('name', old('name'), ['class'=>'form-control', 'placeholder' => trans('profile.video_name')]) !!}
+                    {!! Form::text('name', old('name'), ['class'=>'form-control', 'placeholder' => trans('profile.video_name'), 'required' => 'required']) !!}
                 </div>
                 <div class="form-group">
                     {!! Form::label('description', trans('profile.video_description')) !!}
-                    {!! Form::textarea('description', old('description'), ['class'=>'form-control', 'placeholder' => trans('profile.video_description')]) !!}
+                    {!! Form::textarea('description', old('description'), ['class'=>'form-control', 'placeholder' => trans('profile.video_description'), 'required' => 'required']) !!}
                 </div>
                 <div class="form-group">
                     {!! Form::label('cover', trans('profile.cover_label')) !!}
                     <input type="file" name="cover" class="file grg-fileinput"
-                           data-show-upload="false" data-show-caption="true" accept="image/*">
+                           data-show-upload="false" data-show-caption="true" accept="image/*" required>
                 </div>
                 <div class="form-group">
                     {!! Form::label('video', trans('profile.video_label')) !!}
                     <input type="file" name="video" class="file grg-fileinput"
-                           data-show-upload="false" data-show-caption="true" accept="video/mp4">
+                           data-show-upload="false" data-show-caption="true" accept="video/mp4" required>
                 </div>
                 {!! Form::submit(trans('buttons.save'), ['class' => 'btn btn-success']) !!}
                 {!! Form::close() !!}

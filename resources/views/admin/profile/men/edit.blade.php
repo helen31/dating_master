@@ -5,7 +5,7 @@
     <link href="{{ url('/assets/css/fileinput.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ url('assets/css/datepicker.css') }}">
     <style>
-        .file-input.file-input-new,#status .file-input{
+        .file-input.file-input-new, #status .file-input, #video .file-input{
             position: relative !important;
         }
         .file-input{
@@ -100,6 +100,7 @@
                 <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab" id="open-additional">Данные профиля</a></li>
                 <li role="presentation"><a href="#profile_foto" aria-controls="profile_fot" role="tab" data-toggle="tab" id="profile_fo">Фото профиля</a></li>
                 <li role="presentation"><a href="#status" aria-controls="status" role="tab" data-toggle="tab" id="open_partner">Модерация и сохранение</a></li>
+                <li role="presentation"><a href="#video" aria-controls="video" role="tab" data-toggle="tab">Видео</a></li>
             </ul>
             {!! Form::open(['url' => '#', 'class' => 'form', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
 
@@ -426,11 +427,73 @@
                                 <div class="form-group col-md-12 text-center">
                                     {!! Form::submit(trans('buttons.save'), ['class' => 'btn btn-success']) !!}
                                 </div>
+                                    {!! Form::close() !!}
                             </div>
                         </div>
                     </div>
+
+                    <!-- Видео -->
+                    <div role="tabpanel" class="tab-pane" id="video">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3 class="text-center">Видео</h3>
+                                @foreach($videos as $video)
+                                    <div class="col-md-12 gla-video" id="video-{{ $video->id }}">
+                                        <div class="col-md-12 gla-video-column">
+                                            <h3 class="col-md-12 col-sm-12 text-center gla-video-title">{{ $video->name }}</h3>
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="gla-cover-img video-width">
+                                                    <img class="img-responsive" src="/uploads/videos/covers/{{ $video->cover }}" alt="poster">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="gla-video-item">
+                                                    <video width="400" height="300" controls class="video-width">
+                                                        <source src="/uploads/videos/videos-mp4/{{ $video->video }}" type="video/mp4">
+                                                        {{ trans('profile.video_not_supported') }}
+                                                    </video>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-sm-12 text-left" style="margin: 5px;">
+                                                <a href="#" onclick="deleteProfileVideo(event,'{{ $video->id }}');" class="btn btn-danger btn-xs" >
+                                                    <i class="fa fa-trash-o"></i>  Удалить видео
+                                                </a>
+                                            </div>
+                                            <p class="col-md-12 col-sm-12 text-left">
+                                                <strong>{{ trans('profile.video_description') }}</strong>:&nbsp;{{ $video->description }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                @endforeach
+                                <hr>
+                                <h2 class="text-center gla-title-color">{{ trans('profile.add_video') }}</h2>
+                                {!! Form::open(['url' => '/admin/girl/'.$user->id.'/video/add', 'class' => 'form', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+
+                                <div class="form-group">
+                                    {!! Form::label('name', trans('profile.video_name')) !!}
+                                    {!! Form::text('name', old('name'), ['class'=>'form-control', 'placeholder' => trans('profile.video_name')]) !!}
+                                </div>
+                                <div class="form-group">
+                                    {!! Form::label('description', trans('profile.video_description')) !!}
+                                    {!! Form::textarea('description', old('description'), ['class'=>'form-control', 'placeholder' => trans('profile.video_description')]) !!}
+                                </div>
+                                <div class="form-group">
+                                    {!! Form::label('cover', trans('profile.cover_label')) !!}
+                                    <input type="file" name="cover" class="file"
+                                           data-show-upload="false" accept="image/*">
+                                </div>
+                                <div class="form-group">
+                                    {!! Form::label('video', trans('profile.video_label')) !!}
+                                    <input type="file" name="video" class="file grg-fileinput"
+                                           data-show-upload="false" data-show-caption="true" accept="video/mp4">
+                                </div>
+                                {!! Form::submit(trans('buttons.save'), ['class' => 'btn btn-success']) !!}
+                                {!! Form::close() !!}
+                            </div>
+                        </div>
+                    </div><!-- End video -->
+
                 </div>
-            {!! Form::close() !!}
         </div>
     </section>
 
@@ -580,6 +643,15 @@
                 $("#photo-"+foID).remove();
             });
         }
+    </script>
+    <script>
+        function deleteProfileVideo(event,videoID){
+            event.preventDefault();
+            $.post( "/admin/man/deleteVideo/"+videoID, {_token : $('input[name="_token').val()} ).done( function( data ) {
+                $("#video-"+videoID).remove();
+            });
+        }
+
     </script>
 
 @stop

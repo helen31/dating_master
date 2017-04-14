@@ -249,7 +249,7 @@
                                 <a href="{{ url('/'. App::getLocale() . '/profile/'. Auth::user()->id . '/correspond/'.$u->uid) }}"><img src="/assets/img/note.png" alt="Leave a message" title="{{ trans('profile.leave_message') }}"></a>
                                 <a href="javascript:;" class="grg-tada_link">
                                     <img class="grg-tada" src="/assets/img/smile.png" alt="Smile" title="{{ trans('profile.wink') }}" id="smile">
-                                    <span class="smilePopupWindow">Вы подмигнули</span>
+                                    <span class="smilePopupWindow">{{ trans('profile.you_wink') }}</span>
                                 </a>
                                 @if(Auth::user()->hasRole('Male'))
                                     <a href="{{ url('/'. App::getLocale() . '/profile/'. Auth::user()->id . '/presents/'.$u->uid) }}"><img src="/assets/img/gift-icon2.png" alt="Gifts" title="{{ trans('profile.make_gift') }}" height="64px"></a>
@@ -283,20 +283,22 @@
                 </div>
 
                 <!--Profile photos-->
-                <div class="col-md-12">
-                    <br>
-                    <hr>
-                    <header>{{ trans('profile.photo') }}</header>
-                    <br>
-                    @foreach($profile_images as $p_image)
-                        <div class="grg-photo-frame" id="photo-{{$p_image->id}}">
-                            <img class="grg-img-photo" src="{{ url('/uploads/users/profile_photos/'.$p_image->url) }}">
-                        </div>
-                    @endforeach
-                </div>
+                @if(count($profile_images) > 0)
+                    <div class="col-md-12">
+                        <br>
+                        <hr>
+                        <header>{{ trans('profile.photo') }}</header>
+                        <br>
+                        @foreach($profile_images as $p_image)
+                            <div class="grg-photo-frame" id="photo-{{$p_image->id}}">
+                                <img class="grg-img-photo" src="{{ url('/uploads/users/profile_photos/'.$p_image->url) }}">
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
                 <!--Albums-->
-                <div class="col-md-12">
-                    @if($u->gender = 'female' && count($albums) > 0)
+                @if($u->gender = 'female' && count($albums) > 0)
+                    <div class="col-md-12">
                         <br>
                         <hr>
                         <header>{{ trans('albums.albums') }}</header>
@@ -313,45 +315,28 @@
                                 </div>
                             @endforeach
                         </div>
-                    @endif
-                </div>
+                    </div>
+                @endif
                 <!--Videos-->
-                <div class="col-md-12">
-                    <br>
-                    <hr>
-                    <header>{{ trans('profile.video') }}</header>
-                    <br>
-                    <div class="row text-centre">
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <a href="#">
-                                <div class="gla-cover-img gla-cover-img_width">
-                                    <img src="/uploads/video/1.jpg" alt="poster" object->
+                @if(count($videos) > 0)
+                    <div class="col-md-12">
+                        <br>
+                        <hr>
+                        <header>{{ trans('profile.video') }}</header>
+                        <br>
+                        <div class="row text-center">
+                            @foreach($videos as $video)
+                                <div class="col-lg-4 col-md-6 col-sm-6">
+                                    <a href="{{ url('profile/'.$video->uid.'/video/show/'.$video->id) }}">
+                                        <div class="gla-cover-img gla-cover-img_width">
+                                            <img src="/uploads/videos/covers/{{ $video->cover }}" alt="Poster">
+                                        </div>
+                                    </a>
                                 </div>
-                            </a>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <a href="#">
-                                <div class="gla-cover-img gla-cover-img_width">
-                                    <img src="/uploads/video/2.jpg" alt="poster">
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <a href="#">
-                                <div class="gla-cover-img gla-cover-img_width">
-                                    <img src="/uploads/video/Amazing-Girls-Image-.jpg" alt="poster">
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <a href="#">
-                                <div class="gla-cover-img gla-cover-img_width">
-                                    <img src="/uploads/video/Girls-Pic-In-High-Quality.jpg" alt="poster">
-                                </div>
-                            </a>
+                            @endforeach
                         </div>
                     </div>
-                </div>
+                @endif
             </div>
 
     </div>
