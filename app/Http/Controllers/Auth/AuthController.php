@@ -211,7 +211,7 @@ class AuthController extends Controller
             }
             $profile->birthday = '1900-01-01';
             $profile->l_age_start = 18;
-            $profile->l_age_stop = 65;
+            $profile->l_age_stop = 99;
 
             $profile->save();
 

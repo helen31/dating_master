@@ -11,7 +11,9 @@
                         {{ trans('profile.video_not_supported') }}
                     </video>
                 </div>
-                <p class="col-md-12 col-sm-12 gla-video-description">{{ $video->description }}</p>
+                <p class="col-md-12 col-sm-12 text-justify">{{ $video->description }}</p>
+                <p class="col-md-12 col-sm-12 text-danger">*{{ trans('profile.video_24_access') }}</p>
+
             </div>
         </div>
     </div>
