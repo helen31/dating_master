@@ -33,6 +33,6 @@ class HomeController extends Controller
             ->where('role_id', '=', $roleId)
             ->where('status_id', '=', 1)
             ->where('hot', '=', 1)
-            ->get();
+            ->paginate(20);
     }
 }

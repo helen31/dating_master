@@ -30,8 +30,11 @@
     </div>
     <div class="row">
         <div class="col-md-12 col-sm-12  col-12 text-center g__info">
-            <div class="col-md-6 col-sm-12 col-12"><a class="girl__name" href="{{ url('/'.App::getLocale().'/profile/show/'.$u->id) }}">{{ $u->first_name }}</a><span class="g_name">{{ $u->first_name }}</span></div>
-            <div class="col-md-6 col-sm-12 col-12 g_id"> <b>ID </b>: {{ $u->id }} </div>
+            <div class="col-md-12 col-sm-12 col-12">
+                <a class="girl__name" href="{{ url('/'.App::getLocale().'/profile/show/'.$u->id) }}">{{ $u->first_name }}</a>
+                <span class="g_name">{{ $u->first_name }}</span>
+            </div>
+            <div class="col-md-12 col-sm-12 col-12 g_id"> <b>ID </b>: {{ $u->id }} </div>
             <div class="col-md-12 col-sm-12 col-12 profile"> <a href="{{ url('/'.App::getLocale().'/profile/show/'.$u->id) }}" class="btn btn-small btn-profile">{{ trans('buttons.profile') }}</a></div>
         </div>
     </div>
