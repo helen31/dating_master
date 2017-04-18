@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\VideoList;
 use App\Models\Videos;
 use Illuminate\Http\Request;
 
@@ -23,6 +24,10 @@ class VideoController extends Controller
     public function show($id, $vid)
     {
         $video = Videos::find($vid);
+        if(\Auth::user()->hasRole('Male')){
+            /* Проверка, оплатил ли мужчина просмотр видео в течении 24 часов, иначе с него снова снимается оплата */
+            /* Эта функция еще не написана, используйте модель Video List */
+        }
 
         return view('client.profile.video_show')->with([
             'video' => $video,
