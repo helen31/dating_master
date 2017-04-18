@@ -1,55 +1,59 @@
 @extends('client.app')
 
-
-
 @section('content')
     @include('client.blocks.slider')
     <div class="content-bg">
-        <div class="row">
+        <div class="container">
             <div class="row">
-                <div class="container">
-                    <div class="col-md-6 girl__title">
-                        <h2 class="gla-container-title">
-                            @if(Auth::user() && Auth::user()->hasRole('female'))
-                                {{ trans('home.mans') }}
-                            @else
-                                {{ trans('home.girls') }}
-                            @endif
-                            {{ trans('home.online') }}
-                        </h2>
-                    </div>
+                <div class="col-md-12 girl__title">
+                    <h2 class="gla-container-title">
+                        @if(Auth::user() && Auth::user()->hasRole('female'))
+                            {{ trans('home.mans') }}
+                        @else
+                            {{ trans('home.girls') }}
+                        @endif
+                        {{ trans('home.online') }}
+                    </h2>
                 </div>
             </div>
-            <div class="">
-                <div class="container">
-                    <div class="owl online">
-                        @foreach($users as $u)
-                            @if($u->isOnline())
-                                @include('client.blocks.user-item')
-                            @endif
-                        @endforeach
+            <div class="row lightpink">
+                <div class="main_items">
+                    <div class="container gla-container-maxWidth map-bg">
+                        <div class="owl online">
+                            @foreach($users as $u)
+                                @if($u->isOnline())
+                                    @include('client.blocks.user-item')
+                                @endif
+                            @endforeach
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        {!! $users->render() !!}
                     </div>
                 </div>
             </div>
             @if(!empty($topHot))
-                <div class="row lightpink">
-                    <div class="container">
-                        <div class="col-md-6 girl__title"><h2 class="gla-container-title">{{ trans('home.topHotGirls') }}</h2></div>
-                    </div>
+            <div class="row">
+                <div class="col-md-12 girl__title">
+                    <h2 class="gla-container-title">{{ trans('home.topHotGirls') }}</h2>
                 </div>
-        </div>
-        <div class="row lightpink">
-            <div class="container">
+            </div>
+            <div class="row lightpink">
                 <div class="main_items"><!--container for item-->
-                    <div class="owl online">
-                        @foreach($topHot as $u)
-                            @include('client.blocks.user-item')
-                        @endforeach
+                    <div class="container gla-container-maxWidth map-bg">
+                        <div class="owl online">
+                            @foreach($topHot as $u)
+                                @include('client.blocks.user-item')
+                            @endforeach
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        {!! $users->render() !!}
                     </div>
                 </div>
             </div>
+            @endif
         </div>
-        @endif
     </div>
     <!-- Bottom circle -->
     <div class="container">

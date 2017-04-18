@@ -157,6 +157,7 @@ ul.mob_info {
     line-height: 36px;
     font-size: 14px;
 }
+
 .navbar {
     min-height: 70px;
 }
@@ -168,7 +169,7 @@ ul.mob_info {
 }
 .soc_icons a {
     background-color: #fff;
-    color: #D66457 !important;
+    color: #D66457!important;
     border-radius: 50%;
     border: 2px solid #D66457;
     width: 50px;
@@ -183,13 +184,14 @@ ul.mob_info {
 }
 
 .soc_icons li:first-child a{
-    color: #596CA5 !important;
+    color: #596CA5!important;
     border-color: #596CA5;
 }
 .soc_icons li:last-child a{
     color: #36C5F6 !important;
     border-color: #36C5F6;
 }
+
 .navbar-inverse .navbar-nav.soc_icons > li > a:hover, .navbar-inverse .navbar-nav.soc_icons > li > a:focus {
     background-color: #D9546E;
     border-radius: 50%;
@@ -310,6 +312,7 @@ ul.mob_info {
     min-height: 1px;
     float: left;
     width: inherit;/**gla**/
+    margin-top: 15px;
 }
 /**for online gla**/
 .active .item {
@@ -324,6 +327,7 @@ ul.mob_info {
     min-height: 1px;
     float: left;
     width: inherit;
+    margin-top: 15px;
 }
 
 .main_items .item img {
@@ -444,7 +448,9 @@ ul.dropdown-menu.language-switch[role="menu"] {
 }
 #header .login-buttons a {
     margin-right: 10px;
+    text-decoration: none;
 }
+
 #header .login-buttons a:nth-child(2){
     margin-right: 20px;
 }
@@ -512,6 +518,13 @@ li.profile_name {
 }
 .row.lightpink {
     background-color: rgba(0, 0, 0, .03);
+}
+
+/*----------------------
+   Items container /home/
+-----------------------*/
+.gla-container-maxWidth{
+    max-width: 1170px;
 }
 /*----------------------
    Video
@@ -696,12 +709,13 @@ footer .soc_icons .fa{
 ----------------*/
 .owl-nav {
     position: absolute;
-    top: -46px;
+    top: -39px;
     right: 5%;
-    line-height: 34px;
+    padding: 5px;
+    line-height: 22px;
 }
 .main_items {
-    margin-bottom: 40px;
+    margin: 40px 0 0 0;
 }
 
 .profile {
@@ -1018,7 +1032,6 @@ footer .soc_icons .fa{
     .girl__title h2 {
         font-size: 22px;
         text-align: center;
-        margin: 16px 0 49px;
     }
     .round_item_out {
         height: 182px;
@@ -1040,12 +1053,7 @@ footer .soc_icons .fa{
     }**/
 
     .owl-nav {
-        position: absolute;
-        top: -46px;
-        right: 50%;
-        line-height: 34px;
-        padding-right: -102px;
-        margin-right: -51px;
+        top: -25px;
     }
 
     #photo{
@@ -1167,16 +1175,10 @@ footer .soc_icons .fa{
     .girl__title h2 {
         font-size: 22px;
         text-align: center;
-        margin: 16px 0 49px;
     }
 
     .owl-nav {
-        position: absolute;
-        top: -46px;
-        right: 50%;
-        line-height: 34px;
-        padding-right: -102px;
-        margin-right: -51px;
+        top: -25px;
     }
 
     /**for VIDEO**/

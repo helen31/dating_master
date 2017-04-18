@@ -2,100 +2,55 @@
 
 @section('content')
     @include('client.blocks.searchSlider')
-    <div class="container-fluid content-bg">
-        <div class="row map-bg">
-            <div class="container">
-                <div class="row">
-                    <header class="text-left">
-                        @if(!Auth::user())
-                            @if($_POST && $search_attrs['looking'] == 4)
-                                <h2 class="gla-container-title">{{ trans('search.mans') }}</h2>
-                            @else
-                                <h2 class="gla-container-title">{{ trans('search.girls') }}</h2>
-                            @endif
-                        @elseif(Auth::user()->hasRole('female'))
+    <div class="content-bg">
+        <div class="container">
+            <div class="row">
+                <header class="text-left  girl__title">
+                    @if(!Auth::user())
+                        @if($_POST && $search_attrs['looking'] == 4)
                             <h2 class="gla-container-title">{{ trans('search.mans') }}</h2>
-                        @elseif(Auth::user()->hasRole('male'))
-                            <h2 class="gla-container-title">{{ trans('search.girls') }}</h2>
                         @else
-                            @if($_POST && $search_attrs['looking'] == 4)
-                                <h2 class="gla-container-title">{{ trans('search.mans') }}</h2>
-                            @else
-                                <h2 class="gla-container-title">{{ trans('search.girls') }}</h2>
-                            @endif
+                            <h2 class="gla-container-title">{{ trans('search.girls') }}</h2>
                         @endif
-                    </header>
-                    <div class="row lightpink">
-                        <div class="container">
-                            <div class="main_items"><!--container for item-->
-                                <div class="owl online">
-                                    @if($_POST && $search_attrs['is_online']==1)
-                                        @foreach($users as $u)
-                                            @if($u->isOnline())
-                                                @include('client.blocks.user-item')
-                                            @endif
-                                        @endforeach
-                                    @else
-                                        @foreach($users as $u)
-                                            @include('client.blocks.user-item')
-                                        @endforeach
+                    @elseif(Auth::user()->hasRole('female'))
+                        <h2 class="gla-container-title">{{ trans('search.mans') }}</h2>
+                    @elseif(Auth::user()->hasRole('male'))
+                        <h2 class="gla-container-title">{{ trans('search.girls') }}</h2>
+                    @else
+                        @if($_POST && $search_attrs['looking'] == 4)
+                            <h2 class="gla-container-title">{{ trans('search.mans') }}</h2>
+                        @else
+                            <h2 class="gla-container-title">{{ trans('search.girls') }}</h2>
+                        @endif
+                    @endif
+                </header>
+            </div>
+            <div class="row lightpink">
+                <div class="main_items"><!--container for item-->
+                    <div class="container gla-container-maxWidth map-bg">
+                        <div class="owl online">
+                            @if($_POST && $search_attrs['is_online']==1)
+                                @foreach($users as $u)
+                                    @if($u->isOnline())
+                                        @include('client.blocks.user-item')
                                     @endif
-                                </div>
-                            </div>
+                                @endforeach
+                            @else
+                                @foreach($users as $u)
+                                    @include('client.blocks.user-item')
+                                @endforeach
+                            @endif
                         </div>
                     </div>
-                <!--<div class="col-md-12">
-                        <div class="users col-md-offset-1">
-                            <div class="main_items">
-                               @if($_POST && $search_attrs['is_online']==1)
-                                    @foreach($users as $u)
-                                        @if($u->isOnline())
-                                            @include('client.blocks.user-item')
-                                        @endif
-                                    @endforeach
-                                @else
-                                    @foreach($users as $u)
-                                        @include('client.blocks.user-item')
-                                    @endforeach
-                                @endif
-                            </div>
-                        </div>
-                    </div>-->
-
+                    <div class="text-center">
+                        {!! $users->render() !!}
+                    </div>
                 </div>
-                <div class="row text-center" id="pagination">
-                 @if($users->links())
-                    {{ $users->links() }}
-                @endif
-                </div>
-
             </div>
         </div>
     </div>
 @stop
 
-@section('styles')
-    <style>
-        .item {
-            width: 226px;
-            margin-right: 10px;
-            float: left;
-            border: 1px solid #ccc;
-            margin-top: 10px;
-        }
-        .item img {
-            display: block;
-            width: 75%;
-            margin: 0 auto;
-            padding-top: 20px;
-            -webkit-transform-style: preserve-3d;
-        }
-        .item .photo img {
-            width: 190px;
-            height: 200px;
-        }
-    </style>
-@stop
 @section('scripts')
 <script type="text/javascript" src="{{ url('/assets/js/bootstrap-fileinput-master/js/fileinput.js') }}"></script>
 <script type="text/javascript" src="{{ url('/assets/js/file-input-init.js') }}"></script>
