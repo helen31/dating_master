@@ -13,7 +13,7 @@
 <div role="tabpanel" class="tab-pane" id="photoalbums">
     <div class="row">
         <h2 class="text-center gla-title-color">Albums</h2>
-        <div class="row online text-center">
+        <div class="row text-center">
             @foreach($albums as $a)
                 <div class="col-md-6 col-sm-6 col-xs-12 text-center item gla-item-margin" id="gallerey-{{$a->id}}">
                     <div class="gla-cover-img gla-cover-img_before">

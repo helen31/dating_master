@@ -5,12 +5,13 @@
         <div class="row map-bg">
             <div class="col-md-12">
                 <div class="container">
-                    <div class="col-md-2 col-sm-2" id="profileMenu">
+                    <div class="col-lg-2 col-md-2 col-sm-3 gla-leftNav" id="profileMenu">
+                        <!--desktop Profile left nav-->
                         @if(Auth::user())
                             @include('client.blocks.profile-sidebar')
                         @endif
                     </div>
-                    <div class="col-md-10 col-sm-10" id="profileFields">
+                    <div class="col-lg-10 col-md-10 col-sm-9" id="profileFields">
                         @yield('profileContent')
                     </div>
                 </div>
@@ -28,9 +29,6 @@
         header{
             font-weight: bold;
             font-size: 20px;
-        }
-        .info{
-            margin: 5px;
         }
     </style>
 @stop

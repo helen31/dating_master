@@ -598,6 +598,45 @@ li.profile_name {
     object-fit: contain;
 }
 /**for MY PROFILE**/
+.gla-profile-leftNav{
+    background: #ddd;
+}
+
+.gla-leftNav{
+    border-right: 5px double #ddd!important;
+}
+
+.gla-leftNav .nav li a:hover, .gla-leftNav .nav li a:focus{
+    background: #D9546E;
+    color: #ffffff;
+}
+
+.gla-avatar-img{
+    width: 100%;
+}
+
+.user_data .info{
+    margin-top: 7px;
+    margin-bottom: 7px;
+}
+
+.gla-profile-block{
+    border: 5px double #ddd;
+    margin-top: 15px;
+}
+
+.gla-profile-block .item a{
+    display: inline-block;
+}
+
+.gla-user-data-padding{
+    padding: 0;
+}
+
+.gla-nav-tabs{
+    padding-top: 3px;
+}
+
 .gla-cover-img_width{
     width: 270px;
     height: 203px;
@@ -623,7 +662,97 @@ li.profile_name {
 }
 
 .girl-action{
-    margin-top: 30px;
+    margin: 29px 0;
+}
+
+.girl-action .gla-profile-link{
+    margin-left: 13px;
+    text-decoration: none;
+}
+
+.girl-action .gla-profile-link .gla-profile-icon {
+    height: 49px;
+}
+
+.gla-tab-content{
+    background: #ffffff;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-top: none;
+}
+
+.avatar{
+    margin-top: 12px;
+}
+
+/*---------------------------------------------
+   Profile photos - on click open Modal window
+---------------------------------------------*/
+.grg-img-photo{
+    height: 160px;
+    width: auto;
+}
+
+.grg-photo-frame{
+    float: left;
+    padding: 4px;
+}
+
+.modal {/* The Modal (background) */
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 3; /* Sit on top */
+    padding-top: 4%; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+
+.modal-content {/* Modal Content (Image) */
+    margin: auto;
+    display: block;
+    //width: 60%;
+    max-width: 80%;
+    padding: 10px;
+    cursor: pointer;
+}
+
+@-webkit-keyframes zoom {
+    from {-webkit-transform:scale(0)}
+    to {-webkit-transform:scale(1)}
+}
+
+@keyframes zoom {
+    from {transform:scale(0)}
+    to {transform:scale(1)}
+}
+
+.close {/* The Close Button */
+    position: absolute;
+    //display: none;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 700px){/* 100% Image Width on Smaller Screens */
+    .modal-content {
+        width: 100%;
+    }
 }
 
 /**for albums**/
@@ -668,13 +797,17 @@ li.profile_name {
     font-size: 30px;
 }
 
+.gla-footer-title{
+    padding-left: 25px;
+}
+
 .gla-nav{
     text-align: left!important;
     padding: 0 0 0 10px;
 }
 
 footer .soc_icons{
-    text-align: center!important;
+    padding-left: 15px;
 }
 
 footer .soc_icons li{
@@ -683,6 +816,10 @@ footer .soc_icons li{
 
 footer .soc_icons .fa{
     font-size: 14px!important;
+}
+
+.gla-rights{
+    font-size: 11px;
 }
 
 .gla-card{
@@ -807,6 +944,11 @@ footer .soc_icons .fa{
         width: 287px;
         height: 240px;
     }
+
+    /**for MY PROFILE**/
+    .girl-action {
+        margin: 25px 0;
+    }
 }
 @media screen and (max-width: 992px) {
     .text-right {
@@ -821,6 +963,28 @@ footer .soc_icons .fa{
 
     .gla-nav{
         text-align: center!important;
+    }
+
+    /**for MY PROFILE**/
+    .gla-avatar-img {
+        width: 76%;
+    }
+
+    .girl-action {
+        margin: 25px 0;
+    }
+
+    .girl-action .gla-profile-link .gla-profile-icon {
+        height: 42px;
+    }
+
+    .gla-profile-block{
+        text-align: center;
+    }
+
+    /**Footer**/
+    .gla-footer-title {
+        text-align: center;
     }
 }
 @media screen and (max-width: 768px) {
@@ -845,9 +1009,6 @@ footer .soc_icons .fa{
     }
     #mobile_ver {
         display: block;
-    }
-    #max_info {
-        display: none;
     }
     .row.info.mobile_ver {
         display: block;
@@ -885,8 +1046,25 @@ footer .soc_icons .fa{
     .text-center.g__info .col-md-6:first-child {
         display: block;
     }
+    /* ---   My profile   ---*/
+    .avatar{
+        text-align: center;
+    }
 
-    /**gla**/
+    .gla-avatar-img {
+        width: 59%;
+    }
+
+    .gla-user-data-styleMobile{
+        padding: 15px 0;
+    }
+
+    .gla-user-data-styleMobile .gla-user-data-item{
+        display: inline-block;
+        margin-right: 15px;
+    }
+
+        /**gla**/
     .girl__name {
         display: block;
         color: #B02642;
@@ -924,6 +1102,11 @@ footer .soc_icons .fa{
     /* --- @Profile --- */
     #profileMenu {
         display: none;
+    }
+
+    .girl-action {
+        text-align: left;
+        margin: 15px 0;
     }
 }
 /* ---- @Circle --- */
@@ -1076,26 +1259,42 @@ footer .soc_icons .fa{
         width: 200px;
         height: 150px;
     }
+
+    .gla-avatar-img {
+        width: 100%;
+    }
+
+    .gla-cover-img_width {
+        width: 250px;
+        height: 180px;
+    }
+    /**Profile**/
+    .gla-user-data-style{
+        display: none;
+    }
+
+    .gla-user-data-styleMobile{
+        display: block;
+    }
+
+    .girl-action .gla-profile-link .gla-profile-icon {
+        height: 26px;
+    }
+
+    .girl-action .gla-profile-link {
+        margin-left: 5px;
+    }
 }
 
 @media screen and (min-width: 1200px) {
-    /* #photo {
-         width: 16rem;
-         height: 19rem;
-     }*/
+
 }
+
 @media screen and (min-width: 992px) {
     .g_id {
         margin-top: 7px;
     }
 }
-/**@media screen and (max-width: 992px) {
-    .logo_text{
-        font-size: 1.8vw;
-        font-weight: 600;
-    }
-}**/
-
 
 @media screen and (min-width: 768px) {
     #mobile_ver {
@@ -1135,7 +1334,20 @@ footer .soc_icons .fa{
         font-size: 1.8vw;
         font-weight: 600;
     }
+
+    /**Profile**/
+    .gla-user-data-styleMobile{
+        display: none;
+    }
 }
+
+@media screen and (min-width: 600px) {
+    /**Profile**/
+    .gla-user-data-styleMobile{
+        display: none;
+    }
+}
+
 /* --- Search ---- */
 .grg-search-input{
     padding: 5px;
@@ -1158,6 +1370,23 @@ footer .soc_icons .fa{
     .gla-video-measurements{
         width: 400px;
         height: 300px;
+    }
+
+    .gla-avatar-img {
+        width: 65%;
+    }
+
+    .girl-action .gla-profile-link .gla-profile-icon {
+        height: 33px;
+    }
+
+    /**Profile**/
+    .gla-user-data-style{
+        display: none;
+    }
+
+    .gla-user-data-styleMobile{
+        display: block;
     }
 }
 
@@ -1187,6 +1416,10 @@ footer .soc_icons .fa{
         height: 180px;
     }
 
+    .gla-avatar-img {
+        width: 80%;
+    }
+
     .video-width{
         width: 260px;
         height: 180px;
@@ -1195,5 +1428,18 @@ footer .soc_icons .fa{
     .gla-cover-img_before{
         width: 260px;
         height: 230px;
+    }
+
+    .girl-action .gla-profile-link .gla-profile-icon {
+        height: 33px;
+    }
+
+    /**Profile**/
+    .gla-user-data-style{
+        display: none;
+    }
+
+    .gla-user-data-styleMobile{
+        display: block;
     }
 }

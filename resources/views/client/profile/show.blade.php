@@ -275,7 +275,7 @@
                     </div>
                 </div>
             @endif
-        <!--Albums-->
+            <!--Albums-->
             @if($u->gender = 'female' && count($albums) > 0)
                 <div class="row gla-profile-block">
                     <div class="col-md-12">
@@ -293,7 +293,7 @@
                     </div>
                 </div>
             @endif
-        <!--Videos-->
+            <!--Videos-->
             @if(count($videos) > 0)
                 <div class="row gla-profile-block">
                     <div class="col-md-12">
@@ -322,7 +322,7 @@
 
         $(document).ready(function(){
             $('button[name="horoscope"]').click(function(){
-                //todo window with information about "money"
+               //todo window with information about "money"
 
                 $.ajax({
                     type: "POST",
@@ -331,7 +331,7 @@
                     success: function( response ) {
                         $('#serviceModal').modal();
                         $('#serviceModal').find('.modal-body').append(
-                            "<div>" + response.text + "</div>"
+                                "<div>" + response.text + "</div>"
                         );
                     },
                     error: function( response ) {
@@ -350,9 +350,9 @@
                     success: function( response ) {
                         $('#serviceModal').modal();
                         $('#serviceModal').find('.modal-body').append(
-                            "<div>" + response.first_name + "</div>" +
-                            "<div>" + response.last_name + "</div>" +
-                            "<div>" + response.phone + "</div>"
+                                "<div>" + response.first_name + "</div>" +
+                                "<div>" + response.last_name + "</div>" +
+                                "<div>" + response.phone + "</div>"
                         );
                     },
                     error: function( response ) {
@@ -383,10 +383,10 @@
                     }
                 })
             });
-
-            //Smile
-            $('#smile').click(function(e){
-                e.preventDefault();
+        
+        //Smile 
+             $('#smile').click(function(e){
+                 e.preventDefault();
                 //todo window with information about "money"
 
                 $.ajax({
