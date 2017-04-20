@@ -8,5 +8,8 @@ return [
     'leaveAMessage' => 'Leave a message',
     'chatNow' => 'Chat now',
     'webcamOnline'	=> 'Webcam online',
+    'video'   => 'Video',
+    'Russia'  => 'Russia',
+    'Ukraine' => 'Ukraine',
 
 ];

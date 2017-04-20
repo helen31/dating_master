@@ -220,6 +220,7 @@ class GirlsController extends Controller
         $this->profile->about     = $request->input('about');
         $this->profile->know_lang = $request->input('know_lang');
         $this->profile->english_level  = $request->input('english_level');
+        $this->profile->zodiac = ZodiacSignService::getSignByBirthday($request->input('birthday'));
         $this->profile->looking = $request->input('looking');
         $this->profile->l_age_start = $request->input('l_age_start');
         $this->profile->l_age_stop = $request->input('l_age_stop');
@@ -410,6 +411,7 @@ class GirlsController extends Controller
         $profile->finance_income =$request->input('finance_income');
         $profile->about = $request->input('about');
         $profile->know_lang=$request->input('know_lang');
+        $profile->zodiac = ZodiacSignService::getSignByBirthday($request->input('birthday'));
         $profile->english_level=$request->input('english_level');
         $profile->looking = $request->input('looking');
         $profile->l_age_start=$request->input('l_age_start');

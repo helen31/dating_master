@@ -195,6 +195,7 @@ class ManController extends Controller
         $profile->about = $request->input('about');
         $profile->know_lang = $request->input('know_lang');
         $profile->english_level = $request->input('english_level');
+        $profile->zodiac = ZodiacSignService::getSignByBirthday($request->input('birthday'));
         $profile->looking = $request->input('looking');
         $profile->l_age_start=$request->input('l_age_start');
         $profile->l_age_stop=$request->input('l_age_stop');
