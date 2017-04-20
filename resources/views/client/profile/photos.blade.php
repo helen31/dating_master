@@ -17,17 +17,19 @@
             @foreach($profile_images as $p_image)
                 <div class="grg-photo-frame" id="photo-{{$p_image->id}}">
                     <img class="grg-img-photo js-img-photo" src="{{ url('/uploads/users/profile_photos/'.$p_image->url) }}">
-                    <a class="delete_gallery" href="#" onclick="deleteProfileFoto(event,'{{$p_image->id}}');">
+                    <!--<a class="delete_gallery" href="#" onclick="deleteProfileFoto(event,'{{$p_image->id}}');">
                         <i class="fa fa-trash-o"></i>
-                    </a>
+                    </a>-->
                 </div>
             @endforeach
             <!-- The Modal -->
-            <div id="myModal" class="modal">
-                <!-- The Close Button -->
-                <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+            <div id="myModal" class="gla-modal js-gla-modal">
                 <!-- Modal Content (The Image) -->
-                <img class="modal-content" id="img01">
+                <div class="gla-modal-content-wrap">
+                    <img class="gla-modal-content js-modal-img" id="img01">
+                    <!-- The Close Button -->
+                    <span class="gla-close js-gla-close">&times;</span>
+                </div>
             </div>
         </div>
     </div>
