@@ -26,18 +26,56 @@
                                     @endif
                                 </select>
                             </div>
-
                             <div class="form-group grg-search-input">
-                                <label for="I">{{ trans('searchTitle.age') }}</label>
+                                <label for="age_start">{{ trans('searchTitle.age') }}</label>
                                 <select name="age_start" class="form-control">
 
-                                    @for($i = 18; $i < 60; $i++)
-                                        <option value="{{ $i }}">{{ $i }}</option>
+                                    @for($i = 18; $i < 99; $i++)
+                                        <option value="{{ $i }}"
+                                                {{ (isset($search_attrs['age_start']) && $search_attrs['age_start'] == $i) ? 'selected' : ''}}
+                                        >{{ $i }}</option>
                                     @endfor
                                 </select> -
                                 <select name="age_stop" class="form-control">
-                                    @for($i = 60; $i >= 18; $i--)
-                                        <option value="{{ $i }}">{{ $i }}</option>
+                                    @for($i = 99; $i >= 18; $i--)
+                                        <option value="{{ $i }}"
+                                                {{ (isset($search_attrs['age_stop']) && $search_attrs['age_stop'] == $i) ? 'selected' : ''}}
+                                        >{{ $i }}</option>
+                                    @endfor
+                                </select>
+                            </div>
+                            <div class="form-group grg-search-input">
+                                <label for="user_weight">{{ trans('profile.weight') }}</label>
+                                <select name="weight_start" class="form-control">
+
+                                    @for($i = 35; $i < 250; $i++)
+                                        <option value="{{ $i }}"
+                                                {{ (isset($search_attrs['weight_start']) && $search_attrs['weight_start'] == $i) ? 'selected' : ''}}
+                                        >{{ $i }}</option>
+                                    @endfor
+                                </select> -
+                                <select name="weight_stop" class="form-control">
+                                    @for($i = 250; $i >= 35; $i--)
+                                        <option value="{{ $i }}"
+                                                {{ (isset($search_attrs['weight_stop']) && $search_attrs['weight_stop'] == $i) ? 'selected' : ''}}
+                                        >{{ $i }}</option>
+                                    @endfor
+                                </select>
+                            </div>
+                            <div class="form-group grg-search-input">
+                                <label for="user_height">{{ trans('profile.height') }}</label>
+                                <select name="height_start" class="form-control">
+                                    @for($i = 80; $i < 250; $i++)
+                                        <option value="{{ $i }}"
+                                                {{ (isset($search_attrs['height_start']) && $search_attrs['height_start'] == $i) ? 'selected' : ''}}
+                                        >{{ $i }}</option>
+                                    @endfor
+                                </select> -
+                                <select name="height_stop" class="form-control">
+                                    @for($i = 250; $i >= 90; $i--)
+                                        <option value="{{ $i }}"
+                                                {{ (isset($search_attrs['height_stop']) && $search_attrs['height_stop'] == $i) ? 'selected' : ''}}
+                                        >{{ $i }}</option>
                                     @endfor
                                 </select>
                             </div>
@@ -56,8 +94,12 @@
                                 <div class="form-group grg-search-input">
                                     <label for="is_online">{{ trans('users.online') }} </label>
                                     <select name="is_online" class="form-control">
-                                        <option value="0">---</option>
-                                        <option value="1">{{ trans('answer.yes') }}</option>
+                                        <option value="0"
+                                            {{ (isset($search_attrs['is_online']) && $search_attrs['is_online'] == 0) ? 'selected' : ''}}
+                                        >---</option>
+                                        <option value="1"
+                                            {{ (isset($search_attrs['is_online']) && $search_attrs['is_online'] == 1) ? 'selected' : ''}}
+                                        >{{ trans('answer.yes') }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -65,20 +107,37 @@
                                 <div class="form-group grg-search-input">
                                     <label for="is_avatar">{{ trans('users.photo') }} </label>
                                     <select name="is_avatar" class="form-control">
-                                        <option value="0">---</option>
-                                        <option value="1">{{ trans('answer.yes') }}</option>
+                                        <option value="0"
+                                            {{ (isset($search_attrs['is_avatar']) && $search_attrs['is_avatar'] == 0) ? 'selected' : ''}}
+                                        >---</option>
+                                        <option value="1"
+                                            {{ (isset($search_attrs['is_avatar']) && $search_attrs['is_avatar'] == 1) ? 'selected' : ''}}
+                                        >{{ trans('answer.yes') }}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group grg-search-input">
-                                    {!! Form::label('coutry', trans('profile.country')) !!}
+                                    {!! Form::label('country', trans('profile.country')) !!}
                                     <select name="country" class="form-control grg-long-select">
-                                        <option value="false" selected>---</option>
+                                        <option value="false"
+                                            {{ (isset($search_attrs['country']) && $search_attrs['country'] == false) ? 'selected' : ''}}
+                                        >---</option>
+                                        <option value="3159">{{ trans('users.Russia') }}</option>
+                                        <option value="9908">{{ trans('users.Ukraine') }}</option>
+                                        <option value="false">---</option>
                                         @foreach($countries as $country)
-                                            <option value="{{ $country->id }}"> {{ $country->name }}</option>
+                                            <option value="{{ $country->id }}"
+                                                {{ (isset($search_attrs['country']) && $search_attrs['country'] == $country->id) ? 'selected' : ''}}
+                                            > {{ $country->name }}</option>
                                         @endforeach
                                     </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group grg-search-input">
+                                    {!! Form::label('city', trans('profile.city')) !!}
+                                    {!! Form::text('city', '', ['class' => 'form-control']) !!}
                                 </div>
                             </div>
                         </div><!-- .row -->
@@ -86,9 +145,11 @@
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group grg-search-input">
                                     {!! Form::label('education', trans('profile.education')) !!}
-                                    <select name="education" class="form-control">
+                                    <select name="education[]" class="form-control" multiple>
                                         @foreach($selects['education'] as $education)
-                                            <option value="{{ $education }}">{{ trans('profile.'.$education) }}</option>
+                                            <option value="{{ $education }}"
+                                                {{ (isset($search_attrs['education']) && in_array($education, $search_attrs['education'])) ? 'selected' : ''}}
+                                            >{{ trans('profile.'.$education) }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -96,13 +157,64 @@
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group grg-search-input">
                                     <label for="religion">{{ trans('profile.religion') }}</label>
-                                    <select name="religion" class="form-control">
+                                    <select name="religion[]" class="form-control" multiple>
                                         @foreach($selects['religion'] as $religion)
-                                            <option value="{{ $religion }}">{{ trans('profile.'.$religion) }}</option>
+                                            <option value="{{ $religion }}"
+                                                    {{ (isset($search_attrs['religion']) && in_array($religion, $search_attrs['religion'])) ? 'selected' : ''}}
+                                            >{{ trans('profile.'.$religion) }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group grg-search-input">
+                                    <label for="hair">{{ trans('profile.hair') }}</label>
+                                    <select name="hair[]" class="form-control" multiple>
+                                        @foreach($selects['hair'] as $hair)
+                                            <option value="{{ $hair }}"
+                                                    {{ (isset($search_attrs['hair']) && in_array($hair, $search_attrs['hair'])) ? 'selected' : ''}}
+                                            >{{ trans('profile.'.$hair) }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group grg-search-input">
+                                    <label for="eyes">{{ trans('profile.eyes') }}</label>
+                                    <select name="eyes[]" class="form-control" multiple>
+                                        @foreach($selects['eyes'] as $eyes)
+                                            <option value="{{ $eyes }}"
+                                                    {{ (isset($search_attrs['eyes']) && in_array($eyes, $search_attrs['eyes'])) ? 'selected' : ''}}
+                                            >{{ trans('profile.'.$eyes) }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group grg-search-input">
+                                    <label for="family">{{ trans('profile.family') }}</label>
+                                    <select name="family[]" class="form-control" multiple>
+                                        @foreach($selects['family'] as $family)
+                                            <option value="{{ $family }}"
+                                                    {{ (isset($search_attrs['family']) && in_array($family, $search_attrs['family'])) ? 'selected' : ''}}
+                                            >{{ ($family == '---') ? '---' : trans('profile.'.$family.'_'.$required_gender) }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group grg-search-input">
+                                    <label for="zodiac">{{ trans('profile.zodiac') }}</label>
+                                    <select name="zodiac[]" class="form-control" multiple>
+                                        @foreach($selects['zodiac'] as $zodiac)
+                                            <option value="{{ $zodiac }}"
+                                                    {{ (isset($search_attrs['zodiac']) && in_array($zodiac, $search_attrs['zodiac'])) ? 'selected' : ''}}
+                                            >{{ ($zodiac == '---') ? '---' : trans('horoscope.'.$zodiac) }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
                         </div>
 
                         <div class="row">

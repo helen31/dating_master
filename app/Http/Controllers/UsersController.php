@@ -351,6 +351,7 @@ class UsersController extends Controller
             $profile->finance_income   = $request->input('finance_income');
             $profile->english_level    = $request->input('english_level');
             $profile->know_lang  = $request->input('know_lang');
+            $profile->zodiac = $this->zodiacSignService->getSignByBirthday($request->input('birthday'));
             $profile->save();
             return redirect('/profile/show/'.$id);
         } else {
@@ -381,6 +382,7 @@ class UsersController extends Controller
             $profile->finance_income   = $request->input('finance_income');
             $profile->english_level    = $request->input('english_level');
             $profile->know_lang  = $request->input('know_lang');
+            $profile->zodiac = $this->zodiacSignService->getSignByBirthday($request->input('birthday'));
             $profile->save();
             return redirect('/profile/show/'.$id);
         }
