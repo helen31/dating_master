@@ -264,14 +264,25 @@
                 <div class="row gla-profile-block">
                     <div class="col-md-12">
                         <h2>{{ trans('profile.photo') }}</h2>
-                        @foreach($profile_images as $p_image)
-                            <div class="grg-photo-frame" id="photo-{{$p_image->id}}">
-                                <img class="grg-img-photo" src="{{ url('/uploads/users/profile_photos/'.$p_image->url) }}">
-                                <a class="delete_gallery" href="#" onclick="deleteProfileFoto(event,'{{$p_image->id}}');">
+                        <div class="js-gla-profile-photo-modal">
+                            @foreach($profile_images as $p_image)
+                                <div class="grg-photo-frame" id="photo-{{$p_image->id}}">
+                                    <img class="grg-img-photo js-img-photo" src="{{ url('/uploads/users/profile_photos/'.$p_image->url) }}">
+                                <!--<a class="delete_gallery" href="#" onclick="deleteProfileFoto(event,'{{$p_image->id}}');">
                                     <i class="fa fa-trash-o"></i>
-                                </a>
-                            </div>
+                                </a>-->
+                                </div>
                         @endforeach
+                        <!-- The Modal -->
+                            <div id="myModal" class="gla-modal js-gla-modal">
+                                <!-- Modal Content (The Image) -->
+                                <div class="gla-modal-content-wrap">
+                                    <img class="gla-modal-content js-modal-img" id="img01">
+                                    <!-- The Close Button -->
+                                    <span class="gla-close js-gla-close">&times;</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             @endif
@@ -316,6 +327,12 @@
     </div>
 @stop
 
+@section('scripts')
+    <script type="text/javascript" src="{{ url('/assets/js/modalShow.js') }}"></script>
+    <script>
+        var modal1 = new ModalShow($('.js-gla-profile-photo-modal'));
+    </script>
+@stop
 @section('additional_scripts')
     <script>
         var $ = jQuery.noConflict();

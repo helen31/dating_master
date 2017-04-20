@@ -599,7 +599,7 @@ li.profile_name {
 }
 /**for MY PROFILE**/
 .gla-profile-leftNav{
-    background: #ddd;
+
 }
 
 .gla-leftNav{
@@ -698,27 +698,31 @@ li.profile_name {
     padding: 4px;
 }
 
-.modal {/* The Modal (background) */
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 3; /* Sit on top */
-    padding-top: 4%; /* Location of the box */
+.gla-modal {/**The Modal (background)**/
+    display: none; /**Hidden by default**/
+    position: fixed; /**Stay in place**/
+    z-index: 1001; /**Sit on top**/
+    padding-top: 4%; /**Location of the box**/
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+    width: 100%; /**Full width**/
+    height: 100%; /**Full height**/
+    overflow: auto; /**Enable scroll if needed**/
+    background-color: rgb(0,0,0); /**Fallback color**/
+    background-color: rgba(0,0,0,0.9); /**Black w/ opacity**/
+    //position: relative;
+}
+.gla-modal-content-wrap{
+    position: relative;
 }
 
-.modal-content {/* Modal Content (Image) */
+.gla-modal-content {/**Modal Content (Image)**/
     margin: auto;
     display: block;
-    //width: 60%;
-    max-width: 80%;
+    max-width: 64%;
     padding: 10px;
     cursor: pointer;
+    background: #ffffff;
 }
 
 @-webkit-keyframes zoom {
@@ -731,26 +735,27 @@ li.profile_name {
     to {transform:scale(1)}
 }
 
-.close {/* The Close Button */
-    position: absolute;
-    //display: none;
-    top: 15px;
-    right: 35px;
+.gla-close {/**The Close Button**/
+    top: -7%;
+    /* left: 0; */
     color: #f1f1f1;
     font-size: 40px;
     font-weight: bold;
     transition: 0.3s;
+    /* left: 0; */
+    position: absolute;
+    right: 7%;
 }
 
-.close:hover,
-.close:focus {
+.gla-close:hover,
+.gla-close:focus {
     color: #bbb;
     text-decoration: none;
     cursor: pointer;
 }
 
-@media only screen and (max-width: 700px){/* 100% Image Width on Smaller Screens */
-    .modal-content {
+@media only screen and (max-width: 700px){/**100% Image Width on Smaller Screens**/
+    .gla-modal-content {
         width: 100%;
     }
 }
