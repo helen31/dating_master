@@ -18,7 +18,7 @@
     <div class="left-nav">
         @if(!Auth::user())
             <ul>
-                <li><a href="/{{ App::getLocale() }}/">{{trans('nav.welcome')}}</a></li>
+                <li><a href="/{{ App::getLocale() }}/">{{trans('nav.welcome')}}HELLO!</a></li>
                 <li><a href="/{{ App::getLocale() }}/about">{{trans('nav.about')}}</a></li>
                 <li><a href="/{{ App::getLocale() }}/blog">{{trans('nav.blog')}}</a></li>
                 <li><a href="/{{ App::getLocale() }}/pricing">{{trans('nav.pricing')}}</a></li>
@@ -36,7 +36,7 @@
                       }
                 ?>
                 </li>
-                <li><a href="/{{ App::getLocale() }}/profile/show/{{ Auth::user()->id }}">{{ trans('profile.my') }}</a></li>
+                <li><a href="/{{ App::getLocale() }}/profile/show/{{ Auth::user()->id }}">{{ trans('profile.my') }}Привет!</a></li>
                 <li><a href="/{{ App::getLocale() }}/profile/{{ Auth::user()->id }}/photo/">{{ trans('profile.photo') }}</a></li>
                 <li><a href="/{{ App::getLocale() }}/profile/{{ Auth::user()->id }}/video/">{{ trans('profile.video') }}</a></li>
                 <li><a href="/{{ App::getLocale() }}/search">{{ trans('search.search') }}</a></li>

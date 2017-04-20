@@ -17,12 +17,16 @@
                 </div>
                 <div class="cub">
                     <li>
-                        <a href="#chat"><img src="/assets/img/interface1.png" class="gla-item-online-img" alt="Chat now" title="Chat now!"></a>
+                        <a href="#chat">
+                            <img src="/assets/img/chat.png" class="gla-item-online-img" alt="Chat now" title="Chat now!">
+                        </a>
                     </li>
                 </div>
                 <div class="cub">
                     <li>
-                        <a href="{{ url('/'.App::getLocale().'/profile/'.$u->id.'/message/') }}"><img src="{{ url('/assets/img/note1.png') }}" class="gla-item-online-img" alt="Leave a message" title="Leave a message"></a>
+                        <a href="{{ url('/'.App::getLocale().'/profile/'.$u->id.'/message/') }}">
+                            <img src="{{ url('/assets/img/message.png') }}" class="gla-item-online-img" alt="Leave a message" title="Leave a message">
+                        </a>
                     </li>
                 </div>
             </ul>
