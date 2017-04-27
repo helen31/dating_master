@@ -54,7 +54,7 @@ return [
     | http://php.net/manual/ru/timezones.php
     */
 
-    'timezone' => 'Europe/Kiev',
+    'timezone' => 'UTC',
 
     /*
     |--------------------------------------------------------------------------

@@ -153,7 +153,7 @@ class Controller extends BaseController
     {
         if(\Auth::user() && \Auth::user()->hasRole('male')){
             $user = \App\Models\Finance::where('user_id', '=', \Auth::user()->id)->first();
-            return isset($user->amoun) ?: false;
+            return isset($user->amount) ?: false;
         } else
             return;
     }

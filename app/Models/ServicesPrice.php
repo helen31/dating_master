@@ -12,24 +12,4 @@ class ServicesPrice extends Model
         'name', 'price', 'term',
     ];
 
-    public static function getTerms()
-    {
-        $type = DB::select(DB::raw('SHOW COLUMNS FROM services_price WHERE Field = "term"'))[0]->Type;
-        preg_match('/^enum\((.*)\)$/', $type, $matches);
-        $values = [];
-        foreach (explode(',', $matches[1]) as $value) {
-            $values[] = trim($value, "'");
-        }
-
-        return $values;
-    }
-
-    /**
-     * @param string $term
-     * @return mixed
-     */
-    public static function getValueByTerm($term)
-    {
-        return \DB::table('services_price')->select('price')->where('name', '=', $term)->first();
-    }
 }

@@ -270,26 +270,6 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\ChatMessages', 'user_id');
     }
 
-    /** User finance */
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function finance()
-    {
-        return $this->hasMany('App\Models\Finance');
-    }
-
-    public function userPay()
-    {
-        return $this->hasMany('App\Models\Expenses', 'user_id');
-    }
-
-    public function girlHave()
-    {
-        return $this->hasMany('App\Models\Expenses', 'girl_id');
-    }
-
     /** Smiles */
     public function toSmile()
     {

@@ -14,6 +14,7 @@ use App\Models\Lists;
 use DB;
 
 use App\Models\ChatContactList;
+use App\Services\ClientFinanceService;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\Validator;
@@ -169,13 +170,23 @@ class MessagesController extends Controller
             'sent_message' => 'required',
         ]);
 
-        $message = new Messages();
-        $message->from_user = $request->input('from_user');
-        $message->to_user = $request->input('to_user');
-        $message->message = $this->robot($request->input('sent_message'));
-        $message->status = 0;
-        $message->save();
+        $type = Constants::EXP_MESSAGE;
+        $is_access = ClientFinanceService::spendLoveCoins($request->input('to_user'), $type);
 
-        return redirect('profile/'.$message->from_user.'/correspond/'.$message->to_user);
+        if($is_access == true){
+            $message = new Messages();
+            $message->from_user = $request->input('from_user');
+            $message->to_user = $request->input('to_user');
+            $message->message = $this->robot($request->input('sent_message'));
+            $message->status = 0;
+            $message->save();
+
+            return redirect('profile/'.$message->from_user.'/correspond/'.$message->to_user);
+        }else{
+            \Session::flash('alert-danger', trans('finance.no_money_no_honey'));
+            return redirect('profile/'.$request->input('from_user').'/finance');
+        }
+
+
     }
 }
