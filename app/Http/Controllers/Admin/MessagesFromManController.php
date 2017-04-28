@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use App\Services\ExpenseService;
 use Illuminate\Http\Request;
 use App\Models\Messages;
 use App\Models\Lists;
@@ -19,12 +18,10 @@ class MessagesFromManController extends Controller
     /**
      * @var
      */
-    private $expenseService;
     private $message;
 
-    public function __construct(ExpenseService $expenseService, Messages $message)
+    public function __construct(Messages $message)
     {
-        $this->expenseService = $expenseService;
         $this->message = $message;
 
         view()->share('new_ticket_messages', parent::getUnreadMessages());

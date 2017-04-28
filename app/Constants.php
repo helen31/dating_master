@@ -12,8 +12,9 @@ class Constants
     /* Paid Services */
     const EXP_MESSAGE = 'message';
     const EXP_CHAT = 'chat';
-    const EXP_VIDEO = 'video';
+    const EXP_VIDEO_CHAT = 'video';
     const EXP_ALBUM = 'photo_album';
+    const EXP_GIRL_VIDEO = 'girl_video';
     const EXP_CALL = 'call';
     const EXP_REQUEST_PHONE = 'request_phone';
     const EXP_REQUEST_EMAIL = 'request_email';

@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 
 use App\Constants;
-use App\Models\Expenses;
+use App\Models\Transaction;
 use App\Models\ServicesPrice;
 use App\Models\User;
-use App\Services\ExpenseService;
 use Illuminate\Http\Request;
 use App\Models\Messages;
 use App\Models\Lists;
@@ -24,14 +23,11 @@ class MessagesController extends Controller
     /**
      * @var
      */
-    private $expenseService;
     private $message;
 
-    public function __construct(ExpenseService $expenseService, Messages $message)
+    public function __construct(Messages $message)
     {
-        $this->expenseService = $expenseService;
         $this->message = $message;
-
         parent::__construct();
     }
 /*

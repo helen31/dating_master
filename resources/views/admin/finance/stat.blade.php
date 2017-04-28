@@ -28,7 +28,7 @@
                                     <tr>
                                         <td>{{ $p->uid }}</td>
                                         <td>{{ $p->first_name }} {{ $p->last_name }}</td>
-                                        <td>{{ ($p->expense * $rate->price) / 2  }}</td>
+                                        <td>Lorem</td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -63,7 +63,7 @@
                                     <tr>
                                         <td>{{ $m->uid }}</td>
                                         <td>{{ $m->first_name }} {{ $m->last_name }}</td>
-                                        <td>{{ ($m->expense * $rate->price) / 2  }}</td>
+                                        <td>Lorem</td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -98,7 +98,7 @@
                                 <tr>
                                     <td>{{ $m->uid }}</td>
                                     <td>{{ $m->first_name }} {{ $m->last_name }}</td>
-                                    <td>{{ ($m->expense * $rate->price) / 2  }}</td>
+                                    <td>Lorem</td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -133,7 +133,7 @@
                         <td>{{ $s->user_id }}: {{ $s->first_name }} {{ $s->last_name }}</td>
                         <td>{{ $s->girl_id }}: </td>
                         <td>{{ $s->partner_id }}</td>
-                        <td>{{ ($s->expense * $rate->price) / 2 }}</td>
+                        <td>Lorem</td>
                         <td>{{ trans('stat.'.$s->type) }}</td>
                         <td>{{ $s->created_at }}</td>
                     </tr>

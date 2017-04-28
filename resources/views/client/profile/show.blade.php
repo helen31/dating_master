@@ -291,6 +291,12 @@
                 <div class="row gla-profile-block">
                     <div class="col-md-12">
                         <h2>{{ trans('albums.albums') }}</h2>
+                        @if($can_open_albums == true)
+                            <p class="bg-success">Вы можете просматривать альбомы девушки, так как оплатили эту услугу. Услуга будет активна до {{ $album_expire_date }}</p>
+                        @else
+                            <p class="bg-info">Просмотр альбомов - 1,5 Love Coins</p>
+                        @endif
+
                         <div class="row">
                             @foreach($albums as $a)
                                 <div class="item col-md-6 col-sm-12">
@@ -309,6 +315,11 @@
                 <div class="row gla-profile-block">
                     <div class="col-md-12">
                         <h2>{{ trans('profile.video') }}</h2>
+                        @if($can_open_video == true)
+                            <p class="bg-success">Вы можете просматривать видео девушки, так как оплатили эту услугу. Услуга будет активна до {{ $video_expire_date }}</p>
+                        @else
+                            <p class="bg-info">Просмотр видео - 1,5 Love Coins</p>
+                        @endif
                         <div class="row">
                             @foreach($videos as $video)
                                 <div class="col-lg-4 col-md-6 col-sm-12">

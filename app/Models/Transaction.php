@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Expenses extends Model
+class Transaction extends Model
 {
-    protected $table = 'expenses';
+    protected $table = 'transactions';
 
     public function whoPay()
     {

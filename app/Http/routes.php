@@ -47,16 +47,6 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/get/cities/', 'CityController@getCityByState');
 
 });
-/**
- * Ajax Handlers
- * todo: change all data getters from _POST to _GET
- */
-Route::group([
-    'middleware' => ['web', 'auth', 'roles'],
-    'roles' => ['Male', 'Female'],
-], function(){
-    Route::post('expense', 'ExpenseController@handler');
-});
 
 
 Route::group([  'prefix'        => LaravelLocalization::setLocale(),

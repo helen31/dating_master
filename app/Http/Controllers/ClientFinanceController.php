@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 
 use App\Models\User;
-use App\Models\Expenses;
+use App\Models\Transaction;
 use App\Models\Finance;
 use App\Models\ServicesPrice;
 
