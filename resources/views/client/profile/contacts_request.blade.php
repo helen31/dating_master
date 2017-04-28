@@ -25,7 +25,7 @@
         </tr>
     </table>
 
-        @if($know_email > 0)
+        @if($know_email == true)
             <div class="panel panel-default">
                 <div class="panel-body">
                     <p>{{ $girl->first_name.' '.$girl->last_name }}</p>
@@ -34,11 +34,11 @@
             </div>
         @else
             <div class="grg-btn-girl-contacts">
-                <a class="btn btn-success" href="{{ url('profile/'.$id.'/contacts/'.$cor_id.'/request_email') }}" role="button">{{ trans('profile.request_surname_email') }} - 20 LC</a>
+                <a class="btn btn-success" href="{{ url('profile/'.$id.'/contacts/'.$girl_id.'/request_email') }}" role="button">{{ trans('profile.request_surname_email') }} - 20 LC</a>
             </div>
         @endif
 
-        @if($know_phone > 0)
+        @if($know_phone == true)
             <div class="panel panel-default">
                 <div class="panel-body">
                     <p>{{ $girl->first_name.' '.$girl->last_name }}</p>
@@ -47,7 +47,7 @@
             </div>
         @else
             <div class="grg-btn-girl-contacts">
-                <a class="btn btn-success" href="{{ url('profile/'.$id.'/contacts/'.$cor_id.'/request_phone') }}" role="button">{{ trans('profile.request_surname_phone') }} - 40 LC</a>
+                <a class="btn btn-success" href="{{ url('profile/'.$id.'/contacts/'.$girl_id.'/request_phone') }}" role="button">{{ trans('profile.request_surname_phone') }} - 40 LC</a>
             </div>
         @endif
 

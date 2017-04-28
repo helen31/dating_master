@@ -56,13 +56,6 @@ Route::group([
     'roles' => ['Male', 'Female'],
 ], function(){
     Route::post('expense', 'ExpenseController@handler');
-    Route::post('horoscope', 'HoroscopeController@handler');
-
-    /**
-     * Contacts
-     */
-    Route::post('flp', 'FLController@getFlp');
-    Route::post('fle', 'FLController@getFle');
 });
 
 
@@ -87,10 +80,10 @@ Route::group([  'prefix'        => LaravelLocalization::setLocale(),
 
     Route::get('profile/{id}/horoscope/{cor_id}', 'HoroscopeController@show'); // Страница с кнопкой "Проверить совместимость"
     Route::get('profile/{id}/horoscope/{cor_id}/check', 'HoroscopeController@check'); // Страница с текстом совместимости по гороскопу
-    Route::get('profile/{id}/contacts/{cor_id}', 'UsersController@showGirlContacts'); // Страница с кнопками "Запрос на имя, фамилию, телефон/емейл"
-    Route::get('profile/{id}/contacts/{cor_id}/request_phone', 'UsersController@getGirlPhone'); // Функция получения имени, фамилии и телефона
-    Route::get('profile/{id}/contacts/{cor_id}/request_email', 'UsersController@getGirlEmail'); // Функция получения имени, фамилии и e-mail
-    Route::get('profile/{id}/finance', 'UsersController@profileFinance');
+    Route::get('profile/{id}/contacts/{girl_id}', 'ContactsRequestController@showGirlContacts'); // Страница с кнопками "Запрос на имя, фамилию, телефон/емейл"
+    Route::get('profile/{id}/contacts/{girl_id}/request_phone', 'ContactsRequestController@getGirlPhone'); // Функция получения имени, фамилии и телефона
+    Route::get('profile/{id}/contacts/{girl_id}/request_email', 'ContactsRequestController@getGirlEmail'); // Функция получения имени, фамилии и e-mail
+    Route::get('profile/{id}/finance', 'ClientFinanceController@show');
 
     Route::get('profile/{id}/add/{cor_id}/to_list/{list}', 'ListsController@addToList');// Добавить пользователя в определенный список: к фаворитам или черный список
     Route::get('profile/{id}/remove/{cor_id}/from_list/{list}', 'ListsController@removeFromList');// Удалить пользователя из списка

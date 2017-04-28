@@ -25,14 +25,14 @@
         <td>{{ trans('horoscope.'.$girl->sign) }}</td>
     </tr>
 </table>
-@if(isset($compare))
+@if(isset($compare) && $compare != null)
     <div class="panel panel-default">
         <div class="panel-body">
            {!! $compare->text !!}
         </div>
     </div>
 @else
-    <a class="btn btn-success" href="{{ url('profile/'.$id.'/horoscope/'.$cor_id.'/check') }}" role="button">{{ trans('horoscope.check_comp') }} - 1 LC</a>
+    <a class="btn btn-success" href="{{ url('profile/'.$id.'/horoscope/'.$cor_id.'/check') }}" role="button">{{ trans('horoscope.check_comp') }} - 1 Love Coin</a>
 @endif
 
 @stop
