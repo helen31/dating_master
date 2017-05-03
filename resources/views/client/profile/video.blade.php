@@ -6,38 +6,36 @@
 @stop
 
 @section('profileContent')
-    <div class="row">
         <div role="tabpanel" class="tab-pane">
-            <h2 class="text-center gla-title-color">{{ trans('profile.video') }}</h2>
-            @foreach($videos as $video)
-                <div class="col-md-12 gla-video" id="video-{{ $video->id }}">
-                    <div class="col-md-12 gla-video-column">
-                        <h3 class="col-md-12 col-sm-12 text-center gla-video-title">{{ $video->name }}</h3>
-                        <div class="col-md-6 col-sm-12">
-                            <div class="gla-cover-img video-width">
-                                <img src="/uploads/videos/covers/{{ $video->cover }}" alt="poster">
+
+                <h2 class="gla-title-color">{{ trans('profile.video') }}</h2>
+                @foreach($videos as $video)
+                    <div class="gla-video" id="video-{{ $video->id }}">
+                            <h3 class="col-md-12 col-sm-12 text-center gla-video-title">{{ $video->name }}</h3>
+                            <div class="col-md-6 col-sm-12">
+                                <div class="gla-cover-img video-width">
+                                    <img src="/uploads/videos/covers/{{ $video->cover }}" alt="poster">
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-6 col-sm-12">
-                            <div class="gla-video-item">
-                                <video width="320" height="240" controls class="video-width">
-                                    <source src="/uploads/videos/videos-mp4/{{ $video->video }}" type="video/mp4">
-                                    {{ trans('profile.video_not_supported') }}
-                                </video>
+                            <div class="col-md-6 col-sm-12">
+                                <div class="gla-video-item">
+                                    <video width="320" height="240" controls class="video-width">
+                                        <source src="/uploads/videos/videos-mp4/{{ $video->video }}" type="video/mp4">
+                                        {{ trans('profile.video_not_supported') }}
+                                    </video>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-12 col-sm-12 text-left" style="margin: 5px;">
-                            <a href="#" onclick="deleteProfileVideo(event,'{{ $video->id }}');" class="btn btn-danger btn-xs" >
-                                <i class="fa fa-trash-o"></i>  {{ trans('profile.video_delete') }}
-                            </a>
-                        </div>
-                        <p class="col-md-12 col-sm-12 text-left">
-                            <strong>{{ trans('profile.video_description') }}</strong>:&nbsp;{{ $video->description }}
-                        </p>
+                            <div class="col-md-12 col-sm-12 text-left" style="margin: 5px;">
+                                <a href="#" onclick="deleteProfileVideo(event,'{{ $video->id }}');" class="btn btn-danger btn-xs" >
+                                    <i class="fa fa-trash-o"></i>  {{ trans('profile.video_delete') }}
+                                </a>
+                            </div>
+                            <p class="col-md-12 col-sm-12 text-left">
+                                <strong>{{ trans('profile.video_description') }}</strong>:&nbsp;{{ $video->description }}
+                            </p>
+
                     </div>
-                </div>
-            @endforeach
-            <hr>
+                @endforeach
 
             <div class="col-md-12">
                 <h2 class="text-center gla-title-color">{{ trans('profile.add_video') }}</h2>
@@ -66,7 +64,6 @@
                 {!! Form::close() !!}
             </div>
         </div>
-    </div>
 
 
 @stop

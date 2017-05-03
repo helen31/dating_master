@@ -268,9 +268,6 @@
                             @foreach($profile_images as $p_image)
                                 <div class="grg-photo-frame" id="photo-{{$p_image->id}}">
                                     <img class="grg-img-photo js-img-photo" src="{{ url('/uploads/users/profile_photos/'.$p_image->url) }}">
-                                <!--<a class="delete_gallery" href="#" onclick="deleteProfileFoto(event,'{{$p_image->id}}');">
-                                    <i class="fa fa-trash-o"></i>
-                                </a>-->
                                 </div>
                         @endforeach
                         <!-- The Modal -->
