@@ -22,10 +22,6 @@
 
 @section('styles')
     <style>
-        #profileFields{
-            margin-top: 30px;
-            margin-bottom: 30px;
-        }
         header{
             font-weight: bold;
             font-size: 20px;

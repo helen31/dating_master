@@ -3,23 +3,17 @@
 @section('styles')
     <link href="{{ url('/assets/css/bootstrap-reset.css') }}" rel="stylesheet">
     <link href="{{ url('/assets/css/fileinput.css') }}" rel="stylesheet">
-    <style>
-
-    </style>
 @stop
 
 @section('profileContent')
 
 <div role="tabpanel" class="tab-pane" id="profile_foto">
     <div class="col-md-12">
-        <h3 class="text-center">{{ trans('profile.photo') }}</h3>
+        <h2 class="gla-title-color">{{ trans('profile.photo') }}</h2>
         <div class="js-gla-profile-photo-modal">
             @foreach($profile_images as $p_image)
                 <div class="grg-photo-frame" id="photo-{{$p_image->id}}">
                     <img class="grg-img-photo js-img-photo" src="{{ url('/uploads/users/profile_photos/'.$p_image->url) }}">
-                    <!--<a class="delete_gallery" href="#" onclick="deleteProfileFoto(event,'{{$p_image->id}}');">
-                        <i class="fa fa-trash-o"></i>
-                    </a>-->
                 </div>
             @endforeach
             <!-- The Modal -->

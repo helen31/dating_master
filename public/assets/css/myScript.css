@@ -529,6 +529,7 @@ li.profile_name {
 /*----------------------
    Video
 -----------------------*/
+
 .gla-video-column{
     text-align: center;
     overflow: hidden;
@@ -551,8 +552,6 @@ li.profile_name {
 }
 
 .gla-video{
-    text-align: center;
-    overflow: hidden;
 }
 
 .gla-cover-img{
@@ -793,6 +792,98 @@ li.profile_name {
 
 .delete_gallery:hover{
     color: #B02642;
+}
+
+/*----------------------
+   Finance
+-----------------------*/
+.gla-finance-form{
+    margin-right: 0;
+    margin-left: 0;
+    background-color: #fff;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.gla-finance-form-info{
+    background-color: #f7f7f9;
+    border-top: 1px solid #ddd;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.gla-form{
+    display: inline-block;
+    vertical-align: top;
+    margin: 15px 0;
+}
+
+.gla-form-label{
+    text-align: left!important;
+}
+
+.gla-form-button{
+    background: #D9546E;
+    color: #ffffff;
+}
+
+.gla-form-button:hover{
+    background-color: #B02642;
+    color: #ffffff;
+}
+
+.gla-finance-form-title{
+    padding-top: 15px;
+    padding-bottom: 15px;
+    background-color: #f7f7f9;
+    border-bottom: 1px solid #ddd;
+}
+
+.gla-finance-table{
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.gla-form-radio{
+    display: inline-block;
+}
+
+.gla-label{
+    text-transform: uppercase;
+}
+
+.gla-form-group-margin{
+    margin-bottom: 0;
+}
+
+.gla-label span{
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.gla-table{
+    background: #ffffff;
+}
+
+.gla-table-balance{
+    text-align: end;
+    margin-top: 25px;
+}
+
+
+.gla-table-photo{
+    height: 80px;
+    vertical-align: text-top;
+    margin-right: 7px;
+}
+
+.gla-table-info{
+    vertical-align: top;
+    display: inline-block;
+}
+
+.gla-table-terms{
+    margin: 0;
 }
 
 /*----------------------
