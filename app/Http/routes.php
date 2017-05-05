@@ -271,11 +271,12 @@ Route::group([  'prefix' => LaravelLocalization::setLocale().'/admin',
     /** End ticket System Routes */
 
     /** Finance */
-    Route::get('finance', 'Admin\FinanceController@index');
-    Route::get('finance/control', 'Admin\FinanceController@control');
-    Route::get('finance/stat', 'Admin\FinanceController@stat');
+    Route::get('finance/prices', 'Admin\PriceController@getPrices');
+    Route::get('finance/rates', 'Admin\PriceController@getRates');
 
-    Route::post('finance/{id}','Admin\FinanceController@saveData');
+    Route::post('finance/prices', 'Admin\PriceController@setPrice');
+    Route::post('finance/rates', 'Admin\PriceController@setRate');
+
     /* End finance */
 
     /** Pages */
@@ -327,11 +328,6 @@ Route::group([ 'prefix' => LaravelLocalization::setLocale(),
 
     Route::get('profile/show/{id}', 'UsersController@show');
     Route::get('profile/{id}/show_album/{aid}', 'AlbumController@showAlbum'); // Edit album
-
-
-    /** Payments */
-    Route::get('pricing', 'PaymentsController@addBalance');
-    Route::get('payments/checkout', 'PaymentsController@checkOut'); //@todo payments gateway
 
     /** Pages */
     Route::get('{slug}', 'PagesController@show');

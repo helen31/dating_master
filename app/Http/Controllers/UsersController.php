@@ -14,6 +14,7 @@ use App\Models\Smiles;
 use App\Models\Videos;
 use App\Models\State;
 use App\Models\User;
+use App\Models\ServicesPrice;
 use App\Services\ZodiacSignService;
 use App\Services\ClientFinanceService;
 use Illuminate\Http\Request;
@@ -79,8 +80,10 @@ class UsersController extends Controller
         $videos = Videos::where('uid', '=', $id)->get();
         $can_open_albums = ClientFinanceService::isServiceActive($client_id, $id, Constants::EXP_ALBUM);
         $album_expire_date = ClientFinanceService::checkDateTimeExpired($client_id, $id, Constants::EXP_ALBUM);
+        $album_price = ServicesPrice::where('name', '=', Constants::EXP_ALBUM)->first()->price;
         $can_open_video = ClientFinanceService::isServiceActive($client_id, $id, Constants::EXP_GIRL_VIDEO);
         $video_expire_date = ClientFinanceService::checkDateTimeExpired($client_id, $id, Constants::EXP_GIRL_VIDEO);
+        $video_price = ServicesPrice::where('name', '=', Constants::EXP_GIRL_VIDEO)->first()->price;
 
         return view('client.profile.show')->with([
             'u' => $user,
@@ -90,8 +93,10 @@ class UsersController extends Controller
             'videos' => $videos,
             'can_open_albums' => $can_open_albums,
             'album_expire_date' => $album_expire_date,
+            'album_price' => $album_price,
             'can_open_video' => $can_open_video,
             'video_expire_date' => $video_expire_date,
+            'video_price' => $video_price,
             'sign'  => $this->zodiacSignService->getSignByBirthday($user->birthday),
         ]); 
     }

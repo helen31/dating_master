@@ -169,7 +169,7 @@ class MessagesController extends Controller
         $type = Constants::EXP_MESSAGE;
         $is_access = ClientFinanceService::spendLoveCoins($request->input('to_user'), $type);
 
-        if($is_access == true){
+        if($is_access === true){
             $message = new Messages();
             $message->from_user = $request->input('from_user');
             $message->to_user = $request->input('to_user');
@@ -182,7 +182,5 @@ class MessagesController extends Controller
             \Session::flash('alert-danger', trans('finance.no_money_no_honey'));
             return redirect('profile/'.$request->input('from_user').'/finance');
         }
-
-
     }
 }

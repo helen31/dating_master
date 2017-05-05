@@ -288,10 +288,13 @@
                 <div class="row gla-profile-block">
                     <div class="col-md-12">
                         <h2>{{ trans('albums.albums') }}</h2>
-                        @if($can_open_albums == true)
-                            <p class="bg-success">Вы можете просматривать альбомы девушки, так как оплатили эту услугу. Услуга будет активна до {{ $album_expire_date }}</p>
-                        @else
-                            <p class="bg-info">Просмотр альбомов - 1,5 Love Coins</p>
+
+                        @if(\Auth::user()->hasRole('Male'))
+                            @if($can_open_albums == true)
+                                <p class="bg-success">{{ trans('finance.you_can_view_albums') }} {{ $album_expire_date }}</p>
+                            @else
+                                <p class="bg-info">{{ trans('finance.view_albums') }} - {{ $album_price }} Love Coins</p>
+                            @endif
                         @endif
 
                         <div class="row">
@@ -312,10 +315,12 @@
                 <div class="row gla-profile-block">
                     <div class="col-md-12">
                         <h2>{{ trans('profile.video') }}</h2>
-                        @if($can_open_video == true)
-                            <p class="bg-success">Вы можете просматривать видео девушки, так как оплатили эту услугу. Услуга будет активна до {{ $video_expire_date }}</p>
-                        @else
-                            <p class="bg-info">Просмотр видео - 1,5 Love Coins</p>
+                        @if(\Auth::user()->hasRole('Male'))
+                            @if($can_open_video == true)
+                                <p class="bg-success">{{ trans('finance.you_can_view_video') }} {{ $video_expire_date }}</p>
+                            @else
+                                <p class="bg-info">{{ trans('finance.view_video') }} - {{ $video_price }} Love Coins</p>
+                            @endif
                         @endif
                         <div class="row">
                             @foreach($videos as $video)

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Gifts;
 use App\Models\Presents;
+use App\Services\ClientFinanceService;
 use Carbon\Carbon;
 
 class GiftsController extends Controller
@@ -98,17 +99,36 @@ class GiftsController extends Controller
      */
     public function order(Request $request, $id){
 
-        $gift = new Gifts();
-        $gift->from = $request->input('from');
-        $gift->to = $request->input('to');
-        $gift->present = $request->input('present');
-        $gift->status_id = 1;
-        $gift->status_message = null;
-        if($request->input('gift_message')){
-            $gift->gift_message = $request->input('gift_message');
-        }
-        $gift->save();
+        $type = 'gift';
+        $present_id = $request->input('present');
+        $is_access = ClientFinanceService::spendLoveCoins($request->input('to'), $type, $present_id);
 
-        return redirect('profile/'.$id.'/gifts');
+        if($is_access === true){
+            $gift = new Gifts();
+            $gift->from = $request->input('from');
+            $gift->to = $request->input('to');
+            $gift->present = $request->input('present');
+            $gift->status_id = 1;
+            $gift->status_message = null;
+            if($request->input('gift_message')){
+                $gift->gift_message = $request->input('gift_message');
+            }
+            $gift->save();
+
+            return redirect('profile/'.$id.'/gifts');
+        }else{
+            \Session::flash('alert-danger', trans('finance.no_money_no_honey'));
+            return redirect('profile/'.$request->input('from').'/finance');
+        }
+
+
+
+
+
+
+
+
+
+
     }
 }

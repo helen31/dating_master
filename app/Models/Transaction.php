@@ -10,11 +10,11 @@ class Transaction extends Model
 
     public function whoPay()
     {
-        return $this->belongsTo('App\Models\Users', 'user_id');
+        return $this->belongsTo('App\Models\User', 'user_id');
     }
 
     public function whomPay()
     {
-        return $this->belongsTo('App\Models\Users', 'girl_id');
+        return $this->belongsTo('App\Models\User', 'girl_id');
     }
 }
