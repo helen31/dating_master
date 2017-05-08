@@ -150,11 +150,16 @@ class MessagesController extends Controller
             $message->save();
         }
 
+        // Получаем стоимость услуги "Отправка сообщения" для отображения на кнопке "Отправить"
+        // Для мужчин услуга "Отправка сообщения" платная.
+        $message_price = ServicesPrice::where('name', '=', Constants::EXP_MESSAGE)->first()->price;
+
         return view('client.profile.mail_show')->with([
             'cor_id'  => $cor_id,
             'cor' => $cor,
             'user_id' => $user_id,
             'messages' => $messages,
+            'message_price' => $message_price,
             'is_favourites' => $is_favourites,
             'is_blacklist'  => $is_blacklist,
         ]);

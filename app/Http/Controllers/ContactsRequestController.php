@@ -34,6 +34,10 @@ class ContactsRequestController extends Controller
         $know_phone = ClientFinanceService::isServiceActive($user_id, $girl_id, $type_phone);
         $know_email = ClientFinanceService::isServiceActive($user_id, $girl_id, $type_email);
 
+        // Получаем стоимость услуг "Открыть фамилию + телефон" и "Открыть фамилию + e-mail"
+        $request_phone_price = ServicesPrice::where('name', '=', Constants::EXP_REQUEST_PHONE)->first()->price;
+        $request_email_price = ServicesPrice::where('name', '=', Constants::EXP_REQUEST_EMAIL)->first()->price;
+
         /* Получаем "открытые" данные девушки */
         $girl = User::select('users.*', 'profile.birthday')
             ->leftJoin('profile', 'profile.user_id', '=', 'users.id')
@@ -46,6 +50,8 @@ class ContactsRequestController extends Controller
             'girl' => $girl,
             'know_phone' => $know_phone,
             'know_email' => $know_email,
+            'request_phone_price' => $request_phone_price,
+            'request_email_price' => $request_email_price,
         ]);
     }
 

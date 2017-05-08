@@ -103,7 +103,11 @@
             <input name="to_user" type="hidden" value="{{ $cor_id }}">
             <input name="from_user" type="hidden" value="{{ $user_id }}">
             <div class="form-group">
-                {!! Form::submit(trans('mail.send_message'), ['class' => 'btn btn-success']) !!}
+                @if(\Auth::user()->hasRole('Male'))
+                    {!! Form::submit(trans('mail.send_message').' - '.$message_price.' Love Coins' , ['class' => 'btn btn-success']) !!}
+                @else
+                    {!! Form::submit(trans('mail.send_message'), ['class' => 'btn btn-success']) !!}
+                @endif
             </div>
         {!! Form::close() !!}
 

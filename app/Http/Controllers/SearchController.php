@@ -26,11 +26,18 @@ class SearchController extends Controller
         if(\Auth::user() && \Auth::user()->hasRole('Female')){
             $required_gender = 'male';
         }
+        $locale = \App::getLocale();
+        $order_by = 'name_en';
+        if($locale == 'ru') {
+            $order_by = 'name';
+        }
+
         return view('client.search')->with([
             'required_gender' => $required_gender,
             'selects'   => $this->getSelects(),
             'users'     => $this->getUsers($this->getRole()),
-            'countries' => Country::all(),
+            'countries' => Country::orderBy($order_by)->get(),
+            'locale'    => $locale,
         ]);
     }
 
@@ -42,13 +49,19 @@ class SearchController extends Controller
         if(\Auth::user() && \Auth::user()->hasRole('Female')){
             $required_gender = 'male';
         }
+        $locale = \App::getLocale();
+        $order_by = 'name_en';
+        if($locale == 'ru') {
+            $order_by = 'name';
+        }
 
         return view('client.search')->with([
             'users' => $users['find_users'],
             'required_gender' => $required_gender,
             'selects' => $this->getSelects(),
             'search_attrs' => $request,
-            'countries' => Country::all(),
+            'countries' => Country::orderBy($order_by)->get(),
+            'locale'    => $locale,
         ]);
     }
 
@@ -78,17 +91,13 @@ class SearchController extends Controller
                 if(isset($profile_attrs['religion']) && $profile_attrs['religion'][0]!='---'){  $query->whereIn('religion', $profile_attrs['religion']);}
                 if(isset($profile_attrs['smoke']) && $profile_attrs['smoke']!='---'){     $query->where('smoke', '=', $profile_attrs['smoke']);}
                 if(isset($profile_attrs['drink']) && $profile_attrs['drink']!='---'){     $query->where('drink', '=', $profile_attrs['drink']);}
+                if(isset($profile_attrs['country_id']) && $profile_attrs['country_id']!='---'){     $query->where('country_id', '=', $profile_attrs['country_id']);}
+                if(isset($profile_attrs['city_id']) && $profile_attrs['city_id']!='---'){     $query->where('city_id', '=', $profile_attrs['city_id']);}
             })
 
             ->where('role_id', '=', $profile_attrs['looking'])
             ->where('status_id', '=', '1')
             ->where('avatar','!=', $avatar)
-
-            ->where(function ($query) use ($profile_attrs){
-                if (isset($profile_attrs['country']) && $profile_attrs['country']!='false'){
-                    $query->where('country_id', '=', $profile_attrs['country']);
-                }
-            })
             ->join('profile', 'users.id', '=', 'profile.user_id')
             ->paginate(20);
         return [

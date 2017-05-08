@@ -34,7 +34,7 @@
             </div>
         @else
             <div class="grg-btn-girl-contacts">
-                <a class="btn btn-success" href="{{ url('profile/'.$id.'/contacts/'.$girl_id.'/request_email') }}" role="button">{{ trans('profile.request_surname_email') }} - 20 LC</a>
+                <a class="btn btn-success" href="{{ url('profile/'.$id.'/contacts/'.$girl_id.'/request_email') }}" role="button">{{ trans('profile.request_surname_email').' - '.$request_email_price.' Love Coins' }}</a>
             </div>
         @endif
 
@@ -47,7 +47,7 @@
             </div>
         @else
             <div class="grg-btn-girl-contacts">
-                <a class="btn btn-success" href="{{ url('profile/'.$id.'/contacts/'.$girl_id.'/request_phone') }}" role="button">{{ trans('profile.request_surname_phone') }} - 40 LC</a>
+                <a class="btn btn-success" href="{{ url('profile/'.$id.'/contacts/'.$girl_id.'/request_phone') }}" role="button">{{ trans('profile.request_surname_phone').' - '.$request_phone_price.' Love Coins' }}</a>
             </div>
         @endif
 

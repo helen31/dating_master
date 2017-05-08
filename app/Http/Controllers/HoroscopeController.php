@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\ServicesPrice;
 use App\Models\Horoscope;
 use App\Models\HoroscopeTranslate;
 use Illuminate\Http\Request;
@@ -33,6 +34,9 @@ class HoroscopeController extends Controller
             ->where('users.id', '=', $cor_id)
             ->first();
         $girl->sign = ZodiacSignService::getSignByBirthday($girl->birthday);
+
+        // Получаем стоимость услуги "Совместимость по гороскопу" для отображения на кнопке
+        $horoscope_price = ServicesPrice::where('name', '=', Constants::EXP_HOROSCOPE)->first()->price;
 
         $type = Constants::EXP_HOROSCOPE;
         $know_horoscope = ClientFinanceService::isServiceActive($id, $cor_id, $type);
@@ -68,6 +72,7 @@ class HoroscopeController extends Controller
             'man' => $man,
             'girl' => $girl,
             'compare' => $compare,
+            'horoscope_price' => $horoscope_price,
         ]);
     }
     public function check($id, $cor_id){
