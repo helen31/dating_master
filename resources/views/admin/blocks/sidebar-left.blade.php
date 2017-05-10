@@ -17,10 +17,20 @@
             @if( Auth::User()->hasRole('Owner') )
                 <li class="menu-list">
                     <a href="#"><i class="fa fa-money"></i>
-                        <span>Финансовые отчеты</span></a>
+                        <span>Отчеты по клиентам</span></a>
                     <ul class="child-list">
-                        <li><a href="{{ url(App::getLocale().'/admin/finance/#') }}">Lorem Ipsum</a></li>
-                        <li><a href="{{ url(App::getLocale().'/admin/finance/#') }}">Lorem Ipsum</a></li>
+                        <li><a href="{{ url(App::getLocale().'/admin/finance/clients/general-stat') }}">Общая статистика</a></li>
+                        <li><a href="{{ url(App::getLocale().'/admin/finance/clients/deposits') }}">Пополнения</a></li>
+                        <li><a href="{{ url(App::getLocale().'/admin/finance/clients/expenses') }}">Траты</a></li>
+                        <li><a href="{{ url(App::getLocale().'/admin/finance/clients/refunds') }}">Возвраты</a></li>
+                    </ul>
+                </li>
+                <li class="menu-list">
+                    <a href="#"><i class="fa fa-money"></i>
+                        <span>Отчеты по партнерам</span></a>
+                    <ul class="child-list">
+                        <li><a href="{{ url(App::getLocale().'/admin/finance/partners/general-stat') }}">Общая статистика</a></li>
+                        <li><a href="{{ url(App::getLocale().'/admin/finance/partners/fines') }}">Штрафы</a></li>
                     </ul>
                 </li>
                 <li class="menu-list">
@@ -42,7 +52,6 @@
                     <ul class="child-list">
                         <li><a href="{{ url(App::getLocale().'/admin/partners/') }}">Все партнеры</a></li>
                         <li><a href="{{ url(App::getLocale().'/admin/partner/new') }}">Добавить партнера</a></li>
-                        <li><a href="{{ url(App::getLocale().'/admin/partner/stat') }}">Статистика по партнерам</a></li>
                     </ul>
                 </li>
                 <li class="menu-list">
@@ -125,7 +134,7 @@
                     <li><a href="{{ url(App::getLocale().'/admin/pages/add') }}">Добавить страницу</a></li>
                 </ul>
             </li>
-            <li class=""><a href="{{ url(App::getLocale().'/admin/horoscope') }}"><i class="fa fa-codiepie"></i>
+            <li class=""><a href="{{ url(App::getLocale().'/admin/horoscope') }}"><i class="fa fa-star-half-empty"></i>
                     <span>Гороскопы</span></a>
             </li>
             @endif()
