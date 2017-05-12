@@ -27,6 +27,7 @@ return [
     'current_balance' => 'Your current balance',
     'deposit'         => 'Deposit funds',
     'deposit_funds'   => 'Deposit funds into an account',
+    'refund'          => 'Refund',
     'buy_love_coins'  => 'Buy Love Coins',
     'enter_amount'    => 'Enter amount',
     'your_transactions' => 'Your transactions',
@@ -39,8 +40,8 @@ return [
     'service_is_active' => 'Service is active',
     'service_is_active_until' => 'Service is active until',
 
-    'view_video' => 'View albums',
-    'view_albums'  => 'View video',
+    'view_video' => 'View video',
+    'view_albums'  => 'View albums',
     'you_can_view_video' => 'You can view the girls video, since you paid for this service. The service will be active until',
     'you_can_view_albums' => 'You can view the girls albums, since you paid for this service. The service will be active until',
 ];

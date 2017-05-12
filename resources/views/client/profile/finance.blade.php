@@ -62,10 +62,15 @@
                     </tr>
                     </thead>
                     @foreach($transactions as $trans)
-                        @if($trans->type == 'deposit')
+                        @if($trans->type == 'deposit' || $trans->type == 'refund')
                             <tr class="active">
                                 <td>{{ date('d-m-Y H:i', strtotime($trans->created_at)) }}</td>
-                                <td>{{ trans('finance.deposit') }}</td>
+                                <td>
+                                    {{ trans('finance.'.$trans->type) }}
+                                    @if ($trans->description !== null)
+                                        : {{ $trans->description }}
+                                    @endif
+                                </td>
                                 <td>{{ $trans->amount }}</td>
                             </tr>
                         @else

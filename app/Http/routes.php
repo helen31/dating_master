@@ -273,10 +273,17 @@ Route::group([  'prefix' => LaravelLocalization::setLocale().'/admin',
     /** Finance */
     Route::get('finance/prices', 'Admin\PriceController@getPrices');
     Route::get('finance/rates', 'Admin\PriceController@getRates');
-    Route::get('finance/clients/deposits', 'Admin\ClientFinanceController@getDeposits');
 
     Route::post('finance/prices', 'Admin\PriceController@setPrice');
     Route::post('finance/rates', 'Admin\PriceController@setRate');
+
+    Route::get('finance/clients/general-stat', 'Admin\ClientFinanceController@getGeneralStat');
+
+    Route::match(['get', 'post'], 'finance/clients/deposits', 'Admin\ClientFinanceController@getDeposits');
+    Route::match(['get', 'post'], 'finance/clients/expenses', 'Admin\ClientFinanceController@getExpenses');
+    Route::match(['get', 'post'], 'finance/clients/refunds', 'Admin\ClientFinanceController@getRefunds');
+    Route::match(['get', 'post'], 'finance/clients/detail-stat/{user_id}', 'Admin\ClientFinanceController@getDetailStat');
+
 
     /* End finance */
 

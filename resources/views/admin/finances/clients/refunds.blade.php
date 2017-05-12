@@ -30,12 +30,20 @@
                 <thead>
                     <th>Дата / время</th>
                     <th>Клиент</th>
+                    <th>Причина возврата</th>
                     <th>Сумма, LC</th>
                 </thead>
                 @foreach($transactions as $trans)
                     <tbody>
                         <td>{{ date('d-m-Y - H:i', strtotime($trans->created_at)) }}</td>
                         <td><a href="{{ url('profile/show/'.$trans->user_id) }}">ID#{{ $trans->user_id }}  {{ $trans->first_name.' '.$trans->last_name }}</a></td>
+                        <td>
+                            @if ($trans->description !== null)
+                                {{ $trans->description }}
+                            @else
+                                ---
+                            @endif
+                        </td>
                         <td>{{ $trans->amount }}</td>
                     </tbody>
                 @endforeach

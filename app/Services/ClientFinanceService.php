@@ -8,6 +8,9 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Transaction;
 use App\Models\Finance;
+use App\Models\PartnerFinance;
+use App\Models\PartnerTransaction;
+use App\Models\ExchangeRate;
 use App\Models\ServicesPrice;
 use App\Constants;
 use App\Http\Requests;
@@ -86,6 +89,9 @@ final class ClientFinanceService
                     $new_transaction->expire = $expire;
 
                     $new_transaction->save();
+
+                    //Проверяем наличие счета у партнера
+                    $partner_finance = PartnerFinance::where('partner_id', '=', $girl_data->partner_id)->first();
 
                     return true;
                 } else {

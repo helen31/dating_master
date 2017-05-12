@@ -284,7 +284,7 @@
                 </div>
             @endif
             <!--Albums-->
-            @if($u->gender = 'female' && count($albums) > 0)
+            @if($u->gender == 'female' && count($albums) > 0)
                 <div class="row gla-profile-block">
                     <div class="col-md-12">
                         <h2>{{ trans('albums.albums') }}</h2>

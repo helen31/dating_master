@@ -18,17 +18,19 @@ class Constants
     const EXP_REQUEST_PHONE = 'request_phone';
     const EXP_REQUEST_EMAIL = 'request_email';
     const EXP_HOROSCOPE = 'horoscope';
+    const EXP_GIFT = 'gift';
 
-    private static $EXP_TYPES = [
+    private static $expenses = [
         'message', 'chat', 'video',
-        'girl_video', 'request_phone', 'request_email', 'horoscope',
+        'girl_video', 'request_phone',
+        'request_email', 'horoscope', 'gift'
     ];
 
     /*
      * @return array
      */
-    public static function getExpTypes()
+    public static  function getExpTypes()
     {
-        return self::$EXP_TYPES;
+        return self::$expenses;
     }
 }
