@@ -3,7 +3,6 @@
 @section('styles')
     <link href="{{ url('/assets/css/bootstrap-reset.css') }}" rel="stylesheet">
     <link href="{{ url('/assets/css/fileinput.css') }}" rel="stylesheet">
-    <link href="{{ url('assets/css/datepicker.css') }}" rel="stylesheet">
 
     <style>
         .photo{

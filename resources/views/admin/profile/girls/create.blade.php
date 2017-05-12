@@ -3,7 +3,6 @@
 @section('styles')
     <!-- ink href="{{ url('/assets/css/bootstrap-reset.css') }}" rel="stylesheet" -->
     <link href="{{ url('/assets/css/fileinput.css') }}" rel="stylesheet">
-    <link href="{{ url('assets/css/datepicker.css') }}" rel="stylesheet">
 
     <style>
         .file-input.file-input-new,#status .file-input{
@@ -95,7 +94,7 @@
 
                                     <div class="form-group col-md-4">
                                         <label for="birthday">Дата рождения<span class="red">*</span></label>
-                                        {!! Form::date('birthday', '', ['class'=>'form-control']) !!}
+                                        {!! Form::text('birthday', '', ['class'=>'form-control', 'id'=>'datepicker-birthday2', 'placeholder'=>'yyyy-mm-dd']) !!}
                                     </div>
 
                                     <div class="info col-md-4">
@@ -334,7 +333,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="pass_date">Дата выдачи паспорта<span class="red">*</span></label>
-                                    {!! Form::date('pass_date', '', ['class'=>'form-control']) !!}
+                                    {!! Form::text('pass_date', '', ['class'=>'form-control', 'id'=>'datepicker-pass_date2', 'placeholder'=>'yyyy-mm-dd']) !!}
                                 </div>
                                 <div class="form-group">
                                     <label for="pass_photo">Фото/Скан паспорта<span class="red">*</span></label>
@@ -355,11 +354,9 @@
 @stop
 
 @section('scripts')
-    <script type="text/javascript" src="{{ url('/assets/js/jquery-ui_jquery-ui-1.10.1.custom.min.js') }}"></script>
+    <!--<script type="text/javascript" src="{{ url('/assets/js/jquery-ui_jquery-ui-1.10.1.custom.min.js') }}"></script>-->
 
     <!--bootstrap picker-->
-    <script type="text/javascript" src="{{ url('/assets/js/bootstrap-datepicker/js/bootstrap-datepicker.js') }}"></script>
-    <script type="text/javascript" src="{{ url('/assets/js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js') }}"></script>
 
     <script type="text/javascript" src="{{ url('/assets/js/bootstrap-fileinput-master/js/fileinput.js') }}"></script>
     <script type="text/javascript" src="{{ url('/assets/js/file-input-init.js') }}"></script>

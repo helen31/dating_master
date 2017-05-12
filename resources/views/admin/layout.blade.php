@@ -12,14 +12,17 @@
     <title>{{ trans('admin.dashboard') }}</title>
 
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">-->
 
-    <!--link rel="stylesheet" href="{{ url('/assets/css/bootstrap.min.css') }}" -->
+    <link rel="stylesheet" href="{{ url('/assets/js/bootstrap-3.3.7/bootstrap.min.css') }}"><!--gla new bootstrap 3.3.7-->
     <link rel="stylesheet" href="{{ url('/assets/css/font-awesome.css') }}">
 
     <link rel="stylesheet" href="{{ url('/assets/css/default-theme.css') }}">
-    <link rel="stylesheet" href="{{ url('/assets/css/style.css') }}">
+
+    <link rel="stylesheet" href="{{ url('/assets/css/style.css') }}"><!--style for this admin layout -->
+
+    <link rel="stylesheet" href="{{ url('/assets/js/jquery-ui-datepicker-1.12.1/jquery-ui.min.css') }}"><!--gla datapicler jquery-ui-->
 
     <style>
         .nav-divider{
@@ -107,15 +110,17 @@
     <!-- jQuery -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <!-- Latest compiled and minified JS -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <!-- Sidebar script -->
-    <script src="{{url('/assets/js/scripts.js')}}"></script>
-
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>-->
 
     <script src="{{ url('/assets/js/modernizr.min.js') }}"></script>
-    <!-- script src="{{ url('/assets/js/jquery.nicescroll.js') }}"></script -->
-    <!-- script src="{{url('/assets/js/scripts.js')}}"></script-->
+    <script src="{{ url('/assets/js/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ url('/assets/js/bootstrap-3.3.7/bootstrap.min.js') }}"></script><!--gla new bootstrap 3.3.7-->
 
+    <script src="{{ url('/assets/js/jquery-ui-datepicker-1.12.1/jquery-ui.min.js') }}"></script><!--gla datapicler jquery-ui-->
+    <script src="{{ url('/assets/js/myJquery-ui-datepicker-1.12.1.js') }}"></script><!--gla datapicler jquery-ui-->
+
+    <!-- Sidebar script -->
+    <script src="{{url('/assets/js/scripts.js')}}"></script>
     <script>
         $(document).ready(function(){
             

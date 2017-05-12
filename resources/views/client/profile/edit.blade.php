@@ -3,8 +3,7 @@
 @section('styles')
     <link href="{{ url('/assets/css/bootstrap-reset.css') }}" rel="stylesheet">
     <link href="{{ url('/assets/css/fileinput.css') }}" rel="stylesheet">
-    <link href="{{ url('assets/css/datepicker.css') }}" rel="stylesheet">
-
+    <!--<link rel="stylesheet" href="{{ url('/assets/js/jquery-ui-1.12.1/jquery-ui.min.css') }}">-->
 @stop
 
 @section('profileContent')
@@ -58,7 +57,7 @@
                             </div>
                             <div class="form-group">
                                 {!! Form::label('birthday', trans('profile.birthday')) !!}<span class="text-danger">*</span>
-                                {!! Form::date('birthday', $user->profile->birthday, ['class'=>'form-control', 'required'=>'required']) !!}
+                                {!! Form::text('birthday', $user->profile->birthday, ['class'=>'form-control', 'id'=>'datepicker-birthday1', 'placeholder'=>'yyyy-mm-dd', 'required'=>'required']) !!}
                             </div>
                             <div class="form-group">
                                 {!! Form::label('email',trans('profile.email')) !!}<span class="text-danger">*</span>
@@ -112,7 +111,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="pass_date">{{ trans('profile.pass_date') }}</label><span class="text-danger">*</span>
-                                    {!! Form::date('pass_date', !empty($passport->date) ? $passport->date : '', ['class'=>'form-control', 'required' => 'required']) !!}
+                                    {!! Form::text('pass_date', !empty($passport->date) ? $passport->date : '', ['class'=>'form-control', 'id'=>'datepicker-pass_date1', 'id'=>'datepicker-pass_date1', 'required' => 'required']) !!}
                                 </div>
                                 <div class="form-group">
                                     <label for="pass_photo">{{ trans('profile.pass_photo') }}</label><span class="text-danger">*</span>
@@ -286,8 +285,6 @@
 @stop
 
 @section('scripts')
-
-    <script src="{{ url('/assets/js/bootstrap-datepicker.js') }}"></script>
     <script type="text/javascript" src="{{ url('/assets/js/bootstrap-fileinput-master/js/fileinput.js') }}"></script>
     <script type="text/javascript" src="{{ url('/assets/js/file-input-init.js') }}"></script>
     <script>

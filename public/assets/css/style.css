@@ -81,7 +81,7 @@ Author: Mosaddek Hossain
 
 @import url('bootstrap.min.css');
 @import url('bootstrap-reset.css');
-@import url('jquery-ui-1.10.3.css');
+/**@import url('jquery-ui-1.10.3.css');**/
 @import url('font-awesome.css');
 @import url('simple-line-icons.css');
 @import url('icomoon-weather.css');
@@ -100,6 +100,13 @@ body {
     -moz-font-smoothing: antialiased;
 }
 
+/*---------------
+    datepicker-jquery-ui-1.12.1
+    gla
+---------------*/
+.ui-datepicker {
+    z-index: 3!important;
+}
 
 input,select,textarea {
     font-family: 'Source Sans Pro', sans-serif;
@@ -4171,14 +4178,14 @@ table.sliders tr td {
     top: -0.50em   !important;
 }
 
-.ui-state-default,
+/**.ui-state-default,
 .ui-widget-content .ui-state-default,
 .ui-widget-header .ui-state-default {
     background: #fff !important;
     border: 1px solid #d8dadf !important;
     border-radius: 50% !important;
     -webkit-border-radius: 50% !important;
-}
+}**/
 
 .ui-widget-content .ui-slider-handle:after{
     content: "\f111";
