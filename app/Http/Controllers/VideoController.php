@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants;
 use App\Models\User;
-use App\Models\VideoList;
 use App\Models\Videos;
-use Illuminate\Http\Request;
 
+use App\Services\ClientFinanceService;
+use Illuminate\Http\Request;
 use App\Http\Requests;
 
 class VideoController extends Controller
@@ -19,19 +20,22 @@ class VideoController extends Controller
     }
 
     /*
-     * Show choosen video
+     * Открывает выбранное видео
+     * Просмотр видео девушек для мужчин платный
      */
     public function show($id, $vid)
     {
-        $video = Videos::find($vid);
-        if(\Auth::user()->hasRole('Male')){
-            /* Проверка, оплатил ли мужчина просмотр видео в течении 24 часов, иначе с него снова снимается оплата */
-            /* Эта функция еще не написана, используйте модель Video List */
+        $type = Constants::EXP_GIRL_VIDEO;
+        $is_access = ClientFinanceService::spendLoveCoins($id, $type);
+        if($is_access == true){
+            $video = Videos::find($vid);
+            return view('client.profile.video_show')->with([
+                'video' => $video,
+            ]);
+        }else{
+            \Session::flash('alert-danger', trans('finance.no_money_no_honey'));
+            return redirect('profile/'.$id.'/finance');
         }
-
-        return view('client.profile.video_show')->with([
-            'video' => $video,
-        ]);
     }
     /*
      * Add video to database

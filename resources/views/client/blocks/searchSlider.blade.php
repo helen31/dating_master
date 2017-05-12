@@ -118,26 +118,42 @@
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group grg-search-input">
-                                    {!! Form::label('country', trans('profile.country')) !!}
-                                    <select name="country" class="form-control grg-long-select">
-                                        <option value="false"
-                                            {{ (isset($search_attrs['country']) && $search_attrs['country'] == false) ? 'selected' : ''}}
-                                        >---</option>
+                                    {!! Form::label('country_id', trans('profile.country')) !!}
+                                    <select name="country_id" class="form-control grg-long-select">
+                                        <option value="---">---</option>
                                         <option value="3159">{{ trans('users.Russia') }}</option>
                                         <option value="9908">{{ trans('users.Ukraine') }}</option>
-                                        <option value="false">---</option>
+                                        <option value="---">---</option>
                                         @foreach($countries as $country)
                                             <option value="{{ $country->id }}"
-                                                {{ (isset($search_attrs['country']) && $search_attrs['country'] == $country->id) ? 'selected' : ''}}
-                                            > {{ $country->name }}</option>
+                                                {{ (isset($search_attrs['country_id']) && $search_attrs['country_id'] == $country->id) ? 'selected' : ''}}>
+                                                @if($locale == 'ru')
+                                                    {{ $country->name }}
+                                                @else
+                                                    {{ $country->name_en }}
+                                                @endif
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group grg-search-input">
-                                    {!! Form::label('city', trans('profile.city')) !!}
-                                    {!! Form::text('city', '', ['class' => 'form-control']) !!}
+                                    {!! Form::label('city_id', trans('profile.city')) !!}
+                                    <select name="city_id" class="form-control grg-long-select">
+                                        <option value="---">---</option>
+                                        <option value="10252">{{ trans('search.Simferopol') }}</option>
+                                        <option value="10251">{{ trans('search.Sevastopol') }}</option>
+                                        <option value="10398">{{ trans('search.Odessa') }}</option>
+                                        <option value="10184">{{ trans('search.Kiev') }}</option>
+                                        <option value="10532">{{ trans('search.Kharkiv') }}</option>
+                                        <option value="10367">{{ trans('search.Mykolaiv') }}</option>
+                                        <option value="4962">{{ trans('search.Saint_Petersburg') }}</option>
+                                        <option value="4400">{{ trans('search.Moscow') }}</option>
+                                        <option value="4079">{{ trans('search.Krasnodar') }}</option>
+                                        <option value="10119">{{ trans('search.Zaporizhzhya') }}</option>
+                                        <option value="10337">{{ trans('search.Lviv') }}</option>
+                                    </select>
                                 </div>
                             </div>
                         </div><!-- .row -->

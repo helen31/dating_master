@@ -32,7 +32,7 @@
         </div>
     </div>
 @else
-    <a class="btn btn-success" href="{{ url('profile/'.$id.'/horoscope/'.$cor_id.'/check') }}" role="button">{{ trans('horoscope.check_comp') }} - 1 Love Coin</a>
+    <a class="btn btn-success" href="{{ url('profile/'.$id.'/horoscope/'.$cor_id.'/check') }}" role="button">{{ trans('horoscope.check_comp').' - '.$horoscope_price.' Love Coins' }}</a>
 @endif
 
 @stop

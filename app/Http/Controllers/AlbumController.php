@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Constants;
 use App\Models\Album;
 use App\Models\Images;
-use App\Services\ExpenseService;
+use App\Services\ClientFinanceService;
 use Carbon\Carbon;
 use Faker\Provider\Image;
 use Illuminate\Http\Request;
@@ -16,16 +16,13 @@ use Illuminate\Support\Facades\Validator;
 class AlbumController extends Controller
 {
     private $album;
-    private $expensesService;
 
     /**
      * AlbumController constructor.
-     * @param ExpenseService $expenseService ...
      */
-    public function __construct(Album $album, ExpenseService $expenseService)
+    public function __construct(Album $album)
     {
         $this->album = $album;
-        $this->expensesService = $expenseService;
     }
 
     /*
@@ -40,16 +37,25 @@ class AlbumController extends Controller
     }
     /*
      * Выводит фото альбома для тех кто просматривает его
+     * Для мужчин просмотр альбомов девушек платный
      */
     public function showAlbum($id, $aid)
     {
-        $photos = Images::where('album_id', '=', $aid)->get();
-        $album_Data = Album::where('id', '=' ,$aid)->get()[0];
-        return view('client.albums.showAlbum')->with([
-            'photos' => $photos,
-            'id'     => $id,
-            'album' => $album_Data,
-        ]);
+        $type = Constants::EXP_ALBUM;
+        $is_access = ClientFinanceService::spendLoveCoins($id, $type);
+        if($is_access == true){
+            $photos = Images::where('album_id', '=', $aid)->get();
+            $album_Data = Album::where('id', '=' ,$aid)->get()[0];
+            return view('client.albums.showAlbum')->with([
+                'photos' => $photos,
+                'id'     => $id,
+                'album' => $album_Data,
+            ]);
+        }else{
+            \Session::flash('alert-danger', trans('finance.no_money_no_honey'));
+            return redirect('profile/'.$id.'/finance');
+        }
+
     }
     /*
      * Выводит форму редактирования альбома

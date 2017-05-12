@@ -47,16 +47,6 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/get/cities/', 'CityController@getCityByState');
 
 });
-/**
- * Ajax Handlers
- * todo: change all data getters from _POST to _GET
- */
-Route::group([
-    'middleware' => ['web', 'auth', 'roles'],
-    'roles' => ['Male', 'Female'],
-], function(){
-    Route::post('expense', 'ExpenseController@handler');
-});
 
 
 Route::group([  'prefix'        => LaravelLocalization::setLocale(),
@@ -281,11 +271,20 @@ Route::group([  'prefix' => LaravelLocalization::setLocale().'/admin',
     /** End ticket System Routes */
 
     /** Finance */
-    Route::get('finance', 'Admin\FinanceController@index');
-    Route::get('finance/control', 'Admin\FinanceController@control');
-    Route::get('finance/stat', 'Admin\FinanceController@stat');
+    Route::get('finance/prices', 'Admin\PriceController@getPrices');
+    Route::get('finance/rates', 'Admin\PriceController@getRates');
 
-    Route::post('finance/{id}','Admin\FinanceController@saveData');
+    Route::post('finance/prices', 'Admin\PriceController@setPrice');
+    Route::post('finance/rates', 'Admin\PriceController@setRate');
+
+    Route::get('finance/clients/general-stat', 'Admin\ClientFinanceController@getGeneralStat');
+
+    Route::match(['get', 'post'], 'finance/clients/deposits', 'Admin\ClientFinanceController@getDeposits');
+    Route::match(['get', 'post'], 'finance/clients/expenses', 'Admin\ClientFinanceController@getExpenses');
+    Route::match(['get', 'post'], 'finance/clients/refunds', 'Admin\ClientFinanceController@getRefunds');
+    Route::match(['get', 'post'], 'finance/clients/detail-stat/{user_id}', 'Admin\ClientFinanceController@getDetailStat');
+
+
     /* End finance */
 
     /** Pages */
@@ -337,11 +336,6 @@ Route::group([ 'prefix' => LaravelLocalization::setLocale(),
 
     Route::get('profile/show/{id}', 'UsersController@show');
     Route::get('profile/{id}/show_album/{aid}', 'AlbumController@showAlbum'); // Edit album
-
-
-    /** Payments */
-    Route::get('pricing', 'PaymentsController@addBalance');
-    Route::get('payments/checkout', 'PaymentsController@checkOut'); //@todo payments gateway
 
     /** Pages */
     Route::get('{slug}', 'PagesController@show');

@@ -284,10 +284,19 @@
                 </div>
             @endif
             <!--Albums-->
-            @if($u->gender = 'female' && count($albums) > 0)
+            @if($u->gender == 'female' && count($albums) > 0)
                 <div class="row gla-profile-block">
                     <div class="col-md-12">
                         <h2>{{ trans('albums.albums') }}</h2>
+
+                        @if(\Auth::user()->hasRole('Male'))
+                            @if($can_open_albums == true)
+                                <p class="bg-success">{{ trans('finance.you_can_view_albums') }} {{ $album_expire_date }}</p>
+                            @else
+                                <p class="bg-info">{{ trans('finance.view_albums') }} - {{ $album_price }} Love Coins</p>
+                            @endif
+                        @endif
+
                         <div class="row">
                             @foreach($albums as $a)
                                 <div class="item col-md-6 col-sm-12">
@@ -306,6 +315,13 @@
                 <div class="row gla-profile-block">
                     <div class="col-md-12">
                         <h2>{{ trans('profile.video') }}</h2>
+                        @if(\Auth::user()->hasRole('Male'))
+                            @if($can_open_video == true)
+                                <p class="bg-success">{{ trans('finance.you_can_view_video') }} {{ $video_expire_date }}</p>
+                            @else
+                                <p class="bg-info">{{ trans('finance.view_video') }} - {{ $video_price }} Love Coins</p>
+                            @endif
+                        @endif
                         <div class="row">
                             @foreach($videos as $video)
                                 <div class="col-lg-4 col-md-6 col-sm-12">

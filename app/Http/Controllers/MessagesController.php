@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 
 use App\Constants;
-use App\Models\Expenses;
+use App\Models\Transaction;
 use App\Models\ServicesPrice;
 use App\Models\User;
-use App\Services\ExpenseService;
 use Illuminate\Http\Request;
 use App\Models\Messages;
 use App\Models\Lists;
@@ -24,14 +23,11 @@ class MessagesController extends Controller
     /**
      * @var
      */
-    private $expenseService;
     private $message;
 
-    public function __construct(ExpenseService $expenseService, Messages $message)
+    public function __construct(Messages $message)
     {
-        $this->expenseService = $expenseService;
         $this->message = $message;
-
         parent::__construct();
     }
 /*
@@ -154,11 +150,16 @@ class MessagesController extends Controller
             $message->save();
         }
 
+        // Получаем стоимость услуги "Отправка сообщения" для отображения на кнопке "Отправить"
+        // Для мужчин услуга "Отправка сообщения" платная.
+        $message_price = ServicesPrice::where('name', '=', Constants::EXP_MESSAGE)->first()->price;
+
         return view('client.profile.mail_show')->with([
             'cor_id'  => $cor_id,
             'cor' => $cor,
             'user_id' => $user_id,
             'messages' => $messages,
+            'message_price' => $message_price,
             'is_favourites' => $is_favourites,
             'is_blacklist'  => $is_blacklist,
         ]);
@@ -173,7 +174,7 @@ class MessagesController extends Controller
         $type = Constants::EXP_MESSAGE;
         $is_access = ClientFinanceService::spendLoveCoins($request->input('to_user'), $type);
 
-        if($is_access == true){
+        if($is_access === true){
             $message = new Messages();
             $message->from_user = $request->input('from_user');
             $message->to_user = $request->input('to_user');
@@ -186,7 +187,5 @@ class MessagesController extends Controller
             \Session::flash('alert-danger', trans('finance.no_money_no_honey'));
             return redirect('profile/'.$request->input('from_user').'/finance');
         }
-
-
     }
 }

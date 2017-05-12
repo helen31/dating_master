@@ -347,7 +347,10 @@
 
 
         $(function() {
-            $('.default-date-picker').datepicker();
+
+            $('.datepicker').datepicker({
+                format: 'dd/mm/yyyy'
+            });
 
             $('button.status').click(function(){
 

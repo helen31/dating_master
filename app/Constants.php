@@ -12,23 +12,25 @@ class Constants
     /* Paid Services */
     const EXP_MESSAGE = 'message';
     const EXP_CHAT = 'chat';
-    const EXP_VIDEO = 'video';
+    const EXP_VIDEO_CHAT = 'video';
     const EXP_ALBUM = 'photo_album';
-    const EXP_CALL = 'call';
+    const EXP_GIRL_VIDEO = 'girl_video';
     const EXP_REQUEST_PHONE = 'request_phone';
     const EXP_REQUEST_EMAIL = 'request_email';
     const EXP_HOROSCOPE = 'horoscope';
+    const EXP_GIFT = 'gift';
 
-    private static $EXP_TYPES = [
+    private static $expenses = [
         'message', 'chat', 'video',
-        'girl_video', 'call', 'request_phone', 'request_email', 'horoscope',
+        'girl_video', 'request_phone',
+        'request_email', 'horoscope', 'gift'
     ];
 
     /*
      * @return array
      */
-    public static function getExpTypes()
+    public static  function getExpTypes()
     {
-        return self::$EXP_TYPES;
+        return self::$expenses;
     }
 }

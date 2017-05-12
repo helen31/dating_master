@@ -23,7 +23,7 @@
                 <td> {{ $present->title }} </td>
                 <td> {{ $present->description }} </td>
                 <td> {{ $present->price }} LC</td>
-                <td> <a href="{{ url('profile/'.$id.'/presents/'.$girl->id.'/gift/'.$present->id) }}" class="btn btn-success btn-xs">
+                <td> <a href="{{ url(\App::getLocale().'/profile/'.$id.'/presents/'.$girl->id.'/gift/'.$present->id) }}" class="btn btn-success btn-xs">
                         <i class="fa fa-shopping-cart"></i>&nbsp;
                         {{ trans('profile.gifts_make_order') }}
                     </a>

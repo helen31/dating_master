@@ -2,17 +2,18 @@
 
 namespace App\Services;
 
+use App\Models\Presents;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-
 use App\Models\User;
-use App\Models\Expenses;
+use App\Models\Transaction;
 use App\Models\Finance;
+use App\Models\PartnerFinance;
+use App\Models\PartnerTransaction;
+use App\Models\ExchangeRate;
 use App\Models\ServicesPrice;
-
 use App\Constants;
 use App\Http\Requests;
-
 
 /*
  * Класс содержит служебные методы, которые относятся к транзакциям в виртуальной валюте Love Coins
@@ -26,11 +27,12 @@ final class ClientFinanceService
     /*
      * Алгоритм зачисления средств на баланс
      */
-    public static function putLoveCoins(){
+    public static function putLoveCoins()
+    {
         //
     }
     /*
-     * Алгоритм списания средств с баланса и создания записи о трате в таблице expenses
+     * Алгоритм списания средств с баланса и создания записи о трате в таблице transactions
      * Принимает:
      * $girl_id - ID девушки
      * $type = тип услуги (таблица services_price, поле name)
@@ -42,35 +44,31 @@ final class ClientFinanceService
      * - false - если у клиента-мужчины нет счета или недостаточно средств для оплаты услуги
      * (в этом случае необходимо вывести сообщение о необходимости оплаты счета)
      */
-    public static function spendLoveCoins($girl_id, $type){
-
+    public static function spendLoveCoins($girl_id, $type, $present_id = null)
+    {
         $user_id = \Auth::user()->id;
         $girl_data = User::find($girl_id);
 
         /* Проверяем доступна ли услуга без оплаты. За отправку сообщения ('messages') нужно платить каждый раз,
         другие услуги имеют срок действия или активны постоянно после разовой оплаты */
-        if($type == 'message'){
-            $active = false;
-        }else{
-            $active = ClientFinanceService::isServiceActive($user_id, $girl_id, $type);
-        }
+        $active = self::isServiceActive($user_id, $girl_id, $type);
 
         /* Получаем дату истечения срока действия услуги */
-        $expire = ClientFinanceService::getDateTimeExpired($type);
+        $expire = self::getDateTimeExpired($type);
 
         /* Получаем стоимость услуги */
-        $price = ClientFinanceService::getServicePrice($type);
+        $price = self::getServicePrice($type, $present_id);
 
         /* Получаем баланс пользователя */
-        $balance = ClientFinanceService::getUserBalance($user_id);
+        $balance = self::getUserBalance($user_id);
         // Если пользователь - мужчина, а пользователь, который предосталяет услугу - женщина
-        if(\Auth::user()->hasRole('Male') && $girl_data->role_id == 5){
+        if (\Auth::user()->hasRole('Male') && $girl_data->role_id == 5) {
             //Проверка, оплачена ли услуга
-            if($active == true){
+            if ($active == true) {
                 return true;
-            }else{
+            } else {
                 // Проверка, если ли на балансе нужная сумма
-                if($balance >= $price){
+                if ($balance >= $price) {
 
                     //Списываем средства
                     $new_balance = Finance::where('user_id', '=', $user_id)->first();
@@ -78,22 +76,29 @@ final class ClientFinanceService
                     $new_balance->save();
 
                     //Создаем запись о списании
-                    $new_expense = new Expenses();
-                    $new_expense->user_id = $user_id;
-                    $new_expense->girl_id = $girl_id;
-                    $new_expense->expense = $price;
-                    $new_expense->type = $type;
-                    $new_expense->partner_id = $girl_data->partner_id;
-                    $new_expense->expire = $expire;
+                    $new_transaction = new Transaction();
+                    $new_transaction->user_id = $user_id;
+                    $new_transaction->girl_id = $girl_id;
+                    $new_transaction->amount = $price;
+                    $new_transaction->type = $type;
+                    $new_transaction->description = null;
+                    if ($present_id !== null) {
+                        $new_transaction->description = self::getPresentName($present_id);
+                    }
+                    $new_transaction->partner_id = $girl_data->partner_id;
+                    $new_transaction->expire = $expire;
 
-                    $new_expense->save();
+                    $new_transaction->save();
+
+                    //Проверяем наличие счета у партнера
+                    $partner_finance = PartnerFinance::where('partner_id', '=', $girl_data->partner_id)->first();
 
                     return true;
-                }else{
+                } else {
                     return false;
                 }
             }
-        }else{
+        } else {
             return true;
         }
     }
@@ -104,22 +109,28 @@ final class ClientFinanceService
      * $girl_id = ID девушки
      * $type = тип услуги (таблица services_price, поле name)
      * Возвращает:
-     * true, если услуга активна, а также для услуг без срока действия
+     * true, если услуга активна, а также для оплаченных услуг без срока действия
      * false - если срок действия услуги истек или она еще не оплачивалась раньше
      */
-    public static function isServiceActive($user_id, $girl_id, $type){
+    public static function isServiceActive($user_id, $girl_id, $type)
+    {
 
         $active = false;//Услуга по умолчанию недоступна
-        /* Получаем запись из expenses с переданными данными */
-        $expense = Expenses::where('user_id', '=', $user_id)
-            ->where('girl_id', '=', $girl_id)
-            ->where('type', '=', $type)
-            ->first();
-        $now = Carbon::now()->toDateTimeString();
-        if(isset($expense)){ // Если запись о заказе услуги существует
-            if($expense->expire == null || // Если услуга не имеет срока действия
-                $expense->expire > $now){ // Или срок действия услуги еще не истек
-                $active = true;
+
+        //для части услуг $active всегда false
+        if (!in_array($type, ['message', 'gift', 'deposit'])) {
+            /* Получаем запись из transactions с переданными данными */
+            $paid_service = Transaction::where('user_id', '=', $user_id)
+                ->where('girl_id', '=', $girl_id)
+                ->where('type', '=', $type)
+                ->first();
+            $now = Carbon::now()->toDateTimeString();
+            if (isset($paid_service)) { // Если запись о заказе услуги существует
+                if ($paid_service->expire == null || // Если услуга не имеет срока действия
+                    $paid_service->expire > $now
+                ) { // Или срок действия услуги еще не истек
+                    $active = true;
+                }
             }
         }
         return $active;
@@ -129,9 +140,15 @@ final class ClientFinanceService
      * Принимает: тип услуги (таблица services_price, поле name)
      * Возвращает (double): стоимость услуги в Love Coins
      */
-    public static function getServicePrice($type){
-        $price = (double)ServicesPrice::where('name', '=', $type)
-            ->first()->price;
+    public static function getServicePrice($type, $present_id = null)
+    {
+        if($present_id === null) {
+            $price = (double)ServicesPrice::where('name', '=', $type)
+                ->first()->price;
+        } else {
+            $price = (double)Presents::where('id', '=', $present_id)
+                ->first()->price;
+        }
         return $price;
     }
     /*
@@ -141,11 +158,12 @@ final class ClientFinanceService
      * - сумму Love Coins на счету пользователя
      * - 0,00 если у пользователя нет счета
      */
-    public static function getUserBalance($user_id){
-        if(isset(Finance::where('user_id', '=', $user_id)->first()->id)){
+    public static function getUserBalance($user_id)
+    {
+        if (isset(Finance::where('user_id', '=', $user_id)->first()->id)) {
             $balance = (double)Finance::where('user_id', '=', $user_id)
                 ->first()->amount;
-        }else{
+        } else {
             $balance = (double)0;
         }
         return $balance;
@@ -157,26 +175,62 @@ final class ClientFinanceService
      * - рассчетную дату окончания действия услуги (string)
      * - null, если услуга бессрочная или ее срок действия рассчитывается другим методом
      */
-    public static function getDateTimeExpired($type){
-        $period_name = ServicesPrice::where('name', '=', $type)
-            ->first()->term;
+    public static function getDateTimeExpired($type)
+    {
+        $expire = null;
 
-        switch ($period_name) {
-            case 'day':
-                $expire = Carbon::now()->addDays(1)->toDateTimeString();
-                break;
-            case 'week':
-                $expire = Carbon::now()->addDays(7)->toDateTimeString();
-                break;
-            case 'month':
-                $expire = Carbon::now()->addDays(30)->toDateTimeString();
-                break;
-            default:
-                $expire = null;
+        if (!in_array($type, ['message', 'gift', 'deposit'])) {
+            $period_name = ServicesPrice::where('name', '=', $type)
+                ->first()->term;
+
+            switch ($period_name) {
+                case 'day':
+                    $expire = Carbon::now()->addDays(1)->toDateTimeString();
+                    break;
+                case 'week':
+                    $expire = Carbon::now()->addDays(7)->toDateTimeString();
+                    break;
+                case 'month':
+                    $expire = Carbon::now()->addDays(30)->toDateTimeString();
+                    break;
+                default:
+                    $expire = null;
+            }
         }
         return $expire;
     }
-
-
+    /*
+     * Получает дату истечения срока услуги из таблицы transactions
+     * Возвращает полученную дату или null, если нужной записи не существует
+     */
+    public static function checkDateTimeExpired($user_id, $girl_id, $type)
+    {
+        $expire_date = null;
+        $paid_service = Transaction::where('user_id', '=', $user_id)
+            ->where('girl_id', '=', $girl_id)
+            ->where('type', '=', $type)
+            ->first();
+        if(isset($paid_service)){
+            $expire_date = $paid_service->expire;
+        }
+        return $expire_date;
+    }
+    /*
+     * Возвращает имя подарка по id на языке выбранной локали.
+     * Или null, если подарок с данным ID не существует
+     */
+    public static function getPresentName($present_id)
+    {
+        $present_name = Presents::join('presents_translations', 'presents.id', '=', 'presents_translations.present_id')
+            ->select('presents_translations.title as title')
+            ->where('presents.deleted_at', '=', null)
+            ->where('presents.id', '=', $present_id)
+            ->where('presents_translations.locale', \App::getLocale())
+            ->first();
+        if($present_name !== null){
+            return $present_name->title;
+        }
+        return null;
+    }
 
 }
