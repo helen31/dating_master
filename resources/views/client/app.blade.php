@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title> </title>
-
     <link rel="stylesheet" href="{{ url('/assets/css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ url('/assets/js/jquery-ui-datepicker-1.12.1/jquery-ui.min.css') }}">
     <link rel="stylesheet" href="{{ url('/assets/css/app.css') }}">
     <link rel="stylesheet" href="{{ url('/assets/css/font-awesome.css') }}">
     <link rel="stylesheet" href="{{ url('/hamedmehryar/laravel-chat/src/chat-assets/smiley.css') }}">
@@ -260,9 +260,12 @@
     <!-- include script -->
     <script src="https://code.jquery.com/jquery-1.12.3.min.js"   integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ="   crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="{{ url('/assets/js/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ url('/assets/js/jquery-ui-datepicker-1.12.1/jquery-ui.min.js') }}"></script>
     <script src="{{ url('/assets/js/owl.carousel.min.js') }}"></script>
     <script src="{{ url('/assets/js/myOwlCarousel.js') }}"></script>
     <script src="{{ url('/assets/js/myJS.js') }}"></script>
+    <script src="{{ url('/assets/js/myJquery-ui-datepicker-1.12.1.js') }}"></script>
 
     <!-- .include.script -->
     @yield('scripts')

@@ -3,7 +3,6 @@
 @section('styles')
     <link href="{{ url('/assets/css/bootstrap-reset.css') }}" rel="stylesheet">
     <link href="{{ url('/assets/css/fileinput.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url('assets/css/datepicker.css') }}">
     <style>
         .file-input.file-input-new, #status .file-input, #video .file-input{
             position: relative !important;
@@ -144,7 +143,7 @@
 
                                     <div class="form-group col-md-4">
                                         <label for="birthday">Дата рождения<span class="red">*</span></label>
-                                        {!! Form::date('birthday', $user->profile->birthday, ['class'=>'form-control']) !!}
+                                        {!! Form::text('birthday', $user->profile->birthday, ['class'=>'form-control', 'id'=>'datepicker-birthday4', 'placeholder'=>'yyyy-mm-dd']) !!}
                                     </div>
 
                             <div class="info col-md-4">
@@ -558,8 +557,6 @@
 @stop
 
 @section('scripts')
-
-    <script src="{{ url('/assets/js/bootstrap-datepicker.js') }}"></script>
     <script type="text/javascript" src="{{ url('/assets/js/bootstrap-fileinput-master/js/fileinput.js') }}"></script>
     <script type="text/javascript" src="{{ url('/assets/js/file-input-init.js') }}"></script>
 

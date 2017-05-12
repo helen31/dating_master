@@ -3,7 +3,6 @@
 @section('styles')
     <link href="{{ url('/assets/css/bootstrap-reset.css') }}" rel="stylesheet">
     <link href="{{ url('/assets/css/fileinput.css') }}" rel="stylesheet">
-    <link href="{{ url('assets/css/datepicker.css') }}" rel="stylesheet">
 @stop
 
 @section('profileContent')
@@ -40,7 +39,6 @@
 @stop
 
 @section('scripts')
-    <script src="{{ url('/assets/js/bootstrap-datepicker.js') }}"></script>
     <script type="text/javascript" src="{{ url('/assets/js/bootstrap-fileinput-master/js/fileinput.js') }}"></script>
     <script type="text/javascript" src="{{ url('/assets/js/file-input-init.js') }}"></script>
 

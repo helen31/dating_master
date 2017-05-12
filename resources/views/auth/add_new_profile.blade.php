@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('styles')
-    <link href="{{ url('assets/css/datepicker.css') }}" rel="stylesheet">
+
 @stop
 
 @section('content')
