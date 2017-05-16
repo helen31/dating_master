@@ -13,6 +13,7 @@ return [
     'gifts'     => 'Gifts',
     'Myphotos'    => 'My photos',
     'gallery'   => 'Gallery',
+    'online'   => 'Online',
 
     /* -- Form Profile Labels -- */
 

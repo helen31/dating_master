@@ -1,5 +1,6 @@
 <div class="item">
     <div class="row text-center gla-itemPhoto" id="photo">
+        <span class="gla-item-vip">vip</span>
         @if($u->isOnline())
             <span class="gla-item-online">online</span>
         @endif

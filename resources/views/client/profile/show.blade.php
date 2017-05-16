@@ -291,9 +291,15 @@
 
                         @if(\Auth::user()->hasRole('Male'))
                             @if($can_open_albums == true)
-                                <p class="bg-success">{{ trans('finance.you_can_view_albums') }} {{ $album_expire_date }}</p>
+                                <div class="alert alert-success text-left">
+                                    {{ trans('finance.you_can_view_albums') }}
+                                    <strong>&nbsp;{{ $album_expire_date }}</strong>
+                                </div>
                             @else
-                                <p class="bg-info">{{ trans('finance.view_albums') }} - {{ $album_price }} Love Coins</p>
+                                <div class="alert alert-info text-left">
+                                    {{ trans('finance.view_albums') }} &ndash;
+                                    <strong>{{ $album_price }}</strong> Love Coins
+                                </div>
                             @endif
                         @endif
 
@@ -317,9 +323,17 @@
                         <h2>{{ trans('profile.video') }}</h2>
                         @if(\Auth::user()->hasRole('Male'))
                             @if($can_open_video == true)
-                                <p class="bg-success">{{ trans('finance.you_can_view_video') }} {{ $video_expire_date }}</p>
+                                <div class="alert alert-success text-left">
+                                    {{ trans('finance.you_can_view_video') }}
+                                    <strong>&nbsp;{{ $video_expire_date }}</strong>
+                                </div>
+
                             @else
-                                <p class="bg-info">{{ trans('finance.view_video') }} - {{ $video_price }} Love Coins</p>
+                                <div class="alert alert-info text-left">
+                                    {{ trans('finance.view_video') }}&ndash;
+                                    <strong>{{ $video_price }}</strong>
+                                    Love Coins
+                                </div>
                             @endif
                         @endif
                         <div class="row">
@@ -342,111 +356,8 @@
 
 @section('scripts')
     <script type="text/javascript" src="{{ url('/assets/js/modalShow.js') }}"></script>
+    <script type="text/javascript" src="{{ url('/assets/js/wink.js') }}"></script>
     <script>
         var modal1 = new ModalShow($('.js-gla-profile-photo-modal'));
-    </script>
-@stop
-@section('additional_scripts')
-    <script>
-        var $ = jQuery.noConflict();
-
-        $(document).ready(function(){
-            $('button[name="horoscope"]').click(function(){
-               //todo window with information about "money"
-
-                $.ajax({
-                    type: "POST",
-                    url: '{{ url('/horoscope') }}',
-                    data: {girl_id: parseInt($('#id').html()), _token: $('input[name="_token"]').val()},
-                    success: function( response ) {
-                        $('#serviceModal').modal();
-                        $('#serviceModal').find('.modal-body').append(
-                                "<div>" + response.text + "</div>"
-                        );
-                    },
-                    error: function( response ) {
-                        $('#serviceModal').modal();
-                    }
-                })
-            });
-
-            $('button[name="flp"]').click(function(){
-                //todo window with information about "money"
-
-                $.ajax({
-                    type: "POST",
-                    url: '{{ url('/flp') }}',
-                    data: {girl_id: parseInt($('#id').html()), _token: $('input[name="_token"]').val()},
-                    success: function( response ) {
-                        $('#serviceModal').modal();
-                        $('#serviceModal').find('.modal-body').append(
-                                "<div>" + response.first_name + "</div>" +
-                                "<div>" + response.last_name + "</div>" +
-                                "<div>" + response.phone + "</div>"
-                        );
-                    },
-                    error: function( response ) {
-                        $('#serviceModal').modal();
-                        $('#serviceModal').find('.modal-body').append(response);
-                    }
-                })
-            });
-
-            $('button[name="fle"]').click(function(){
-                //todo window with information about "money"
-
-                $.ajax({
-                    type: "POST",
-                    url: '{{ url('/fle') }}',
-                    data: {girl_id: parseInt($('#id').html()), _token: $('input[name="_token"]').val()},
-                    success: function( response ) {
-                        $('#serviceModal').modal();
-                        $('#serviceModal').find('.modal-body').append(
-                            "<div>" + response.first_name + "</div>" +
-                            "<div>" + response.last_name + "</div>" +
-                            "<div>" + response.email + "</div>"
-                        );
-                    },
-                    error: function( response ) {
-                        $('#serviceModal').modal();
-                        $('#serviceModal').find('.modal-body').append( response );
-                    }
-                })
-            });
-        
-        //Smile 
-             $('#smile').click(function(e){
-                 e.preventDefault();
-                //todo window with information about "money"
-
-                $.ajax({
-                    type: "POST",
-                    url: '{{ url('/wink') }}',
-                    data: 'id='+{{$u->uid}}+'&_token={{ csrf_token() }}',
-                    success: function( response ) {
-                        console.log(response);
-                    },
-                    error: function( response ) {
-                        console.log('error');
-                    }
-                })
-            });
-        });
-        /**
-         * todo: funciton for appending data to modal
-         */
-    </script>
-
-    <!--You have winked-->
-    <script>
-        $('#smile').on('click', function (event) {
-            event.preventDefault();
-
-            $(event.target).parent('.grg-tada_link').find('.smilePopupWindow').show(600, function (event) {
-                var currentElem = $(this);
-
-                setTimeout( function(){ currentElem.hide(); }, 800);
-            });
-        })
     </script>
 @stop
