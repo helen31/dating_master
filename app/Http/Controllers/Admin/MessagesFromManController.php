@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Messages;
+use App\Services\PartnerFinanceService;
 use App\Models\Lists;
 use DB;
 
@@ -120,6 +121,10 @@ class MessagesFromManController extends Controller
         foreach($unread_messages as $message){
             $message->status = 1; // Статус - прочитанное
             $message->save();
+            // Если на письмо отвечает партнер, перечисляется комиссия партнеру за ответ на сообщение мужчины
+            if(\Auth::user()->hasRole('Partner')){
+                PartnerFinanceService::chargePartnersComission($request->input('to_user'), $request->input('from_user'), 'message');
+            }
         }
 
         //Сохраняем новое сообщение в базе

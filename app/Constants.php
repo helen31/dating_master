@@ -20,11 +20,22 @@ class Constants
     const EXP_HOROSCOPE = 'horoscope';
     const EXP_GIFT = 'gift';
 
+    /* Список всех платных услуг */
     private static $expenses = [
-        'message', 'chat', 'video',
+        'message', 'chat', 'video', 'photo_album',
         'girl_video', 'request_phone',
         'request_email', 'horoscope', 'gift'
     ];
+    /*
+    * Список услуг, начисление комиссии партнерам за которые происходит сразу, после оплаты
+    * (например начисление комиссии за подарок происходит после подтверждения доставки подарка,
+    * а начисление комиссии за сообщение - после ответа партнера на него)
+    */
+    private static $expenses_instant_charge = [
+        'photo_album', 'girl_video', 'request_phone',
+        'request_email', 'horoscope'
+    ];
+
 
     /*
      * @return array
@@ -33,4 +44,10 @@ class Constants
     {
         return self::$expenses;
     }
+
+    public static  function getExpInstantChargeTypes()
+    {
+        return self::$expenses_instant_charge;
+    }
+
 }

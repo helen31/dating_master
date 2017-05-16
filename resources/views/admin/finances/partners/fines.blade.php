@@ -2,8 +2,9 @@
 
 @section('content')
     <section class="panel">
+
         <div class="panel-body">
-            <h4 class="text-left">Сумма за период: <strong>{{ number_format($amount, 2) }}</strong> Love Coins</h4>
+            <h4 class="text-left">Сумма за период: <strong>{{ number_format($amount, 2) }}</strong> USD</h4>
             <ul class="list-group">
                 <li class="list-group-item list-group-item-info">
                     *Данные за последние 24 часа могут быть неполными из-за разности во времени.
@@ -27,15 +28,23 @@
 
             <table class="table">
                 <thead>
-                    <th>Дата / время</th>
-                    <th>Клиент</th>
-                    <th>Сумма, LC</th>
+                <th>Дата / время</th>
+                <th>Партнер</th>
+                <th>Причина штрафа</th>
+                <th>Сумма, USD</th>
                 </thead>
                 @foreach($transactions as $trans)
                     <tbody>
-                        <td>{{ date('d-m-Y - H:i', strtotime($trans->created_at)) }}</td>
-                        <td><a href="{{ url('profile/show/'.$trans->user_id) }}">ID#{{ $trans->user_id }}  {{ $trans->first_name.' '.$trans->last_name }}</a></td>
-                        <td>{{ $trans->amount }}</td>
+                    <td>{{ date('d-m-Y - H:i', strtotime($trans->created_at)) }}</td>
+                    <td><a href="#">ID#{{ $trans->user_id }}  {{ $trans->first_name.' '.$trans->last_name }}</a></td>
+                    <td>
+                        @if ($trans->description !== null)
+                            {{ $trans->description }}
+                        @else
+                            ---
+                        @endif
+                    </td>
+                    <td>{{ $trans->amount }}</td>
                     </tbody>
                 @endforeach
             </table>

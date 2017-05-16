@@ -13,6 +13,9 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
 
+use App\Models\PartnerFinance;
+use App\Models\PartnerTransaction;
+
 class ClientFinanceController extends Controller
 {
     /* Класс для вывода отчетов по клиентах в Love Coins */
@@ -155,34 +158,4 @@ class ClientFinanceController extends Controller
             'end_date' => $end_date,
         ]);
     }
-    /* Возвращает из запроса начальную дату или устанавливает ее по умолчанию */
-    public function getStartDate($request)
-    {
-        if ($request->has('start_date')) {
-            $start_date = $request['start_date'];
-        } else {
-            $start_date = Carbon::now()->subDay(30)->toDateString();
-        }
-        return $start_date;
-    }
-    /* Возвращает из запроса конечную дату или устанавливает ее по умолчанию */
-    public function getEndDate($request)
-    {
-        if ($request->has('end_date')) {
-            $end_date = $request['end_date'];
-        } else {
-            $end_date = Carbon::now()->addDays(2)->toDateString();
-        }
-        return $end_date;
-    }
-    /* Получает общую сумму по выбранным транзкациям */
-    public function getTransactionsAmount($transactions)
-    {
-        $amount = 0.00;
-        foreach ($transactions as $trans) {
-            $amount = $amount + (double)$trans->amount;
-        }
-        return $amount;
-    }
-
 }

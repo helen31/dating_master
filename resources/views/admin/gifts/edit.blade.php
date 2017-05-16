@@ -1,3 +1,4 @@
+
 @extends('admin.layout')
 
 @section('styles')
@@ -39,42 +40,42 @@
                     <p>Статус доставки: <span class="bg-danger">&nbsp;{{ trans('admin/sidebar-left.gift_status_'.$gift->status_id) }}&nbsp;</span></p>
                     <p>Сообщение мужчины: {{ $gift->gift_message }}</p>
                 </div>
-                <div class="col-md-12">
-
-                    @if( Auth::user()->hasRole('Owner') || Auth::user()->hasRole('Moder'))
-                        <div class="form-group">
-                            {!! Form::label('status_id', 'Статус доставки') !!}
-
-                            <select name="status_id" class="form-control">
-                                @foreach($statuses as $status)
-                                    <option value="{{ $status->id }}" {{ $status->id == $gift->status_id ? "selected" : ''}}>{{ trans('admin/sidebar-left.gift_'.$status->name) }}</option>
-                                @endforeach
-                            </select>
-
-                        </div>
-                        <div class="form-group">
-                            <label for="status_message">Причина отклонения (если есть):</label>
-                            <textarea name="status_message" class="form-control">{{ $gift->status_message }}</textarea>
-                        </div>
-                    @else
-                        <h3 class="text-center">Информация о доставке</h3>
-                        <p class="text-center"><strong>Статус доставки:</strong> <span class="bg-danger">&nbsp;{{ trans('admin/sidebar-left.gift_status_'.$gift->status_id) }}&nbsp;</span></p>
-                        @if($gift->status_id == 3)
-                            <p class="text-center"><strong>Причина отклонения:</strong> {{ ($gift->status_message) ? $gift->status_message : 'не указана' }}</p>
-                        @endif
-                    @endif
-
-                    <div class="form-group text-center">
+                @if ($gift->status_id != 4)
+                    <div class="col-md-12">
                         @if( Auth::user()->hasRole('Owner') || Auth::user()->hasRole('Moder'))
-                            {!! Form::submit('Сохранить', ['class' => 'btn btn-success']) !!}
-                        @else
-                            <br>
-                            {!! Form::submit('Отправить на рассмотрение', ['class' => 'btn btn-success']) !!}
-                        @endif
-                    </div>
+                            <div class="form-group">
+                                {!! Form::label('status_id', 'Статус доставки') !!}
 
-                    {!! Form::close() !!}
-                </div>
+                                <select name="status_id" class="form-control">
+                                    @foreach($statuses as $status)
+                                        <option value="{{ $status->id }}" {{ $status->id == $gift->status_id ? "selected" : ''}}>{{ trans('admin/sidebar-left.gift_'.$status->name) }}</option>
+                                    @endforeach
+                                </select>
+
+                            </div>
+                            <div class="form-group">
+                                <label for="status_message">Причина отклонения (если есть):</label>
+                                <textarea name="status_message" class="form-control">{{ $gift->status_message }}</textarea>
+                            </div>
+                        @else
+                            <h3 class="text-center">Информация о доставке</h3>
+                            <p class="text-center"><strong>Статус доставки:</strong> <span class="bg-danger">&nbsp;{{ trans('admin/sidebar-left.gift_status_'.$gift->status_id) }}&nbsp;</span></p>
+                            @if($gift->status_id == 3)
+                                <p class="text-center"><strong>Причина отклонения:</strong> {{ ($gift->status_message) ? $gift->status_message : 'не указана' }}</p>
+                            @endif
+                        @endif
+
+                        <div class="form-group text-center">
+                            @if( Auth::user()->hasRole('Owner') || Auth::user()->hasRole('Moder'))
+                                {!! Form::submit('Сохранить', ['class' => 'btn btn-success']) !!}
+                            @else
+                                <br>
+                                {!! Form::submit('Отправить на рассмотрение', ['class' => 'btn btn-success']) !!}
+                            @endif
+                        </div>
+                        {!! Form::close() !!}
+                    </div>
+                @endif
             </div>
     </section>
 
