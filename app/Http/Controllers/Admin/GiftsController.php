@@ -7,6 +7,7 @@ use App\Models\Gifts;
 use App\Models\GiftStatus;
 use App\Models\Presents;
 use App\Models\PresentsTranslation;
+use App\Services\PartnerFinanceService;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -96,10 +97,10 @@ class GiftsController extends Controller
         if(Auth::user()->hasRole('Owner') || Auth::user()->hasRole('Moder')){
             $gift->status_id = $request->input('status_id'); // Статус доставки тот, который присвоен администратором
             $gift->status_message = NULL; // Сообщение касается только отклоненных заказов, поэтому оно обнуляется, если статус - не отклонен
-            if($request->input('status_id') == 3){
+            if ($request->input('status_id') == 3) {
                 $gift->status_message = $request->input('status_message');
             }
-        }else{
+        } else {
             $gift->status_id = 2; // Статус доставки после сохранинея партнером - на рассмотрении
         }
 
@@ -107,6 +108,10 @@ class GiftsController extends Controller
 
         \Session::flash('flash_success', 'Информация успешно обновлена');
 
+        if ($request->input('status_id') == 4) {
+            PartnerFinanceService::chargePartnersComission($gift->from, $gift->to, 'gift', $gift->present);
+            \Session::flash('flash_success', 'Информация успешно обновлена, начислена комиссия партнеру');
+        }
         return redirect()->back();
     }
 

@@ -258,7 +258,7 @@
         </div>
     </div>
     <!-- include script -->
-    <script src="https://code.jquery.com/jquery-1.12.3.min.js"   integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ="   crossorigin="anonymous"></script>-->
+    <script src="https://code.jquery.com/jquery-1.12.3.min.js"   integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ="   crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="{{ url('/assets/js/jquery-ui-datepicker-1.12.1/jquery-ui.min.js') }}"></script>
     <script src="{{ url('/assets/js/owl.carousel.min.js') }}"></script>

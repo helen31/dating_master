@@ -8,9 +8,7 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Transaction;
 use App\Models\Finance;
-use App\Models\PartnerFinance;
-use App\Models\PartnerTransaction;
-use App\Models\ExchangeRate;
+use App\Services\PartnerFinanceService;
 use App\Models\ServicesPrice;
 use App\Constants;
 use App\Http\Requests;
@@ -70,7 +68,7 @@ final class ClientFinanceService
                 // Проверка, если ли на балансе нужная сумма
                 if ($balance >= $price) {
 
-                    //Списываем средства
+                    //Списываем средства со счета клиента
                     $new_balance = Finance::where('user_id', '=', $user_id)->first();
                     $new_balance->amount = $balance - $price;
                     $new_balance->save();
@@ -90,9 +88,11 @@ final class ClientFinanceService
 
                     $new_transaction->save();
 
-                    //Проверяем наличие счета у партнера
-                    $partner_finance = PartnerFinance::where('partner_id', '=', $girl_data->partner_id)->first();
-
+                    /* Если тип транзакции относится к тем, за которые сразу перечисляется комиссия
+                    партнеру, начисляем эту комиссию */
+                    if (in_array($type, Constants::getExpInstantChargeTypes())) {
+                       PartnerFinanceService::chargePartnersComission($user_id, $girl_id, $type);
+                    }
                     return true;
                 } else {
                     return false;

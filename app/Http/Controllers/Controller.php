@@ -9,6 +9,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class Controller extends BaseController
 {
@@ -143,20 +144,6 @@ class Controller extends BaseController
         }
     }
 
-    /**
-     * Get users money
-     *
-     * @return mixed || bool
-     */
-    public function getMoney()
-    {
-        if(\Auth::user() && \Auth::user()->hasRole('male')){
-            $user = \App\Models\Finance::where('user_id', '=', \Auth::user()->id)->first();
-            return isset($user->amount) ?: false;
-        } else
-            return;
-    }
-
 
     /** Users */
     //todo: move function to User model
@@ -180,9 +167,6 @@ class Controller extends BaseController
         else
             return 5;
     }
-
-   
-
     /**
      * Transliteration
      *
@@ -218,5 +202,37 @@ class Controller extends BaseController
         ];
 
         return strtr($string, $converter);
+    }
+    /*
+     * Методы для финансовых отчетов в админке
+     */
+    /* Возвращает из запроса начальную дату или устанавливает ее по умолчанию */
+    public function getStartDate($request)
+    {
+        if ($request->has('start_date')) {
+            $start_date = $request['start_date'];
+        } else {
+            $start_date = Carbon::now()->subDay(30)->toDateString();
+        }
+        return $start_date;
+    }
+    /* Возвращает из запроса конечную дату или устанавливает ее по умолчанию */
+    public function getEndDate($request)
+    {
+        if ($request->has('end_date')) {
+            $end_date = $request['end_date'];
+        } else {
+            $end_date = Carbon::now()->addDays(2)->toDateString();
+        }
+        return $end_date;
+    }
+    /* Получает общую сумму по выбранным транзкациям */
+    public function getTransactionsAmount($transactions)
+    {
+        $amount = 0.00;
+        foreach ($transactions as $trans) {
+            $amount = $amount + (double)$trans->amount;
+        }
+        return $amount;
     }
 }
