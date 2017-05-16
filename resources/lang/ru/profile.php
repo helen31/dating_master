@@ -13,6 +13,7 @@ return [
     'gifts'     => 'Подарки',
     'Myphotos'    => 'Мои фото',
     'gallery'   => 'Галерея',
+    'online'   => 'Онлайн',
 
     /* -- Form Profile Labels -- */
 

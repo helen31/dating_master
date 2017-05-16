@@ -28,7 +28,3 @@
         }
     </style>
 @stop
-
-@section('scripts')
-    @yield('additional_scripts')
-@stop

@@ -2,7 +2,7 @@
 
 @section('profileContent')
 
-    <h2>{{ trans('profile.gifts') }}</h2>
+    <h2 class="gla-title-color">{{ trans('profile.gifts') }}</h2>
 
     <table class="table table-hover">
         <tr>

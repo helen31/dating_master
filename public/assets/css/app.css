@@ -58,7 +58,6 @@ header nav{
 .form-header{
     margin: 5px;
 }
-/** Girls Carousel */
 
 /* .item{
     min-height: 390px;
@@ -66,7 +65,7 @@ header nav{
     max-height: 390px;
 }
 */
-
+/** Girls Carousel */
 .owl {
     margin-bottom: 15px;
 }
@@ -95,6 +94,7 @@ footer .fa{
 .header-bg {
     background: url('/public/uploads/main_img.jpeg');
     background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .content-bg{

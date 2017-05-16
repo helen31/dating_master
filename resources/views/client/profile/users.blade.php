@@ -3,7 +3,7 @@
 @section('profileContent')
     <div class="row">
         <header class="text-center">
-            <h2>{{ trans('profile.online') }}</h2>
+            <h2 class="gla-title-color">{{ trans('profile.online') }}</h2>
         </header>
         @foreach($users as $u)
             @if($u->isOnline())

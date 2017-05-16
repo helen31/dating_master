@@ -15,7 +15,7 @@
 @section('profileContent')
 
     <div class="row grg-mail-padding">
-        <h2 class="text-center">{{ trans('mail.mail') }}</h2>
+        <h2 class="text-center gla-title-color">{{ trans('mail.mail') }}</h2>
 
         <!-- Nav tabs -->
 
