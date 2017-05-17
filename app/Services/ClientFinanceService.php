@@ -232,5 +232,30 @@ final class ClientFinanceService
         }
         return null;
     }
+    /* Начисляет штраф или возврад средств клиенту, которые создаются вручную из админки,
+    *  создает запись о транзвакции, обновляет баланс клиента */
+    public static function saveClientFinancesChange($user_id, $type, $sign, $amount, $description)
+    {
+        /* Обновляем баланс на счету партнера */
+        $finances = Finance::where('user_id', '=', $user_id)->first();
+
+        /* $sign определяет, приводит ли транзакция к увеличению баланса или уменьшению */
+        if ($sign === '+') {
+            $finances->amount = (double)$finances->amount + $amount;
+        } elseif ($sign === '-') {
+            $finances->amount = (double)$finances->amount - $amount;
+        } else {
+            \Session::flash('flash_error', 'Ошибка: отсуствует параметр - знак транзакции. Не удалось обновить баланс');
+        }
+        $finances->save();
+
+        /* Создаем запись о транзакции */
+        $new_trans = new Transaction();
+        $new_trans->user_id = $user_id;
+        $new_trans->amount = $amount;
+        $new_trans->type = $type;
+        $new_trans->description = $description;
+        $new_trans->save();
+    }
 
 }

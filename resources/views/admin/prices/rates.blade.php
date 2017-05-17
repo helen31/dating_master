@@ -4,7 +4,9 @@
 
     <section class="panel">
         <header class="panel-heading">Редактировать обменные курсы и комиссию партнерам</header>
-        <p class="text-center bg-info">*Целая и дробная часть числа должны разделятся точкой (пример: 3.50), иначе данные не сохранятся</p>
+        <li class="list-group-item list-group-item-info text-center">
+            *Целая и дробная часть числа должны разделятся точкой (пример: 3.50), иначе данные не сохранятся
+        </li>
         <div class="panel-body">
             @if (count($errors) > 0)
                 <div class="alert alert-danger">

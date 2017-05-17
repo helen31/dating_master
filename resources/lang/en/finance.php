@@ -14,6 +14,15 @@ return [
     'girl_blog'     => 'Writing girl',
     'gift'          => 'Gift',
 
+    /* Partner finances*/
+    'payment' => 'Payment',
+    'fine'    => 'Fine',
+
+    /* Client finances*/
+    'debit' => 'Debit',
+    'refund' => 'Refund',
+
+    /* Periods */
     'once'          => 'once',
     'minute'        => 'minute',
     'day'           => 'day',

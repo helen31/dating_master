@@ -283,6 +283,11 @@ Route::group([  'prefix' => LaravelLocalization::setLocale().'/admin',
     Route::match(['get', 'post'], 'finance/clients/refunds', 'Admin\ClientFinanceController@getRefunds');
     Route::match(['get', 'post'], 'finance/clients/detail-stat/{user_id}', 'Admin\ClientFinanceController@getDetailStat');
 
+    Route::get('finance/clients/debit/{user_id}', 'Admin\ClientFinanceController@getDebitForm');
+    Route::get('finance/clients/refund/{user_id}', 'Admin\ClientFinanceController@getRefundForm');
+    Route::post('finance/clients/debit/{user_id}', 'Admin\ClientFinanceController@saveDebit');
+    Route::post('finance/clients/refund/{user_id}', 'Admin\ClientFinanceController@saveRefund');
+
     Route::get('finance/partners/general-stat', 'Admin\PartnerFinanceController@getGeneralStat');
     Route::match(['get', 'post'], 'finance/partners/detail-stat/{partner_id}', 'Admin\PartnerFinanceController@getDetailStat');
     Route::match(['get', 'post'], 'finance/partners/fines', 'Admin\PartnerFinanceController@getFines');
@@ -291,7 +296,6 @@ Route::group([  'prefix' => LaravelLocalization::setLocale().'/admin',
     Route::get('finance/partners/fine/{partner_id}', 'Admin\PartnerFinanceController@getPartnerFineForm');
     Route::post('finance/partners/payment/{partner_id}', 'Admin\PartnerFinanceController@savePartnerPayment');
     Route::post('finance/partners/fine/{partner_id}', 'Admin\PartnerFinanceController@savePartnerFine');
-
 
     /* End finance */
 
