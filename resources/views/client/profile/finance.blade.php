@@ -62,7 +62,7 @@
                     </tr>
                     </thead>
                     @foreach($transactions as $trans)
-                        @if($trans->type == 'deposit' || $trans->type == 'refund')
+                        @if(in_array($trans->type, ['deposit', 'refund', 'debit']))
                             <tr class="active">
                                 <td>{{ date('d-m-Y H:i', strtotime($trans->created_at)) }}</td>
                                 <td>

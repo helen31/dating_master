@@ -136,7 +136,6 @@ class User extends Authenticatable
         } else {
             return $this->checkIfUserHasRole($roles);
         }
-
         return false;
     }
 

@@ -31,6 +31,7 @@ class PartnerFinanceController extends Controller
     {
         $partner_finances = PartnerFinance::leftJoin('users', 'users.id' ,'=', 'partner_finances.partner_id')
             ->where('partner_finances.partner_id', '!=', 1) // этот человек - Admin
+            ->where('users.deleted_at', '=', null) // статистику по удаленным партнерам не показываем
             ->orderBy('partner_finances.amount', 'DESC')
             ->select('partner_finances.*', 'users.first_name', 'users.last_name')
             ->get();
