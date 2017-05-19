@@ -48,9 +48,9 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="image">{{ trans('blog.image') }}</label>
-                    <img src="{{ url('/uploads/blog/images/'.$post->cover_image) }}" id="preview" width="100%">
+                    <img src="{{ url('/uploads/blog/'.$post->cover_image) }}" id="preview" width="100%">
                     <input id="file-0" class="file" type="file" multiple=false value="{{ $post->cover_image }}">
-                    <input type="hidden" name="id" value="{!! $post->id; !!}">
+                    <input type="hidden" name="id" value="{!! $post->id !!}">
                 </div>
                 <div class="form-group text-center">
                     {{ Form::submit(trans('blog.submit'), ['class' => 'btn btn-success']) }}
@@ -125,7 +125,7 @@
                         $(this).parent().remove();
                     },
                     error: function(response){
-                        alert("Ошибка удаления фала");
+                        alert("Ошибка удаления файла");
                     }
                 });
             });

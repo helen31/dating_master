@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
+use App\Models\PartnerFinance;
 
 class PartnerController extends Controller
 {
@@ -106,6 +107,12 @@ class PartnerController extends Controller
         }
         $u->address = $request->input('address');
         $u->save();
+
+        /* Создаем партнеру счет и проставляем баланс 0.00 */
+        $partner_finances = new PartnerFinance();
+        $partner_finances->partner_id = $u->id;
+        $partner_finances->amount = 0.00;
+        $partner_finances->save();
 
         return redirect('/admin/partners');
     }

@@ -289,7 +289,7 @@
                     <div class="col-md-12">
                         <h2>{{ trans('albums.albums') }}</h2>
 
-                        @if(\Auth::user()->hasRole('Male'))
+                        @if(\Auth::user()->hasRole('Male') && $u->role_id == 5)
                             @if($can_open_albums == true)
                                 <div class="alert alert-success text-left">
                                     {{ trans('finance.you_can_view_albums') }}
@@ -323,7 +323,7 @@
                 <div class="row gla-profile-block">
                     <div class="col-md-12">
                         <h2>{{ trans('profile.video') }}</h2>
-                        @if(\Auth::user()->hasRole('Male'))
+                        @if(\Auth::user()->hasRole('Male') && $u->role_id == 5)
                             @if($can_open_video == true)
                                 <div class="alert alert-success text-left">
                                     {{ trans('finance.you_can_view_video') }}

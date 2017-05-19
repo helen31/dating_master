@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Services\PartnerFinanceService;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -30,6 +31,7 @@ class PartnerFinanceController extends Controller
     {
         $partner_finances = PartnerFinance::leftJoin('users', 'users.id' ,'=', 'partner_finances.partner_id')
             ->where('partner_finances.partner_id', '!=', 1) // этот человек - Admin
+            ->where('users.deleted_at', '=', null) // статистику по удаленным партнерам не показываем
             ->orderBy('partner_finances.amount', 'DESC')
             ->select('partner_finances.*', 'users.first_name', 'users.last_name')
             ->get();
@@ -105,7 +107,7 @@ class PartnerFinanceController extends Controller
         if (\Auth::user()->hasRole('Owner')) {
             $transactions = PartnerTransaction::leftJoin('users', 'users.id' ,'=', 'partner_transactions.partner_id')
                 ->where('partner_transactions.type', '=', 'fine')
-                ->where('partner_finances.partner_id', '!=', 1) // партнер с id = 1 - это админ
+                ->where('partner_transactions.partner_id', '!=', 1) // партнер с id = 1 - это админ
                 ->whereBetween('partner_transactions.created_at', [$start_date, $end_date])
                 ->select('partner_transactions.*', 'users.first_name', 'users.last_name')
                 ->get();
@@ -122,7 +124,7 @@ class PartnerFinanceController extends Controller
 
         $amount = $this->getTransactionsAmount($transactions);
 
-        return view('admin.finances.clients.fines')->with([
+        return view('admin.finances.partners.fines')->with([
             'heading' => 'Штрафы по партнерам (USD)',
             'transactions' => $transactions,
             'amount' => $amount,
@@ -131,23 +133,65 @@ class PartnerFinanceController extends Controller
         ]);
     }
     /* Выводит форму для создания выплаты партнеру */
-    public function getPartnerPaymentForm()
+    public function getPartnerPaymentForm($partner_id)
     {
+        $partner = User::where('id', '=', $partner_id)->first();
+        $amount = PartnerFinance::where('partner_id', '=', $partner_id)->first()->amount;
 
+        return view('admin.finances.partners.payment')->with([
+            'heading' => 'Внести выплату партнеру (USD)',
+            'partner' => $partner,
+            'amount' => $amount,
+        ]);
     }
     /* Выводит форму для создания штрафа партнеру */
-    public function getPartnerFineForm()
+    public function getPartnerFineForm($partner_id)
     {
+        $partner = User::where('id', '=', $partner_id)->first();
+        $amount = PartnerFinance::where('partner_id', '=', $partner_id)->first()->amount;
 
+        return view('admin.finances.partners.fine')->with([
+            'heading' => 'Начислить штраф партнеру (USD)',
+            'partner' => $partner,
+            'amount' => $amount,
+        ]);
     }
     /* Создает и сохраняет запись о произведенном платеже, обновляет баланс партнера */
-    public function savePartnerPayment()
+    public function savePartnerPayment(Request $request, $partner_id)
     {
+        $this->validate($request, [
+            'amount' => 'required|numeric',
+        ]);
+        $type = 'payment';
+        $sign = '-';
+        $amount = $request->input('amount');
+        if ($request->has('description')) {
+            $description = $request->input('description');
+        } else {
+            $description = null;
+        }
+        PartnerFinanceService::savePartnerFinancesChange($partner_id, $type, $sign, $amount, $description);
 
+        \Session::flash('flash_success', 'Данные успешно сохранены');
+        return redirect('admin/finance/partners/detail-stat/'.$partner_id);
     }
     /* Создает и сохраняет запись о наложеннои штрафе, обновляет баланс партнера */
-    public function savePartnerFine()
+    public function savePartnerFine(Request $request, $partner_id)
     {
+        $this->validate($request, [
+            'amount' => 'required|numeric',
+        ]);
+        $type = 'fine';
+        $sign = '-';
+        $amount = $request->input('amount');
+        if ($request->has('description')) {
+            $description = $request->input('description');
+        } else {
+            $description = null;
+        }
+        PartnerFinanceService::savePartnerFinancesChange($partner_id, $type, $sign, $amount, $description);
 
+        \Session::flash('flash_success', 'Данные успешно сохранены');
+        return redirect('admin/finance/partners/detail-stat/'.$partner_id);
     }
 }

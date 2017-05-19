@@ -14,7 +14,7 @@
                     <span>Управление</span>
                 </a>
             </li>
-            @if( Auth::User()->hasRole('Owner') )
+            @if (Auth::user()->role_id == 1) <!-- Admin -->
                 <li class="menu-list">
                     <a href="#"><i class="fa fa-money"></i>
                         <span>Отчеты по клиентам</span></a>
@@ -39,6 +39,16 @@
                     <ul class="child-list">
                         <li><a href="{{ url(App::getLocale().'/admin/finance/prices') }}">Прайсы на услуги</a></li>
                         <li><a href="{{ url(App::getLocale().'/admin/finance/rates') }}">Курсы и комиссии</a></li>
+                    </ul>
+                </li>
+            @endif
+            @if (Auth::user()->role_id == 3)<!-- партнер -->
+                <li class="menu-list">
+                    <a href="#"><i class="fa fa-money"></i>
+                        <span>Финансы</span></a>
+                    <ul class="child-list">
+                        <li><a href="{{ url(App::getLocale().'/admin/finance/partners/detail-stat/'.Auth::user()->id) }}">Отчет</a></li>
+                        <li><a href="{{ url(App::getLocale().'/admin/finance/partners/fines') }}">Штрафы</a></li>
                     </ul>
                 </li>
             @endif

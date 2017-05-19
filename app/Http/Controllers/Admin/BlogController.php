@@ -14,12 +14,6 @@ class BlogController extends Controller
     private $post;
     private $trans;
 
-    /*
-     * @todo загрузка файлов бля блоговой записи с полся body
-     * @todo Если нет языка пользователя показывать который есть или редиректить на все записи доступные по языку пользователя
-     * @todo Rewrite unread shit to Provider
-     */
-
     public function __construct(Post $post, PostTranslation $trans)
     {
         $this->middleware('auth');
@@ -40,9 +34,9 @@ class BlogController extends Controller
     public function index()
     {
         $heading = 'Все записи';
+
         $posts = $this->post->all();
         $translation = $this->trans->all();
-
 
         return view('admin.blog.index')->with([
             'heading'     => $heading,
@@ -78,14 +72,13 @@ class BlogController extends Controller
     public function store(Request $request)
     {
 
-        $rulse = [
+        $rules = [
             'title' => 'required',
             'body'  => 'required',
             'locale' => 'required',
         ];
 
         $image = '';
-        //var_dump($request->file());
         if (!empty($request->file())) {
             $file = $request->file('image');
             $fileName = time().'-'.$file->getClientOriginalName();
@@ -113,9 +106,8 @@ class BlogController extends Controller
 
     public function show($id)
     {
-        //@todo Show
         if (in_array(App::getLocale(), Config::get('app.locales'))) {
-            $post = $this->post->find($id); //->lang( App::getLocale() )->get();
+            $post = $this->post->find($id);
             $trans = $this->trans->post($id);
             $image = $this->post->select('cover_image')->find($id);
         }
@@ -164,7 +156,7 @@ class BlogController extends Controller
      */
     public function update(Request $request)
     {
-        $rulse = [
+        $rules = [
             'id'    => 'required',
             'title' => 'required',
             'body'  => 'required',

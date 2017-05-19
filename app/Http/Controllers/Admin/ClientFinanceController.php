@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Models\PartnerFinance;
 use App\Models\PartnerTransaction;
+use App\Services\ClientFinanceService;
 
 class ClientFinanceController extends Controller
 {
@@ -157,5 +158,67 @@ class ClientFinanceController extends Controller
             'start_date' => $start_date,
             'end_date' => $end_date,
         ]);
+    }
+    /* Выводит форму для создания начисления / возврата средств клиенту */
+    public function getRefundForm($user_id)
+    {
+        $user = User::where('id', '=', $user_id)->first();
+        $amount = Finance::where('user_id', '=', $user_id)->first()->amount;
+
+        return view('admin.finances.clients.refund')->with([
+            'heading' => 'Начислить / вернуть средства клиенту (Love Coins)',
+            'user' => $user,
+            'amount' => $amount,
+        ]);
+    }
+    /* Выводит форму для создания списания / штрафа клиенту */
+    public function getDebitForm($user_id)
+    {
+        $user = User::where('id', '=', $user_id)->first();
+        $amount = Finance::where('user_id', '=', $user_id)->first()->amount;
+
+        return view('admin.finances.clients.debit')->with([
+            'heading' => 'Списать средства с клиента (Love Coins)',
+            'user' => $user,
+            'amount' => $amount,
+        ]);
+    }
+    /* Создает и сохраняет запись о произведенном возврате / зачислении, обновляет баланс клиента */
+    public function saveRefund(Request $request, $user_id)
+    {
+        $this->validate($request, [
+            'amount' => 'required|numeric',
+        ]);
+        $type = 'refund';
+        $sign = '+';
+        $amount = $request->input('amount');
+        if ($request->has('description')) {
+            $description = $request->input('description');
+        } else {
+            $description = null;
+        }
+        ClientFinanceService::saveClientFinancesChange($user_id, $type, $sign, $amount, $description);
+
+        \Session::flash('flash_success', 'Данные успешно сохранены');
+        return redirect('admin/finance/clients/detail-stat/'.$user_id);
+    }
+    /* Создает и сохраняет запись о наложеннои штрафе, обновляет баланс партнера */
+    public function saveDebit(Request $request, $user_id)
+    {
+        $this->validate($request, [
+            'amount' => 'required|numeric',
+        ]);
+        $type = 'debit';
+        $sign = '-';
+        $amount = $request->input('amount');
+        if ($request->has('description')) {
+            $description = $request->input('description');
+        } else {
+            $description = null;
+        }
+        ClientFinanceService::saveClientFinancesChange($user_id, $type, $sign, $amount, $description);
+
+        \Session::flash('flash_success', 'Данные успешно сохранены');
+        return redirect('admin/finance/clients/detail-stat/'.$user_id);
     }
 }

@@ -36,7 +36,7 @@
                 @foreach($transactions as $trans)
                     <tbody>
                     <td>{{ date('d-m-Y - H:i', strtotime($trans->created_at)) }}</td>
-                    <td><a href="#">ID#{{ $trans->user_id }}  {{ $trans->first_name.' '.$trans->last_name }}</a></td>
+                    <td><a href="{{ url(\App::getLocale().'/admin/partner/show/'.$trans->partner_id) }}">ID#{{ $trans->partner_id }}  {{ $trans->first_name.' '.$trans->last_name }}</a></td>
                     <td>
                         @if ($trans->description !== null)
                             {{ $trans->description }}

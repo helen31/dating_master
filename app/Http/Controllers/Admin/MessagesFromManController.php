@@ -122,7 +122,9 @@ class MessagesFromManController extends Controller
             $message->status = 1; // Статус - прочитанное
             $message->save();
             // Если на письмо отвечает партнер, перечисляется комиссия партнеру за ответ на сообщение мужчины
-            if(\Auth::user()->hasRole('Partner')){
+            // Производится проверка, что пользователь является партнером и девушка принадлежит ему
+            $partner_id = User::where('id', '=', $request->input('from_user'))->first()->partner_id;
+            if(\Auth::user()->role_id == 3 && \Auth::user()->id == $partner_id){
                 PartnerFinanceService::chargePartnersComission($request->input('to_user'), $request->input('from_user'), 'message');
             }
         }

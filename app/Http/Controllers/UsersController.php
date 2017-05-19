@@ -63,6 +63,7 @@ class UsersController extends Controller
                 'users.webcam',
                 'users.city_id',
                 'users.country_id',
+                'users.role_id',
                 'profile.*',
                 'countries.name as country',
                 'countries.name_en as country_en',

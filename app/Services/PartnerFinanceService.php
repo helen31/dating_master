@@ -12,6 +12,7 @@ use App\Services\ClientFinanceService;
 
 final class PartnerFinanceService
 {
+    /* Начисляет комиссию партнеру за использование платных услуг */
     public static function chargePartnersComission($user_id, $girl_id, $type, $present_id = null)
     {
         $partner_id = User::where('id', '=', $girl_id)->first()->partner_id;
@@ -21,18 +22,10 @@ final class PartnerFinanceService
             $exchange_rate_usd = (double)ExchangeRate::where('name', '=', 'lc_usd')->first()->rate;
             $accrual = $price*$acc_rate*$exchange_rate_usd;
 
-            /* Если у партрнера нет счета, создаем его
-            и увеличиваем баланс на счету */
+            /* Увеличиваем баланс на счету партнера на сумму начисления */
             $partner_finances = PartnerFinance::where('partner_id', '=', $partner_id)->first();
-            if ($partner_finances === null) {
-                $partner_finances = new PartnerFinance();
-                $partner_finances->partner_id = $partner_id;
-                $partner_finances->amount = $accrual;
-                $partner_finances->save();
-            } else {
-                $partner_finances->amount = $partner_finances->amount + $accrual;
-                $partner_finances->save();
-            }
+            $partner_finances->amount = (double)$partner_finances->amount + $accrual;
+            $partner_finances->save();
 
             /* Создаем запись о зачислении средств партнеру */
             $new_partner_trans = new PartnerTransaction();
@@ -49,7 +42,7 @@ final class PartnerFinanceService
             $new_partner_trans->save();
         }
     }
-
+    /* Возвращает комиссию партнера (в частях единицы) в зависимости от типа услуги */
     public static function getChargeRate($type)
     {
         if ($type == 'gift') {
@@ -59,6 +52,29 @@ final class PartnerFinanceService
         }
         return $charge_rate;
     }
+    /* Начисляет штраф или выплату партнеру которые создаются вручную из админки,
+    *  создает запись о транзвакции, обновляет баланс партнера */
+    public static function savePartnerFinancesChange($partner_id, $type, $sign, $amount, $description)
+    {
+        /* Обновляем баланс на счету партнера */
+        $partner_finances = PartnerFinance::where('partner_id', '=', $partner_id)->first();
 
+        /* $sign определяет, приводит ли транзакция к увеличению баланса или уменьшению */
+        if ($sign === '+') {
+            $partner_finances->amount = (double)$partner_finances->amount + $amount;
+        } elseif ($sign === '-') {
+            $partner_finances->amount = (double)$partner_finances->amount - $amount;
+        } else {
+            \Session::flash('flash_error', 'Ошибка: отсуствует параметр - знак транзакции. Не удалось обновить баланс');
+        }
+        $partner_finances->save();
 
+        /* Создаем запись о транзакции */
+        $new_partner_trans = new PartnerTransaction();
+        $new_partner_trans->partner_id = $partner_id;
+        $new_partner_trans->amount = $amount;
+        $new_partner_trans->type = $type;
+        $new_partner_trans->description = $description;
+        $new_partner_trans->save();
+    }
 }
