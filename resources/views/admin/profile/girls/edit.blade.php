@@ -199,16 +199,20 @@
                             <h3 class="text-center"> Фотографии профиля (макс. 10) </h3>
                             <div class="form-group col-md-12">
                                 <div class="form-group">
-                                    <div class="col-md-12">
-                                        @foreach($profile_images as $p_image)
-                                            <div class="photo col-md-3" id="photo-{{$p_image->id}}">
-                                                <img class="img-responsive" src="{{ url('/uploads/users/profile_photos/'.$p_image->url) }}">
-                                                <a class="delete_gallery" href="#" onclick="deleteProfileFoto(event,'{{$p_image->id}}');"><i class="fa fa-trash-o"></i></a>
-                                            </div>
-                                        @endforeach
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            @foreach($profile_images as $p_image)
+                                                <div class="grg-photo-frame" id="photo-{{$p_image->id}}">
+                                                    <div class="gla-photo-position">
+                                                        <img class="grg-img-photo" src="{{ url('/uploads/users/profile_photos/'.$p_image->url) }}">
+                                                        <a class="delete_gallery" href="#" onclick="deleteProfileFoto(event,'{{$p_image->id}}');"><i class="fa fa-trash-o"></i></a>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                        {!! Form::label(trans('profile_photo')) !!}
+                                        <input id="profile_photo" type="file" name="profile_photo[]" multiple="multiple" class="file" accept="image/*">
                                     </div>
-                                    {!! Form::label(trans('profile_photo')) !!}
-                                    <input id="profile_photo" type="file" name="profile_photo[]" multiple="multiple" class="file" accept="image/*">
                                 </div>
                             </div>
                         </div>
@@ -407,25 +411,23 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <h3 class="text-center">Альбомы</h3>
-                                <div class="row">
-                                    <div class="owl row online">
-                                        @foreach($albums as $a)
-                                            <div class="item col-md-4" id="gallerey-{{$a->id}}">
-                                                <div class="row text-center">
-                                                    <a href="{{ url(App::getLocale().'/admin/girl/edit/'.$user->id.'/edit_album/'.$a->id) }}">
-                                                        <img src="{{ url('/uploads/albums/'.$a->cover_image) }}" width="90%">
-                                                        <div class="text-center">{{ $a->name }}</div>
-                                                    </a>
-                                                    <a class="delete_gallery" href="#" onclick="deleteGallery({{$a->id}});"  ><i class="fa fa-trash-o"></i></a>
-                                                </div>
+                                <div class="owl online">
+                                    @foreach($albums as $a)
+                                        <div class="grg-photo-frame" id="gallerey-{{$a->id}}">
+                                            <div class="gla-photo-position">
+                                                <a href="{{ url(App::getLocale().'/admin/girl/edit/'.$user->id.'/edit_album/'.$a->id) }}">
+                                                    <img src="{{ url('/uploads/albums/'.$a->cover_image) }}" class="grg-img-photo">
+                                                    <div class="text-center">{{ $a->name }}</div>
+                                                </a>
+                                                <a class="delete_gallery" href="#" onclick="deleteGallery({{$a->id}});"  ><i class="fa fa-trash-o"></i></a>
                                             </div>
-                                        @endforeach
-                                        <div class="item last_create col-md-4">
-                                            <a href="{{url(App::getLocale().'/admin/girl/edit/'.$user->id.'/add_album') }}">
-                                                <img style="    width: 100%;" class="create" src="/public/uploads/add_image.png">
-                                                <div class="text-center">{{ trans('albums.add') }}</div>
-                                            </a>
                                         </div>
+                                    @endforeach
+                                    <div class="grg-photo-frame">
+                                        <a href="{{url(App::getLocale().'/admin/girl/edit/'.$user->id.'/add_album') }}">
+                                            <img class="grg-img-photo create" src="/public/uploads/add_image.png">
+                                            <div class="text-center">{{ trans('albums.add') }}</div>
+                                        </a>
                                     </div>
                                 </div>
                             </div>

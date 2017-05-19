@@ -21,21 +21,15 @@
                 <li><a href="/{{ App::getLocale() }}/">{{trans('nav.welcome')}}</a></li>
                 <li><a href="/{{ App::getLocale() }}/about">{{trans('nav.about')}}</a></li>
                 <li><a href="/{{ App::getLocale() }}/blog">{{trans('nav.blog')}}</a></li>
-                <li><a href="/{{ App::getLocale() }}/pricing">{{trans('nav.pricing')}}</a></li>
                 <li><a href="/{{ App::getLocale() }}/search">{{trans('nav.search')}}</a></li>
+                <li><a href="/{{ App::getLocale() }}/pricing">{{trans('nav.pricing')}}</a></li>
                 <li><a href="/{{ App::getLocale() }}/contacts">{{trans('nav.contacts')}}</a></li>
             </ul>
         @else
             <ul class="nav">
-                <li class="profile_name"><i class="fa fa-user" aria-hidden="true"></i>
                 <?php
                     $user = Auth::user();
-                      foreach($user as $u)
-                      {
-                         echo "$u";
-                      }
                 ?>
-                </li>
                 <li><a href="/{{ App::getLocale() }}/profile/show/{{ Auth::user()->id }}">{{ trans('profile.my') }}</a></li>
                 <li><a href="/{{ App::getLocale() }}/profile/{{ Auth::user()->id }}/photo/">{{ trans('profile.photo') }}</a></li>
                 <li><a href="/{{ App::getLocale() }}/profile/{{ Auth::user()->id }}/video/">{{ trans('profile.video') }}</a></li>
@@ -58,28 +52,70 @@
             </ul>
         @endif
     </div>
-    <div class="container-fluid">
+    <div class="container-fluid gla-container-mobile-header">
         <div class="row top_nav">
-            <div class="col-md-2 col-xs-2">
+            <div class="col-xs-2">
                 <div class="left-nav-open">
                     <i class="fa fa-bars" aria-hidden="true"></i>
                 </div>
             </div>
-            @if(!Auth::user())
-                <div class="col-md-6 col-xs-5">
-                    <span class="top_nav_mnu_center">Dating | Home </span>
-                </div>
-            @else
-                <div class="col-md-6 col-xs-5 profile_col">
-                    <span class="top_nav_mnu_center">Dating</span>
-                </div>
-            @endif
-            <div class="col-md-4 col-xs-5">
+            <div class="col-xs-10 gla-container-mobile-header-align">
                 @if(!Auth::user())
-                    <button type="button" class="btn btn-default" id="button-login" data-toggle="modal" data-target="#loginModal"><i class="fa fa-user"></i> {{ trans('buttons.login') }} </button>
+                <div class="dropdown gla-dropdown-lineHeight">
+                    <a href="javascript:;" data-toggle="dropdown" class="dropdown-toggle" aria-expanded="false">
+                        <div class="gla-user-icon"><i class="fa fa-user"></i></div>
+                        <b class="fa fa-angle-down"></b>
+                    </a>
+                    <ul role="menu" class="dropdown-menu gla-dropdown-menu">
+                        <li>
+                            <a tabindex="-1" href="#" data-toggle="modal" data-target="#loginModal">
+                                <i class="fa fa-sign-in" aria-hidden="true"></i> {{ trans('buttons.login') }}
+                            </a>
+                        </li>
+                        <li>
+                            <a tabindex="-1" href="#" data-toggle="modal" data-target="#registerModal">
+                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i> {{ trans('buttons.signup') }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
                 @else 
-                    <span class="top_nav_mnu_right"><a href="#" class="coin_btn"><i class="fa fa-btc" aria-hidden="true"></i>25 Coins</a> <a class="cart" href="#">Cart</a></span>
+                <div class="dropdown gla-dropdown-lineHeight">
+                    <a href="javascript:;" data-toggle="dropdown" class="dropdown-toggle" aria-expanded="false">
+                        <div class="gla-user-icon"><i class="fa fa-user"></i>Svetlana</div>
+                        <b class="fa fa-angle-down"></b>
+                    </a>
+                    <ul role="menu" class="dropdown-menu gla-dropdown-menu">
+                        <li>
+                            <a tabindex="-1" href="{{ url(App::getLocale().'/profile/'. Auth::user()->id) }}" class="gla-heaer-mobile-user-icon">
+                                <i class="fa fa-user" aria-hidden="true"></i>{{ trans('buttons.profile') }}
+                            </a>
+                        </li>
+                        <li>
+                            <a tabindex="-1" href="{{ url('/logout') }}">
+                                <i class="fa fa-sign-out" aria-hidden="true"></i>{{ trans('buttons.logout') }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
                 @endif
+                <div class="dropdown gla-dropdown-lineHeight">
+                    <a href="javascript:;" data-toggle="dropdown" class="dropdown-toggle" aria-expanded="false">
+                        <img src="{{ url('/assets/img/flags/'.App::getLocale().'.png') }}" class="gl-language_icon-mobile" alt="{{App::getLocale()}}">
+                        <b class="fa fa-angle-down"></b>
+                    </a>
+                    <ul role="menu" class="dropdown-menu gla-dropdown-menu language-switch">
+                        @foreach( Config::get('app.locales') as $locale )
+                            @if( $locale != App::getLocale() )
+                                <li>
+                                    <a tabindex="-1" href="{{ LaravelLocalization::getLocalizedURL($locale) }}">
+                                        <img src="{{ url('/assets/img/flags/'.$locale.'.png') }}" class="gl-language_icon-mobile" alt="{{$locale}}">
+                                    </a>
+                                </li>
+                            @endif
+                        @endforeach
+                    </ul>
+                </div>
             </div>
         </div>
 
@@ -139,8 +175,8 @@
                             </div>
                             <div class="col-md-12" style="margin-top: 10px">
                                 <input type="checkbox"> Remember me<br />
-                                <button type="submit" class="btn btn-sm btn-default">
-                                    <i class="fa fa-unlock"></i> Sign In
+                                <button type="submit" class="btn btn-pink btn-sm">
+                                    <i class="fa fa-unlock"></i> SIGN IN
                                 </button>
                                 <div class="col-md-12">
                                     <div class="social_buttons" style="margin-top: 20px">
@@ -242,7 +278,6 @@
                             </div>
                         </form>
                     </div>
-
                 </div>
             </div>
         </div>

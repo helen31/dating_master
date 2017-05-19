@@ -150,9 +150,11 @@
                 {!! Form::close() !!}
                 <div class="col-md-12">
                     @foreach($photos as $p)
-                        <div class="photo" id="photo-{{$p->id}}">
-                            <img src="{{ url('/uploads/albums/'.$p->image) }}" width="100%">
-                            <a class="delete_gallery" href="#" onclick="deleteFoto(event,{{$p->id}});"  ><i class="fa fa-trash-o"></i></a>
+                        <div class="grg-photo-frame" id="photo-{{$p->id}}">
+                            <div class="gla-photo-position">
+                                <img src="{{ url('/uploads/albums/'.$p->image) }}" class="grg-img-photo" width="100%">
+                                <a class="delete_gallery" href="#" onclick="deleteFoto(event,{{$p->id}});"  ><i class="fa fa-trash-o"></i></a>
+                            </div>
                         </div>
                     @endforeach
                 </div>

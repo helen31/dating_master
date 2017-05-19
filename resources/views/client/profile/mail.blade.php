@@ -19,7 +19,7 @@
 
         <!-- Nav tabs -->
 
-        <ul class="nav nav-tabs" role="tablist">
+        <ul class="nav nav-tabs gla-mail-nav-tabs" role="tablist">
             <li role="presentation" class="active">
                 <a href="#income" aria-controls="income" role="tab" data-toggle="tab">
                     {{ trans('mail.income') }}
@@ -56,53 +56,56 @@
             <!-- Входящие -->
 
             <div role="tabpanel" class="tab-pane active" id="income">
+                <div class="table-responsive">
                     <table class="table table-striped">
                         <thead>
-                            <tr>
-                                <th>{{ trans('mail.sender') }}</th>
-                                <th>{{ trans('mail.message') }}</th>
-                                <th>{{ trans('mail.status') }}</th>
-                                <th>{{ trans('mail.date') }}</th>
-                            </tr>
+                        <tr>
+                            <th>{{ trans('mail.sender') }}</th>
+                            <th>{{ trans('mail.message') }}</th>
+                            <th>{{ trans('mail.status') }}</th>
+                            <th>{{ trans('mail.date') }}</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            @foreach($income as $m)
-                                <tr style="{{ ($m->status == 0)?'font-weight: bold;':'' }} cursor:pointer;" onclick='location.href="{{ url('profile/'.$m->to_user.'/correspond/'.$m->from_user) }}"'>
-                                    <td>
-                                        <img src="{{ url('/uploads/users/avatars/'.$m->avatar) }}" height="40px">
-                                        {{ $m->first_name }}
-                                    </td>
-                                    <td>
-                                        {{ mb_substr($m->message, 0, 50) }}...
-                                    </td>
-                                    <td>
-                                        @if($m->status == 0)
-                                            <span style="color:#B02642;">{{ trans('mail.unread') }}</span>
-                                        @else
-                                            <span style="color:#A0A0A0;">{{ trans('mail.read') }}</span>
-                                        @endif
-                                    </td>
-                                    <td>{{ date('d-m-Y H:i', strtotime($m->created_at)) }}</td>
-                                </tr>
-                            @endforeach
+                        @foreach($income as $m)
+                            <tr style="{{ ($m->status == 0)?'font-weight: bold;':'' }} cursor:pointer;" onclick='location.href="{{ url('profile/'.$m->to_user.'/correspond/'.$m->from_user) }}"'>
+                                <td>
+                                    <img src="{{ url('/uploads/users/avatars/'.$m->avatar) }}" height="40px">
+                                    {{ $m->first_name }}
+                                </td>
+                                <td>
+                                    {{ mb_substr($m->message, 0, 50) }}...
+                                </td>
+                                <td>
+                                    @if($m->status == 0)
+                                        <span style="color:#B02642;">{{ trans('mail.unread') }}</span>
+                                    @else
+                                        <span style="color:#A0A0A0;">{{ trans('mail.read') }}</span>
+                                    @endif
+                                </td>
+                                <td>{{ date('d-m-Y H:i', strtotime($m->created_at)) }}</td>
+                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
-                    {!!  $income->render() !!}
+                </div>
+                {!!  $income->render() !!}
             </div>
 
             <!-- Исходящие -->
 
             <div role="tabpanel" class="tab-pane" id="outcome">
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>{{ trans('mail.recipient') }}</th>
-                        <th>{{ trans('mail.message') }}</th>
-                        <th>{{ trans('mail.status') }}</th>
-                        <th>{{ trans('mail.date') }}</th>
-                    </tr>
-                    </thead>
-                    <tbody>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>{{ trans('mail.recipient') }}</th>
+                            <th>{{ trans('mail.message') }}</th>
+                            <th>{{ trans('mail.status') }}</th>
+                            <th>{{ trans('mail.date') }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
                         @foreach($outcome as $m)
                             <tr style="{{ ($m->status == 0)?'font-weight: bold;':'' }} cursor:pointer;" onclick='location.href="{{ url('profile/'.$m->from_user.'/correspond/'.$m->to_user) }}"'>
                                 <td>
@@ -123,82 +126,87 @@
                             </tr>
                         @endforeach
 
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
                 {!!  $outcome->render() !!}
             </div>
 
             <!-- Сообщения от фаворитов -->
 
             <div role="tabpanel" class="tab-pane" id="favourites">
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>{{ trans('mail.sender') }}</th>
-                        <th>{{ trans('mail.message') }}</th>
-                        <th>{{ trans('mail.status') }}</th>
-                        <th>{{ trans('mail.date') }}</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($favourites as $m)
-                        <tr style="{{ ($m->status == 0)?'font-weight: bold;':'' }} cursor:pointer;" onclick='location.href="{{ url('profile/'.$m->to_user.'/correspond/'.$m->from_user) }}"'>
-                            <td>
-                                <img src="{{ url('/uploads/users/avatars/'.$m->avatar) }}" height="40px">
-                                {{ $m->first_name }}
-                            </td>
-                            <td>
-                                {{ mb_substr($m->message, 0, 50) }}...
-                            </td>
-                            <td>
-                                @if($m->status == 0)
-                                    <span style="color:#B02642;">{{ trans('mail.unread') }}</span>
-                                @else
-                                    <span style="color:#A0A0A0;">{{ trans('mail.read') }}</span>
-                                @endif
-                            </td>
-                            <td>{{ date('d-m-Y H:i', strtotime($m->created_at)) }}</td>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>{{ trans('mail.sender') }}</th>
+                            <th>{{ trans('mail.message') }}</th>
+                            <th>{{ trans('mail.status') }}</th>
+                            <th>{{ trans('mail.date') }}</th>
                         </tr>
-                    @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        @foreach($favourites as $m)
+                            <tr style="{{ ($m->status == 0)?'font-weight: bold;':'' }} cursor:pointer;" onclick='location.href="{{ url('profile/'.$m->to_user.'/correspond/'.$m->from_user) }}"'>
+                                <td>
+                                    <img src="{{ url('/uploads/users/avatars/'.$m->avatar) }}" height="40px">
+                                    {{ $m->first_name }}
+                                </td>
+                                <td>
+                                    {{ mb_substr($m->message, 0, 50) }}...
+                                </td>
+                                <td>
+                                    @if($m->status == 0)
+                                        <span style="color:#B02642;">{{ trans('mail.unread') }}</span>
+                                    @else
+                                        <span style="color:#A0A0A0;">{{ trans('mail.read') }}</span>
+                                    @endif
+                                </td>
+                                <td>{{ date('d-m-Y H:i', strtotime($m->created_at)) }}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
                 {!!  $favourites->render() !!}
             </div>
 
             <!-- Сообщения от черного списка -->
 
             <div role="tabpanel" class="tab-pane" id="blacklist">
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>{{ trans('mail.sender') }}</th>
-                        <th>{{ trans('mail.message') }}</th>
-                        <th>{{ trans('mail.status') }}</th>
-                        <th>{{ trans('mail.date') }}</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($blacklist as $m)
-                        <tr style="{{ ($m->status == 0)?'font-weight: bold;':'' }} cursor:pointer;" onclick='location.href="{{ url('profile/'.$m->to_user.'/correspond/'.$m->from_user) }}"'>
-                            <td>
-                                <img src="{{ url('/uploads/users/avatars/'.$m->avatar) }}" height="40px">
-                                {{ $m->first_name }}
-                            </td>
-                            <td>
-                                {{ mb_substr($m->message, 0, 50) }}...
-                            </td>
-                            <td>
-                                @if($m->status == 0)
-                                    <span style="color:#B02642;">{{ trans('mail.unread') }}</span>
-                                @else
-                                    <span style="color:#A0A0A0;">{{ trans('mail.read') }}</span>
-                                @endif
-                            </td>
-                            <td>{{ date('d-m-Y H:i', strtotime($m->created_at)) }}</td>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>{{ trans('mail.sender') }}</th>
+                            <th>{{ trans('mail.message') }}</th>
+                            <th>{{ trans('mail.status') }}</th>
+                            <th>{{ trans('mail.date') }}</th>
                         </tr>
-                    @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        @foreach($blacklist as $m)
+                            <tr style="{{ ($m->status == 0)?'font-weight: bold;':'' }} cursor:pointer;" onclick='location.href="{{ url('profile/'.$m->to_user.'/correspond/'.$m->from_user) }}"'>
+                                <td>
+                                    <img src="{{ url('/uploads/users/avatars/'.$m->avatar) }}" height="40px">
+                                    {{ $m->first_name }}
+                                </td>
+                                <td>
+                                    {{ mb_substr($m->message, 0, 50) }}...
+                                </td>
+                                <td>
+                                    @if($m->status == 0)
+                                        <span style="color:#B02642;">{{ trans('mail.unread') }}</span>
+                                    @else
+                                        <span style="color:#A0A0A0;">{{ trans('mail.read') }}</span>
+                                    @endif
+                                </td>
+                                <td>{{ date('d-m-Y H:i', strtotime($m->created_at)) }}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
                 {!!  $blacklist->render() !!}
             </div>
         </div>

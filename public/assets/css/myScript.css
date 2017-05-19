@@ -1,7 +1,10 @@
-
 /*----------------------
     Custiom CSS
 -----------------------*/
+/**modal search**/
+#loginModal{
+    padding-right: 0!important;
+}
 
 .search-form {
     background-color: #B02642;
@@ -98,7 +101,6 @@ ul.mob_info {
     margin: 30px 0;
 }
 .dropdown-toggle {
-    padding: 10px;
 }
 .dropdown.btn.btn-default.pull-right {
     padding: 5px 0;
@@ -116,7 +118,10 @@ ul.mob_info {
     /*font-size: 26px;*/
 }
 .gla-header-md-padding{
-    padding: 0 8px;
+    padding: 0;
+}
+.gla-header-md-margin_left{
+    margin-left: 10px;
 }
 
 .dropdown.btn.btn-default.pull-right {
@@ -203,7 +208,7 @@ ul.mob_info {
 }
 .top_nav_mnu_right {
     display: block;
-    line-height: 50px;
+    line-height: 59px;
     text-align: center;
 }
 .bottom_li {
@@ -410,9 +415,75 @@ hr {
 /*----------------------
     Heder
 -----------------------*/
-/* div.navbar-header .navbar-toggle {
-    float: left;
-}*/
+.gl-container{
+    padding: 0 8px;
+}
+.gla-dropdown-style{
+    padding-top: 2px;
+}
+.vcenter{
+    float: none;
+    display: inline-block;
+    vertical-align: middle;
+    padding: 0;
+    width: 39%;
+}
+.vcenter_right{
+    width: 60%;
+    margin-top: 0!important;
+}
+.gla-profile-dropdown{
+    margin-right: 20px;
+}
+.vcenter .gla-dropdown-menu{
+    z-index: 1001;
+    min-width: inherit;
+    right: 0;
+    left: inherit;
+}
+.vcenter .gla-dropdown-menu li{
+    overflow: hidden;
+    width: 100%;
+}
+.vcenter  .gla-dropdown-menu li a{
+    width: 100%;
+    text-align: left!important;
+}
+.gla-profile-dropdown .gla-dropdown-menu li a .fa-sign-out, .fa-user{
+    padding-right: 5px;
+}
+.profile-header-container{
+    margin: 0 auto;
+    text-align: center;
+    display: inline-block;
+}
+.login-buttons .profile-header-img{
+    float: none!important;
+}
+.vcenter .fa-angle-down{
+    vertical-align: middle;
+}
+.profile-header-container .fa-angle-down{
+    vertical-align: middle;
+    margin-left: -5px;
+}
+
+.profile-header-img {
+    display: inline-block;
+    height: 32px;
+    width: 32px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    vertical-align: middle;
+    border-radius: 50%;
+}
+.gla-header-icon-description {
+    font-size: 14px;
+    padding-right: 7px;
+    font-weight: 200;
+}
+
 #header {
     background-color: #FFFFFF;
 }
@@ -439,6 +510,7 @@ div.navbar-header #button-register {
 
 .header__logo{
     vertical-align: middle;
+    text-decoration: none;
 }
 
 .navi i.fa.fa-chevron-left {
@@ -446,7 +518,6 @@ div.navbar-header #button-register {
 }
 ul.dropdown-menu.language-switch[role="menu"] {
     z-index: 99999;
-    opacity: 0.9;
 }
 #header .dropdown-menu a{
     float: left;
@@ -459,8 +530,8 @@ ul.dropdown-menu.language-switch[role="menu"] {
 //min-width: 100%;
 }
 #header .login-buttons a {
-    margin-right: 10px;
     text-decoration: none;
+    vertical-align: middle;
 }
 
 #header .login-buttons a:nth-child(2){
@@ -469,21 +540,21 @@ ul.dropdown-menu.language-switch[role="menu"] {
 .top_nav .top_nav_mnu_center {
     text-align: center;
     display: block;
-    line-height: 50px;
+    line-height: 59px;
 }
 .top_nav #button-login {
-    margin-top: 8px;
+    margin-top: 15px;
     float: right;
 }
 .top_nav .left-nav-open {
     font-size: 30px;
-    line-height: 50px;
+    line-height: 59px;
     padding: 0 20px;
 }
 .row.top_nav {
     background-color: #222222;
     color: #fff;
-    z-index: 9999999;
+    z-index: 888;
     position: absolute;
     width: 100%;
 }
@@ -516,6 +587,7 @@ li.profile_name {
 }
 .left-nav li a:hover {
     background-color: #888888;
+    text-decoration: none;
 }
 .logo_text {
     font-size: 36px;
@@ -598,7 +670,6 @@ li.profile_name {
     text-align: center;
 }
 
-
 .gla-cover-img:hover:before{
     color: rgba(159, 159, 159, 0.8);
 }
@@ -665,7 +736,6 @@ li.profile_name {
 .gla-video-item_border{
     border: none;
     background-color: inherit;
-
 }
 
 .gla-video-measurements{
@@ -767,6 +837,16 @@ li.profile_name {
 }
 
 /**for albums**/
+.gla-style-margin{
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.gla-profile-albums .gla-cover-img:before{
+    display: none;
+    cursor: pointer;
+
+}
+.gla-profile-albums-description{}
 .gla-item-margin{
     margin-bottom: 2.5%;
 }
@@ -928,7 +1008,6 @@ footer .soc_icons .fa{
 .gla-card{
     text-align: right;
 }
-
 
 /* ---------------
     PAGINATION
@@ -1122,6 +1201,10 @@ footer .soc_icons .fa{
 }
 
 /* --- Search ---- */
+.no-gutter {
+    padding-right:0;
+    padding-left:0;
+}
 .gla-search-form{}
 .grg-search-input{
     padding: 5px;
@@ -1183,7 +1266,12 @@ footer .soc_icons .fa{
     display: inline-block;
     width: 60%;
 }
-
+/*----------------------
+    PRICING
+-----------------------*/
+.gla-price-bg{
+    padding-top: 20px;
+}
 /* ---   @MEDIA   ---*/
 @media screen and (max-width: 1200px) {
     /* #photo {
@@ -1211,8 +1299,16 @@ footer .soc_icons .fa{
     }
 }
 @media screen and (max-width: 992px) {
+    /**mail-block**/
+    .gla-mail-nav-tabs li {
+        width: 133px;
+        height: 69px;
+    }
+    .gla-mail-nav-tabs li a {
+        height: 100%;
+    }
     .text-right {
-        text-align: center;
+        //text-align: center;
     }
     #header .login-buttons button {
         min-width:110px;
@@ -1248,12 +1344,20 @@ footer .soc_icons .fa{
     }
 }
 @media screen and (max-width: 768px) {
+    #header {
+        padding: 0;
+    }
+    .gl-container {
+        padding: 76px 0 15px 0;
+    }
     .logo {
         text-align: center;
-        margin-top: 20px;
+        margin-top: 0;
+    }
+    .vcenter{
+        width: 100%;
     }
     #logo_img {
-        margin-top: 30px;
     }
     .girl-action ul li {
         width: 45px;
@@ -1288,7 +1392,6 @@ footer .soc_icons .fa{
     }
     .top_nav .left-nav-open {
         padding: 0;
-        margin-top: 9px;
     }
     /* ---   @Girls    ---*/
     .row.girl-action .col-md-4.col-sm-4.col-xs-4.col-lg-4 {
@@ -1431,11 +1534,36 @@ footer .soc_icons .fa{
 }
 
 @media screen and (max-width: 767px) {
+    /**mail-block**/
+    .gla-mail-nav-tabs li {
+        width: 125px;
+        height: 82px;
+    }
+    .gla-mail-nav-tabs li a {
+        height: 100%;
+    }
     .logo_text {
         font-size: 26px;
+        vertical-align: middle;
     }
 }
 @media screen and (max-width: 386px) {
+    /**mail-block**/
+    .gla-mail-nav-tabs li{
+        width: 50px;
+        height: auto;
+    }
+    .gla-mail-nav-tabs li a{
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        height: auto;
+    }
+    .gla-mail-nav-tabs li a:focus{
+        overflow: visible;
+        //white-space: normal;
+        //height:auto;
+    }
     /**header**/
     .top_nav .top_nav_mnu_center {
         font-size: 13px;
@@ -1496,7 +1624,7 @@ footer .soc_icons .fa{
     }
 
     .gla-cover-img_width {
-        width: 250px;
+        width: 222px;
         height: 180px;
     }
     /**Profile**/
@@ -1523,6 +1651,9 @@ footer .soc_icons .fa{
     }
     .form-inline .form-control {
         width: 102px;
+    }
+    .gla-profile-albums-description{
+        text-align: center;
     }
 }
 
@@ -1587,7 +1718,7 @@ footer .soc_icons .fa{
         display: block;
     }
     .logo_text{
-        font-size: 1.8vw;
+        font-size: 1.65vw;
         font-weight: 600;
     }
 
@@ -1639,7 +1770,17 @@ footer .soc_icons .fa{
 }
 /**gla**/
 @media (min-width: 386px) and (max-width: 550px){
-    /* ---   @Girls-item-row    ---*/
+    /**mail-block**/
+    .gla-mail-nav-tabs li {
+        width: 80px;
+        height: 84px;
+    }
+    .gla-mail-nav-tabs li a {
+        font-size: 13px;
+        padding: 5px 5px;
+        height: 100%;
+    }
+        /* ---   @Girls-item-row    ---*/
     #photo {
         max-height: 295px;
         min-height: 295px;
