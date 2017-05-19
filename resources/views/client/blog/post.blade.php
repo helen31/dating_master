@@ -2,17 +2,15 @@
 
 @section('content')
     <div class="container">
-        <div class="col-md-12">
-            <div class="col-md-8">
+        <div class="row gla-post-margin">
+            <div class="col-md-8 col-md-offset-2">
                 @foreach($post as $p)
-                    <h1>{{ $p->title }}</h1>
                     @if( $p->cover_image )
-                        <img src="{{ url('/uploads/blog/'.$p->cover_image) }}" width="100%">
+                    <img src="{{ url('/uploads/blog/'.$p->cover_image) }}" class="img-responsive">
                     @endif
+                    <h2>{{ $p->title }}</h2>
                     {!! $p->body !!}
                 @endforeach
-            </div>
-            <div class="col-md-4">
             </div>
         </div>
     </div>

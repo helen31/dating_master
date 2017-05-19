@@ -16,11 +16,11 @@
                 {{ csrf_field() }}
                 <div class="form-group">
                     <label>Начало периода</label>
-                    <input name="start_date" type="datetime" class="form-control" value="{{ $start_date }}">
+                    <input name="start_date" id = "datepicker-finances-startDate1" type="datetime" class="form-control" value="{{ $start_date }}">
                 </div>
                 <div class="form-group">
                     <label>Конец периода</label>
-                    <input type="datetime" class="form-control" value="{{ $end_date }}">
+                    <input id="datepicker-finances-endDate1" type="datetime" class="form-control" value="{{ $end_date }}">
                 </div>
                 <button name="end_date" type="submit" class="btn btn-success">Применить</button>
             </form>

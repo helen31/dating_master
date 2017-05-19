@@ -1,6 +1,17 @@
 /*----------------------
     Custiom CSS
 -----------------------*/
+/****/
+.gla-post-margin{
+    margin: 40px 0;
+}
+/**blog**/
+.gla-row-margin-bottom{
+    margin-bottom: 45px;
+}
+.gla-blog-title-margin{
+    margin-top: 0;
+}
 /**modal search**/
 #loginModal{
     padding-right: 0!important;

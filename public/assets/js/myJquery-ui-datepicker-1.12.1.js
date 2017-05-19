@@ -33,4 +33,58 @@ $( function() {
         dateFormat: "yy-mm-dd"
     });
 
+    /**admin/finances/client/refunds.blade.php**/
+    $( "#datepicker-finances-startDate1" ).datepicker({
+        dateFormat: "yy-mm-dd"
+    });
+
+    $( "#datepicker-finances-endDate1" ).datepicker({
+        dateFormat: "yy-mm-dd"
+    });
+
+    /**admin/finances/client/expenses.blade.php**/
+    $( "#datepicker-finances-startDate2" ).datepicker({
+        dateFormat: "yy-mm-dd"
+    });
+
+    $( "#datepicker-finances-endDate2" ).datepicker({
+        dateFormat: "yy-mm-dd"
+    });
+
+    /**admin/finances/client/deposits.blade.php**/
+    $( "#datepicker-finances-startDate3" ).datepicker({
+        dateFormat: "yy-mm-dd"
+    });
+
+    $( "#datepicker-finances-endDate3" ).datepicker({
+        dateFormat: "yy-mm-dd"
+    });
+
+    /**admin/finances/partners/fines.blade.php**/
+    $( "#datepicker-finances-startDate4" ).datepicker({
+        dateFormat: "yy-mm-dd"
+    });
+
+    $( "#datepicker-finances-endDate4" ).datepicker({
+        dateFormat: "yy-mm-dd"
+    });
+
+    /**admin/finances/partners/detail-stat.blade.php**/
+    $( "#datepicker-finances-startDate5" ).datepicker({
+        dateFormat: "yy-mm-dd"
+    });
+
+    $( "#datepicker-finances-endDate5" ).datepicker({
+        dateFormat: "yy-mm-dd"
+    });
+
+    /**admin/finances/clients/detail-stat.blade.php**/
+    $( "#datepicker-finances-startDate6" ).datepicker({
+        dateFormat: "yy-mm-dd"
+    });
+
+    $( "#datepicker-finances-endDate6" ).datepicker({
+        dateFormat: "yy-mm-dd"
+    });
+
 } );
