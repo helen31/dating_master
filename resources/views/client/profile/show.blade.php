@@ -305,11 +305,13 @@
 
                         <div class="row">
                             @foreach($albums as $a)
-                                <div class="item col-md-6 col-sm-12">
-                                    <a href="{{ url(App::getLocale().'/profile/'.$id.'/show_album/'.$a->id) }}">
-                                        <img src="{{ url('/uploads/albums/'.$a->cover_image) }}" width="250px">
-                                        <div class="text-center">{{ $a->name }}</div>
-                                    </a>
+                                <div class="col-lg-4 col-md-6 col-sm-12 gla-profile-albums">
+                                    <div class="gla-cover-img gla-cover-img_width">
+                                        <a href="{{ url(App::getLocale().'/profile/'.$id.'/show_album/'.$a->id) }}">
+                                            <img src="{{ url('/uploads/albums/'.$a->cover_image) }}" class="img-responsive" width="">
+                                        </a>
+                                    </div>
+                                    <div class="gla-profile-albums-description"><p>{{ $a->name }}</p></div>
                                 </div>
                             @endforeach
                         </div>

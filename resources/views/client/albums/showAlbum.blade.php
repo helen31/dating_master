@@ -101,9 +101,8 @@
 @stop
 
 @section('profileContent')
-
-    <section class="panel">
-        <header class="panel-heading">{{ trans('albums.name') }}: {{ $album->name }}</header>
+    <div class="panel panel-default gla-style-margin">
+        <div class="panel-heading"><p class="lead">{{ trans('albums.name') }}: {{ $album->name }}</p></div>
         <div class="panel-body">
             @if (count($errors) > 0)
                 <div class="alert alert-danger">
@@ -131,7 +130,7 @@
                 <img class="modal-content" id="img01">
             </div>
         </div>
-    </section>
+    </div>
 @stop
 @section('scripts')
 

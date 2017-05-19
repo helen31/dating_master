@@ -1,5 +1,5 @@
 <div class="header-bg">
-    <div class="container">
+    <div class="container no-gutter">
 
         <div class="short_search_wrapper bg-default col-sm-12 col-md-4 col-lg-3">
             <div class="search-form">

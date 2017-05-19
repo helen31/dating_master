@@ -2,7 +2,49 @@ body{
     margin: 0 !important;
     padding: 0 !important;
 }
-
+/**header for mobile**/
+.gla-heaer-mobile-user-icon{
+    color: #00A8B3;
+}
+.gla-container-mobile-header .gl-language_icon-mobile{
+    width: 22px;
+}
+.gla-container-mobile-header .gl-user_icon{
+    display: inline-block;
+}
+.gla-dropdown-menu{
+    right: 0;
+    left: auto;
+    min-width: inherit;
+    height: inherit;
+    top: 45px;
+}
+.gla-container-mobile-header .gl-user_icon{
+    color: #ffffff;
+}
+.gla-container-mobile-header .gla-user-icon{
+    display: inline-block;
+    color: #ffffff;
+}
+.gla-user-icon .fa-user{
+    color: #ffffff;
+    font-size: 24px;
+}
+.gla-container-mobile-header .gla-dropdown-lineHeight .fa-angle-down{
+    margin-left: 5px;
+    color: #ffffff;
+}
+.gla-dropdown-lineHeight{
+    line-height: 59px;
+    display: inline-block;
+    margin-left: 35px;
+}
+.gla-container-mobile-header-align{
+    text-align: end;
+}
+.gla-container-mobile-header .gla-dropdown-lineHeight a{
+    text-decoration: none;
+}
 header nav{
     color: white;
     font-weight: bold !important;
@@ -11,7 +53,7 @@ header nav{
 }
 
 #header{
-    padding-top: 20px;
+    padding: 20px 0;
 }
 
 #slider{
@@ -25,7 +67,6 @@ header nav{
 
 #logo_img {
     width: 100px;
-    margin-bottom: 15px;
 }
 
 #header .login-buttons {
